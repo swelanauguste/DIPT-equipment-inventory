@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="small">
+    <div class="col-lg-10 mx-auto p-5  rounded-4 ">
+
+        {% if object.pk %}
+        <h2>Update {{object.serial_number}}</h2>
+        {% else %}
+        <h2>Add computer</h2>
+
+        {% endif %}
+
+        <hr>
+        <form action=""
+            method="post">
+            {% csrf_token %}
+
+            <div class="row">
+                {{ form.from_project|as_crispy_field }}
+            </div>
+            <div class="row">
+                <span class="col">
+                    {{ form.date_received|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.warranty_info|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.serial_number|as_crispy_field }}
+                </span>
+            </div>
+            <hr>
+            <div class="row">
+                <span class="col">
+                    {{ form.computer_name|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.model|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.os|as_crispy_field }}
+                </span>
+            </div>
+            <div class="row">
+                <span class="col">
+                    {{ form.status|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.image|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.user|as_crispy_field }}
+                </span>
+            </div>
+            <hr>
+            <div class="row">
+                <span class="col">
+                    {{ form.department|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.location|as_crispy_field }}
+                </span>
+
+                <span class="col">
+                    {{ form.date_installed|as_crispy_field }}
+                </span>
+            </div>
+            <div class="col">
+                <span>{{form.notes|as_crispy_field}}</span>
+            </div>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

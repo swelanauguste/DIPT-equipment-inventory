@@ -1,0 +1,67 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+    <script src="{% static 'js/jquery-3.7.1.slim.js' %}"></script>
+    <link rel="stylesheet"
+        href="{% static 'css/select2.min.css' %}">
+    <script src="{% static 'js/select2.min.js'%}"></script>
+    <link rel="stylesheet"
+        href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet"
+        href="{% static 'css/styles.css' %}">
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="shortcut icon"
+        href="{% static 'images/logo.png' %}"
+        type="image/x-icon">
+    <title>IT Unit Inventory - DIPT</title>
+</head>
+
+<body class="small">
+    <div class="row">
+        <div class="col-lg-2 px-4 text-bg-dark min-vh-100 small">
+            {% include 'nav.html' %}
+        </div>
+        <div class="col">
+            {% block content %}
+
+            {% endblock content %}
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#id_department').select2();
+            $('#id_location').select2();
+            $('#id_os').select2();
+            $('#id_status').select2();
+            $('#id_model').select2();
+            $('#id_user').select2();
+            $('.computer-list a').addClass('btn btn-sm btn-dark px-5 rounded-pill');
+            $('form button').addClass('btn btn-sm btn-dark px-5 rounded-pill');
+            $('li a').addClass('text-white text-decoration-none');
+            $('.form-control').addClass('form-control-sm');
+            $('.selectmultiple').attr('type');
+            $('td a').addClass('text-dark', 'select');
+            $('h3 a').addClass('text-white text-decoration-none');
+            $('.col p a').addClass('text-dark fw-bold');
+            $('.dateinput').attr('type', 'date');
+            $('.textarea').attr('rows', 4);
+
+        });
+    </script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

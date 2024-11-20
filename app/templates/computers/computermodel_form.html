@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="m-5 small">
+    <div class="col-lg-6 mx-ato p-5 shadow rounded-4 border">
+        <h2>Add computer model</h2>
+        <hr>
+        <form action=""
+            method="post">
+            {% csrf_token %}
+
+            <div class="row">
+                <span class="col">
+                    {{ form.maker|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.name|as_crispy_field }}
+                </span>
+              
+            </div>
+            <div class="row">
+                <span class="col">
+                    {{ form.computer_type|as_crispy_field }}
+                </span>
+            
+                <span class="col">
+                    {{ form.processor|as_crispy_field }}
+                </span>
+            </div>
+            <div class="row">
+                <span class="col">
+                    {{ form.ram|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.hdd|as_crispy_field }}
+                </span>
+            </div>
+            <div class="col">
+                <span>{{form.notes|as_crispy_field}}</span>
+            </div>
+            <br>
+            <div class="d-grid">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

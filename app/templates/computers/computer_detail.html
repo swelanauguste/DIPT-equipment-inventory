@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="py-5">
+    <h1>{{object.model}} | {{object.serial_number}}</h1>
+    <hr>
+    <div class="px-3">
+        <p class="text-end me-3"><a
+                class="btn btn-sm btn-warning px-5 rounded-pill"
+                href="{% url 'computer-update' object.slug %}">Edit</a>
+        </p>
+        <div class="row">
+            <div class="col">
+                <p><strong>Received: </strong>{{object.date_received}}</p>
+                <p><strong>Serial#: </strong>{{object.serial_number}}</p>
+                <p><strong>Computer name: </strong>{{object.computer_name}}</p>
+                <p><strong>Warranty: </strong>{{object.warranty_info}}</p>
+                <p><strong>Status: </strong><span
+                        class="text-bg-{{object.status.colour}} px-3 py-1 rounded-pill">{{object.status}}</span>
+                </p>
+                <p><strong>Operating System: </strong>{{object.os}}</p>
+                <p><strong>Location: </strong>{{object.location}}</p>
+                <p><strong>Department: </strong>{{object.department}}</p>
+                <p><strong>Assigned to: </strong><a href="#">{{object.user.last}}</a></p>
+                <p><strong>Installed: </strong>{{object.date_installed}}</p>
+                {% if object.image %}
+                <p><strong>Att: </strong>{{object.image.url}}</p>
+                {% endif %}
+                <p><strong>Notes: </strong>{{object.notes|default:'N/A'}}</p>
+
+
+            </div>
+            <div class="col">
+                <p><strong>Model: </strong><a
+                        href="{{object.model.get_absolute_url}}">{{object.model.name}}</a>
+                </p>
+                <p><strong>Type: </strong>{{object.model.computer_type}}</p>
+                <p><strong>Maker: </strong>{{object.model.maker}}</p>
+                <p><strong>Processor: </strong>{{object.model.processor}}</p>
+                <p><strong>RAM (GB): </strong>{{object.model.ram}}</p>
+                <p><strong>HDD: </strong>{{object.model.hdd}}</p>
+            </div>
+        </div>
+
+        <hr>
+        <p class="small text-muted"><strong>Created:
+            </strong><span>{{object.created_at}}
+                {{object.created_by|lower}}</span>
+            <span class="float-end"><strong>Updated:
+                </strong>{{object.updated_at}}
+                {{object.updated_by|lower}}</span>
+        </p>
+    </div>
+</div>
+{% endblock content %}
