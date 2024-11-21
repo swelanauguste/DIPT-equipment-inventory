@@ -1,9 +1,17 @@
 <h3 class="pt-2 fw-bold"><a href="/">ICT Unit - DIPT</a></h3>
 <hr>
 <ul class="fw-bold">
-    <li><a href="{% url 'computer-list' %}">Tickets</a>
+    <li><a href="{% url 'ticket-list' %}">Tickets</a>
         <ul>
-            <li><a href="{% url 'computer-create' %}">Add ticket</a></li>
+
+            {% if request.user.role == 'technician' or request.user.role == 'manager' %}
+            <li><a href="{% url 'ticket-tech-create' %}">Add ticket</a></li>
+
+            {% else %}
+            <li><a href="{% url 'ticket-create' %}">Add ticket</a></li>
+
+            {% endif %}
+
         </ul>
     </li>
     <hr>
@@ -15,22 +23,22 @@
                 <li><a href="{% url 'computer-model-create' %}">Add model</a>
                 </li>
             </ul>
-            <li><a href="">Monitors</a>
-                <ul>
-                    <li><a href="#">Add monitor</a></li>
-                    <li><a href="#">Models</a></li>
-                    <ul>
-                        <li><a href="">Add model</a></li>
-                    </ul>
-                </ul>
-            </li>
-            <li><a href="#">Office Suite</a></li>
-
         </ul>
     </li>
-
     <hr>
-
+    <li><a href="#">Office Suite</a></li>
+    <hr>
+    <li><a href="{% url 'monitor-list' %}">Monitors</a>
+        <ul>
+            <li><a href="{% url 'monitor-create' %}">Add monitor</a></li>
+            <li><a href="{% url 'monitor-model-list' %}">Models</a></li>
+            <ul>
+                <li><a href="{% url 'monitor-model-create' %}">Add model</a>
+                </li>
+            </ul>
+        </ul>
+    </li>
+    <hr>
     <li><a href="">Printers</a>
         <ul>
             <li><a href="#">Add printer</a></li>
@@ -40,6 +48,14 @@
             </ul>
         </ul>
     </li>
+
+
+
     <hr>
+    <li><a href="{% url 'user-detail' %}">{{request.user}}</a>
+        <ul>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </li>
 
 </ul>

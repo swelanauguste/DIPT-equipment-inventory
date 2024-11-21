@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="p-5">
+    <h1>{{user}}</h1>
+    <hr>
+
+    {% if request.user == user %}
+    <p class="text-end"><a class="edit-btn"
+            href="{% url 'user-update' %}">Edit</a></p>
+    {% endif %}
+
+    {% if user.first_name and user.last_name %}
+    <p><strong>Name: </strong>{{user}}</p>
+    {% endif %}
+    <p><strong>Department: </strong>{{user.department|upper}}</p>
+    <p><strong>Location: </strong>{{user.location|upper}}</p>
+    <p><strong>Phone: </strong>{{user.phone}}</p>
+</div>
+{% endblock content %}

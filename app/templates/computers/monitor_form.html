@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="m-5 small">
+    <div class="col-lg-6 mx-ato p-5 shadow rounded-4 border">
+        <h1>
+            {% if object.pk %}
+            {{object.serial_number}}
+            {% else %}
+            New monitor model
+            {% endif %}
+        </h1>
+        <hr>
+        <form action=""
+            method="post">
+            {% csrf_token %}
+
+            <div class="row">
+                <span class="col">
+                    {{ form.date_received|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.serial_number|as_crispy_field }}
+                </span>
+
+            </div>
+            <div class="row">
+                <span class="col">
+                    {{ form.model|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.date_installed|as_crispy_field }}
+                </span>
+
+            </div>
+
+
+            <div class="col">
+                <span>{{form.notes|as_crispy_field}}</span>
+            </div>
+            <br>
+            <div class="d-grid">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

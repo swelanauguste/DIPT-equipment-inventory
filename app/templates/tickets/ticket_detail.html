@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="p-5">
+    <h1>{{object.ticket_id|upper}}</h1>
+    <hr>
+    <div class="px-3">
+        {% if request.user.role == 'technician' or request.user.role == 'manager' %}
+        <p class="text-end me-3"><a
+            class="btn btn-sm btn-warning px-5 rounded-pill"
+            href="{% url 'ticket-tech-update' object.slug %}">Edit</a>
+    </p>
+
+        {% else %}
+        <p class="text-end me-3"><a
+            class="btn btn-sm btn-warning px-5 rounded-pill"
+            href="{% url 'ticket-user-update' object.slug %}">Edit</a>
+    </p>
+
+        {% endif %}
+     
+        <p><strong>User(s): </strong>
+
+            {% for user in object.user.all %}
+            <a href="{{user.get_absolute_url}}">{{user}}</a>
+            {% endfor %}
+
+        </p>
+        <p><strong>Summary#: </strong>{{object.summary}}</p>
+        <p><strong>Decription: </strong>{{object.description}}</p>
+        <p><strong>Status: </strong>{{object.ticket_status}}</p>
+        <p><strong>Category: </strong>{{object.ticket_category}}</p>
+        <p><strong>Assigned to: </strong><a
+                href="{{object.assigned_to.get_absolute_url}}">{{object.assigned_to}}</a>
+        </p>
+        <hr>
+        <p class="small text-muted"><strong>Created:
+            </strong><span>{{object.created_at}} <a
+                    href="{{object.created_by.get_absolute_url}}">{{object.created_by}}</a></span>
+            <span class="float-end"><strong>Updated:
+                </strong>{{object.updated_at}} <a
+                    href="{object.updated_at.get_absolute_url}}">{{object.updated_by}}</a></span>
+        </p>
+    </div>
+</div>
+{% endblock content %}

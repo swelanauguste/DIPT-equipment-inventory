@@ -35,4 +35,36 @@ urlpatterns = [
         views.ComputerModelUpdateView.as_view(),
         name="computer-model-update",
     ),
+    path("monitor-list/", views.MonitorListView.as_view(), name="monitor-list"),
+    path("monitor-create/", views.MonitorCreateView.as_view(), name="monitor-create"),
+    path(
+        "monitor-detail/<slug:slug>/",
+        views.MonitorDetailView.as_view(),
+        name="monitor-detail",
+    ),
+    path(
+        "monitor-update/<slug:slug>/",
+        views.MonitorUpdateView.as_view(),
+        name="monitor-update",
+    ),
+    path(
+        "monitor-model-list/",
+        views.MonitorModelListView.as_view(),
+        name="monitor-model-list",
+    ),
+    path(
+        "create-monitor-model/",
+        views.MonitorModelCreateView.as_view(),
+        name="monitor-model-create",
+    ),
+    path(
+        "monitor-model-detail/<slug:slug>/",
+        views.MonitorModelDetailView.as_view(),
+        name="monitor-model-detail",
+    ),
+    path(
+        "monitor-model-update/<slug:slug>/",
+        views.MonitorModelUpdateView.as_view(),
+        name="monitor-model-update",
+    ),
 ]

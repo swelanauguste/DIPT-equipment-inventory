@@ -64,104 +64,105 @@ class Status(models.Model):
         return self.name.upper()
 
 
-# class MonitorModel(models.Model):
-#     name = models.CharField(max_length=100)
-#     slug = models.SlugField(unique=True, blank=True, null=True)
-#     maker = models.ForeignKey(
-#         Maker, on_delete=models.PROTECT, related_name="monitor_models"
-#     )
-#     image = models.FileField(upload_to="monitor_models/", blank=True, null=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     created_by = models.ForeignKey(
-#         User,
-#         on_delete=models.SET_NULL,
-#         null=True,
-#         blank=True,
-#         related_name="monitor_model_created_by",
-#     )
-#     updated_by = models.ForeignKey(
-#         User,
-#         on_delete=models.SET_NULL,
-#         null=True,
-#         blank=True,
-#         related_name="monitor_model_updated_by",
-#     )
+class MonitorModel(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, blank=True, null=True)
+    maker = models.ForeignKey(
+        Maker, on_delete=models.PROTECT, related_name="monitor_models"
+    )
+    image = models.FileField(upload_to="monitor_models/", blank=True, null=True)
+    notes = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="monitor_model_created_by",
+    )
+    updated_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="monitor_model_updated_by",
+    )
 
-#     class Meta:
-#         ordering = ["name"]
+    class Meta:
+        ordering = ["name"]
 
-#     def save(self, *args, **kwargs):
-#         if not self.slug:
-#             self.slug = slugify(self.name)
-#         super(Maker, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(MonitorModel, self).save(*args, **kwargs)
 
-#     def get_absolute_url(self):
-#         return reverse("monitor-model-detail", kwargs={"slug": self.slug})
+    def get_absolute_url(self):
+        return reverse("monitor-model-detail", kwargs={"slug": self.slug})
 
-#     def __str__(self):
-#         return f"{self.maker} - {self.name}"
+    def __str__(self):
+        return f"{self.maker.name.upper()} - {self.name.upper()}"
 
 
-# class Monitor(models.Model):
-#     serial_number = models.CharField(max_length=100, blank=True, null=True)
-#     slug = models.SlugField(unique=True, blank=True, null=True)
-#     model = models.ForeignKey(
-#         MonitorModel, on_delete=models.PROTECT, related_name="monitors"
-#     )
-#     date_received = models.DateField(blank=True, null=True)
-#     date_installed = models.DateField(blank=True, null=True)
-#     notes = models.TextField(blank=True, null=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     created_by = models.ForeignKey(
-#         User,
-#         on_delete=models.PROTECT,
-#         null=True,
-#         blank=True,
-#         related_name="monitor_created_by",
-#     )
-#     updated_by = models.ForeignKey(
-#         User,
-#         on_delete=models.PROTECT,
-#         null=True,
-#         blank=True,
-#         related_name="monitor_updated_by",
-#     )
+class Monitor(models.Model):
+    serial_number = models.CharField(max_length=100, blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
+    model = models.ForeignKey(
+        MonitorModel, on_delete=models.PROTECT, related_name="monitors"
+    )
+    date_received = models.DateField(blank=True, null=True, default=timezone.now)
+    date_installed = models.DateField(blank=True, null=True)
+    notes = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="monitor_created_by",
+    )
+    updated_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="monitor_updated_by",
+    )
 
-#     class Meta:
-#         ordering = ["model__name"]
+    class Meta:
+        ordering = ["model__name"]
 
-#     def save(self, *args, **kwargs):
-#         if not self.slug:
-#             self.slug = slugify(self.serial_number)
-#         super(Maker, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.serial_number)
+        super(Monitor, self).save(*args, **kwargs)
 
-#     def get_absolute_url(self):
-#         return reverse("monitor-detail", kwargs={"slug": self.slug})
+    def get_absolute_url(self):
+        return reverse("monitor-detail", kwargs={"slug": self.slug})
 
-#     def __str__(self):
-#         return f"{self.model.name} - {self.serial_number}"
+    def __str__(self):
+        return f"{self.model.name.upper()} - {self.serial_number.upper()}"
 
 
 class ComputerModel(models.Model):
     computer_type_list = [
-        ("Desktop", "Desktop"),
-        ("Laptop", "Laptop"),
-        ("Tablet", "Tablet"),
-        ("Server", "Server"),
-        ("Other", "Other"),
+        ("desktop", "Desktop"),
+        ("laptop", "Laptop"),
+        ("tablet", "Tablet"),
+        ("server", "Server"),
+        ("other", "Other"),
     ]
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True, null=True)
     computer_type = models.CharField(
-        max_length=10, choices=computer_type_list, default="Desktop"
+        max_length=10, choices=computer_type_list, default="desktop"
     )
     maker = models.ForeignKey(
         Maker, on_delete=models.PROTECT, related_name="computer_models"
     )
     processor = models.CharField(
-        max_length=50, blank=True, null=True, help_text="In GHz(e.g.:i5 2.9 GHz)"
+        max_length=100, blank=True, null=True, help_text="In GHz(e.g.:i5 2.9 GHz)"
     )
     ram = models.CharField("RAM", max_length=5, blank=True, null=True, help_text="GB")
     hdd = models.CharField(max_length=5, verbose_name="HDD/Storage", help_text="GB/TB")
@@ -195,24 +196,34 @@ class ComputerModel(models.Model):
         return reverse("computer-model-detail", kwargs={"slug": self.slug})
 
     def __str__(self):
-        return f"{self.maker} - {self.name} - {self.processor}"
+        return f"{self.maker} - {self.name.upper()} - {self.processor}"
 
 
 class Computer(models.Model):
     from_project = models.BooleanField(default=False)
     serial_number = models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
-    warranty_info = models.CharField("Warranty", max_length=100, default="N/A")
+    warranty_info = models.CharField(
+        "Warranty", max_length=100, default="N/A", blank=True, null=True
+    )
     computer_name = models.CharField(
         max_length=100, blank=True, null=True, default="MCWT"
     )
     status = models.ForeignKey(
-        Status, on_delete=models.PROTECT, related_name="computer_status"
+        Status,
+        on_delete=models.PROTECT,
+        related_name="computer_status",
+        null=True,
+        blank=True,
     )
     model = models.ForeignKey(
-        ComputerModel, on_delete=models.PROTECT, related_name="computers"
+        ComputerModel,
+        on_delete=models.PROTECT,
+        related_name="computers",
+        null=True,
+        blank=True,
     )
-    # monitor = models.ManyToManyField(Monitor, related_name="monitors", blank=True)
+    monitor = models.ManyToManyField(Monitor, related_name="monitors", blank=True)
     os = models.ForeignKey(
         OperatingSystem,
         on_delete=models.PROTECT,
@@ -271,7 +282,7 @@ class Computer(models.Model):
                 self.slug = slugify(self.serial_number)
             elif self.computer_name:
                 self.slug = slugify(self.computer_name)
-            
+
         super(Computer, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

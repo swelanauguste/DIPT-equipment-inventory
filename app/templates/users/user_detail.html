@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="p-5">
+        <h1>{{request.user}}</h1>
+        <hr>
+        <p class="text-end"><a class="edit-btn" href="{% url 'user-update' %}">Edit</a></p>
+        {% if request.user.first_name and request.user.last_name %}
+        <p><strong>Name: </strong>{{request.user}}</p>
+        {% endif %}
+        <p><strong>Department: </strong>{{request.user.department|upper}}</p>
+        <p><strong>Location: </strong>{{request.user.location|upper}}</p>
+        <p><strong>Phone: </strong>{{request.user.phone}}</p>
+        <hr>
+        <p><a href="{% url 'change-password' %}">Change password</a></p>
+    </div>
+{% endblock content %}
+    

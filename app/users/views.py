@@ -1,4 +1,3 @@
-import after_response
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth import views as auth_views
@@ -117,7 +116,7 @@ def user_registration_view(request):
 
 @login_required
 def user_update(request):
-    user = get_object_or_404(User, pk=request.user.pk)
+    user = get_object_or_404(User, slug=request.user.slug)
 
     if request.method == "POST":
         form = UserUpdateForm(request.POST, request.FILES, instance=user)
@@ -135,8 +134,11 @@ def user_update(request):
 
 @login_required
 def user_detail(request):
-    if request.user.role == "admin" or request.user.role == "agent":
-        user = get_object_or_404(User, pk=request.user.id)
-    else:
-        user = get_object_or_404(User, pk=request.user.id)
+    user = get_object_or_404(User, slug=request.user.slug)
     return render(request, "users/user_detail.html", {"user": user})
+
+
+@login_required
+def get_user_detail(request, slug):
+    user = get_object_or_404(User, slug=slug)
+    return render(request, "users/get_user_detail.html", {"user": user})

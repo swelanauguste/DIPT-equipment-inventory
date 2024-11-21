@@ -8,9 +8,9 @@
     <div class="col-lg-10 mx-auto p-5  rounded-4 ">
 
         {% if object.pk %}
-        <h2>Update {{object.serial_number}}</h2>
+        <h2>{{object.serial_number}}</h2>
         {% else %}
-        <h2>Add computer</h2>
+        <h2>New computer</h2>
 
         {% endif %}
 
@@ -65,6 +65,9 @@
                     {{ form.location|as_crispy_field }}
                 </span>
 
+                <span class="col">
+                    {{ form.monitor|as_crispy_field }}
+                </span>
                 <span class="col">
                     {{ form.date_installed|as_crispy_field }}
                 </span>

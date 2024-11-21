@@ -30,9 +30,13 @@
 
 <body class="small">
     <div class="row">
+        {% if request.user.is_authenticated %}
+
         <div class="col-lg-2 px-4 text-bg-dark min-vh-100 small">
             {% include 'nav.html' %}
         </div>
+        {% endif %}
+
         <div class="col">
             {% block content %}
 
@@ -47,17 +51,28 @@
             $('#id_status').select2();
             $('#id_model').select2();
             $('#id_user').select2();
+            $('#id_monitor').select2();
+            $('#status').select2();
+            $('#model').select2();
+            $('#os').select2();
+            $('#location').select2();
+            $('#department').select2();
+            $('#user').select2();
+            $('#maker').select2();
+            $('#computer_type').select2();
             $('.computer-list a').addClass('btn btn-sm btn-dark px-5 rounded-pill');
             $('form button').addClass('btn btn-sm btn-dark px-5 rounded-pill');
             $('li a').addClass('text-white text-decoration-none');
             $('.form-control').addClass('form-control-sm');
             $('.selectmultiple').attr('type');
-            $('td a').addClass('text-dark', 'select');
+            $('td a').addClass('text-dark');
             $('h3 a').addClass('text-white text-decoration-none');
             $('.col p a').addClass('text-dark fw-bold');
             $('.dateinput').attr('type', 'date');
             $('.textarea').attr('rows', 4);
-
+            $('.edit-btn').addClass('btn btn-sm btn-warning px-5 rounded-pill');
+            $('.login').addClass('btn btn-sm btn-dark px-5 rounded-pill');
+            $('input[type="text"]').addClass('form-control form-control-sm rounded-pill');
         });
     </script>
     <script src="{% static 'js/popper.min.js' %}"></script>

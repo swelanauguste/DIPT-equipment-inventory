@@ -4,11 +4,79 @@
 <div class="py-2 small">
     <h1 class="display-4">Computers</h1>
     <hr>
-    <div class="py-3 col-lg-6 mx-auto">
-        <input class="form-control rounded-pill"
-            placeholder="Search"
-            type="text">
-        {% include 'computers/computer-filter-accordion.html' %}
+    <div class="py-3 col-lg-8 mx-auto">
+        <form method="get" action="">
+            <div class="row">
+              <div class="col">
+                <input type="text" name="serial_number" placeholder="Serial Number" value="{{ request.GET.serial_number }}">
+              </div>
+              <div class="col">
+                <input type="text" name="computer_name" placeholder="Computer Name" value="{{ request.GET.computer_name }}">
+              </div>
+            </div>
+
+            <br>
+
+            <div class="d-flex justify-content-center gap-2">
+              <!-- Status Dropdown -->
+                <select class="form-control" id="status" name="status" onchange="this.form.submit();">
+                  <option value="">Select Status</option>
+                  {% for stat in statuses %}
+                    <option value="{{ stat.id }}" {% if request.GET.status == stat.id|stringformat:"s" %}selected{% endif %}>
+                    {{ stat.name|upper }}
+                    </option>
+                  {% endfor %}
+                </select>
+              <!-- Other Dropdowns (e.g., Models, Operating Systems, Locations) -->
+                <select class="form-control" id="model" name="model" onchange="this.form.submit();">
+                  <option value="">Select Model</option>
+                    {% for model in models %}
+                      <option value="{{ model.id }}" {% if request.GET.model == model.id|stringformat:"s" %}selected{% endif %}>
+                      {{ model.name|upper }}
+                      </option>
+                    {% endfor %}
+                </select>
+                <select class="form-control" id="os" name="os" onchange="this.form.submit();">
+                  <option value="">Select Operating System</option>
+                  {% for os in operating_systems %}
+                    <option value="{{ os.id }}" {% if request.GET.os == os.id|stringformat:"s" %}selected{% endif %}>
+                    {{ os.name|title }}
+                    </option>
+                  {% endfor %}
+                </select>
+        
+
+        
+            <select class="form-control" id="location" name="location" onchange="this.form.submit();">
+                <option value="">Select Location</option>
+                {% for location in locations %}
+                <option value="{{ location.id }}" {% if request.GET.location == location.id|stringformat:"s" %}selected{% endif %}>
+                    {{ location.name|title }}
+                </option>
+                {% endfor %}
+            </select>
+        
+            <select class="form-control" id="department" name="department" onchange="this.form.submit();">
+                <option value="">Select Department</option>
+                {% for department in departments %}
+                <option value="{{ department.id }}" {% if request.GET.department == department.id|stringformat:"s" %}selected{% endif %}>
+                    {{ department.name|upper }}
+                </option>
+                {% endfor %}
+            </select>
+        
+            <select class="form-control" id="user" name="user" onchange="this.form.submit();">
+                <option value="">Select User</option>
+                {% for user in users %}
+                <option value="{{ user.id }}" {% if request.GET.user == user.id|stringformat:"s" %}selected{% endif %}>
+                    {{ user|title }}
+                </option>
+                {% endfor %}
+            </select>
+          </div>
+            <br>
+            <button type="submit">Filter</button>
+        </form>
     </div>
 
     <div class="table-responsive">
@@ -16,7 +84,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Computer</th>
+                    <th scope="col">Computer (Serial#)</th>
                     <th scope="col">Department</th>
                     <th scope="col">User</th>
                 </tr>
@@ -25,8 +93,8 @@
                 {% for ob in object_list %}
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
-                    <td><a href="{{ob.get_absolute_url}}">{{ob.computer_name}}
-                            ({{ob.serial_number}})</a></td>
+                    <td><a href="{{ob.get_absolute_url}}">{{ob.computer_name|upper}}
+                            ({{ob.serial_number|upper}})</a></td>
                     <td><a href="#">{{ob.department}}</a></td>
                     <td><a href="#">{{ob.user.last}}</a></td>
                 </tr>
@@ -35,7 +103,21 @@
         </table>
     </div>
 </div>
+<div class="pagination">
+  <span class="step-links">
+      {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
 
-<script>
-</script>
+      <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+  </span>
+</div>
 {% endblock content %}

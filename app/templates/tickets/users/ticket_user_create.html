@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="m-5 small">
+    <div class="col-lg-6 mx-auto p-5 shadow rounded-4 border">
+        <h1>
+            {% if object.pk %}
+            {{object.ticket_id|upper}}
+            {% else %}
+            New Ticket
+            {% endif %}
+        </h1>
+        <hr>
+        <form action=""
+            method="post">
+            {% csrf_token %}
+            <span class="col">
+                {{ form.summary|as_crispy_field }}
+            </span>
+            <span class="col">
+                {{ form.description|as_crispy_field }}
+            </span>
+            <div class="col">
+                <span>{{form.file|as_crispy_field}}</span>
+            </div>
+            <div class="col">
+                <span>{{form.assigned_to|as_crispy_field}}</span>
+            </div>
+            <br>
+            <div class="d-grid">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

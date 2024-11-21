@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="m-5 small">
+    <div class="col-lg-6 mx-ato p-5 shadow rounded-4 border">
+        <h2>
+            
+            {% if object.pk %}
+                {{object.name}}
+            {% else %}
+                New Monitor Model
+            {% endif %}
+                
+        </h2>
+        <hr>
+        <form action=""
+            method="post">
+            {% csrf_token %}
+
+            <div class="row">
+                <span class="col">
+                    {{ form.name|as_crispy_field }}
+                </span>
+                <span class="col">
+                    {{ form.maker|as_crispy_field }}
+                </span>
+                
+            </div>
+            <div class="row">
+                <span class="col">
+                    {{ form.image|as_crispy_field }}
+                </span>
+              
+            </div>
+        
+           
+            <div class="col">
+                <span>{{form.notes|as_crispy_field}}</span>
+            </div>
+            <br>
+            <div class="d-grid">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

@@ -1,47 +1,46 @@
-import csv
+import json
+
 from django.core.management.base import BaseCommand
+
 from ...models import Location
-from django.utils.text import slugify
+
 
 class Command(BaseCommand):
-    help = "Add Location list to the Location model"
+    help = "Load location data from JSON into the Location model."
 
-    def add_arguments(self, parser):
-        parser.add_argument(
-            "file_path", type=str, help="Path to the file containing Location list"
-        )
+    def handle(self, *args, **kwargs):
+        # Load the JSON data
+        with open("./static/docs/locations.json", "r") as file:
+            data = json.load(file)
 
-    def handle(self, *args, **options):
-        file_path = options["file_path"]
         added_count = 0
         skipped_count = 0
 
-        try:
-            with open(file_path, mode="r", encoding="utf-8") as file:
-                reader = csv.reader(file)
-                for row in reader:
-                    if len(row) < 1:
-                        self.stdout.write("Skipping empty row.")
-                        continue
-                    
-                    name = row[0].strip().lower()
-                    if not name:
-                        self.stdout.write("Skipping row with empty name.")
-                        continue
-                    
-                    slug = slugify(name)
-                    if not Location.objects.filter(slug=slug).exists():
-                        Location.objects.create(name=name, slug=slug)
-                        added_count += 1
-                        self.stdout.write(f"Added Location: {name}")
-                    else:
-                        skipped_count += 1
-                        self.stdout.write(f"Skipped existing Location: {name}")
+        for entry in data:
+            fields = entry["fields"]
+            name = str(fields["name"]).lower().strip()
 
-            self.stdout.write(
-                self.style.SUCCESS(f"Finished! Added: {added_count}, Skipped: {skipped_count}")
+            # Check if a location with the same name already exists
+            if Location.objects.filter(name=name).exists():
+                skipped_count += 1
+                self.stdout.write(
+                    self.style.WARNING(f"Skipped: location'{name}' already exists.")
+                )
+                continue
+
+            # Create or update the Location instance
+            location = Location.objects.create(
+                pk=entry["pk"],
+                name=name,
             )
-        except FileNotFoundError:
-            self.stderr.write(self.style.ERROR(f"File not found: {file_path}"))
-        except Exception as e:
-            self.stderr.write(self.style.ERROR(f"An error occurred: {str(e)}"))
+            added_count += 1
+
+            # Log output
+            self.stdout.write(self.style.SUCCESS(f"Added location: {name}"))
+
+        # Final summary
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Summary: {added_count} added, {skipped_count} skipped."
+            )
+        )

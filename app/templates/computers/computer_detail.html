@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<div class="py-5">
+<div class="p-5">
     <h1>{{object.model}} | {{object.serial_number}}</h1>
     <hr>
     <div class="px-3">
@@ -20,9 +20,20 @@
                         class="text-bg-{{object.status.colour}} px-3 py-1 rounded-pill">{{object.status}}</span>
                 </p>
                 <p><strong>Operating System: </strong>{{object.os}}</p>
+                <p><strong>Monitor: </strong>
+                    {% for monitor in object.monitor.all %}
+                    <a href="{{monitor.get_absolute_url}}">{{monitor}}</a>
+                    {% endfor %}
+                </p>
                 <p><strong>Location: </strong>{{object.location}}</p>
                 <p><strong>Department: </strong>{{object.department}}</p>
-                <p><strong>Assigned to: </strong><a href="#">{{object.user.last}}</a></p>
+                <p><strong>Assigned to: </strong>
+                    
+                    {% for user in  object.user.all %}
+                        <a href="{{user.get_absolute_url}}">{{user}}</a>
+                    {% endfor %}
+                        
+                   </p>
                 <p><strong>Installed: </strong>{{object.date_installed}}</p>
                 {% if object.image %}
                 <p><strong>Att: </strong>{{object.image.url}}</p>
@@ -46,10 +57,12 @@
         <hr>
         <p class="small text-muted"><strong>Created:
             </strong><span>{{object.created_at}}
-                {{object.created_by|lower}}</span>
+                <a
+                    href="{{object.created_by.get_absolute_url}}">{{object.created_by|title}}</a></span>
             <span class="float-end"><strong>Updated:
                 </strong>{{object.updated_at}}
-                {{object.updated_by|lower}}</span>
+                <a
+                    href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|title}}</a></span>
         </p>
     </div>
 </div>

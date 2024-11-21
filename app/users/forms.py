@@ -10,6 +10,9 @@ class UserUpdateForm(forms.ModelForm):
         fields = [
             "first_name",
             "last_name",
+            "job_title",
+            "department",
+            "location",
             "email",
             "phone",
         ]
