@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from users.models import User
 
@@ -12,14 +13,13 @@ class TicketListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().filter(is_deleted=False)
 
         # Retrieve filter parameters
         is_closed = self.request.GET.get("is_closed", "")
         ticket_status = self.request.GET.get("ticket_status", "")
         ticket_category = self.request.GET.get("ticket_category", "")
-        summary = self.request.GET.get("summary", "")
-        description = self.request.GET.get("description", "")
+        query = self.request.GET.get("q", "")
         assigned_to = self.request.GET.get("assigned_to", "")
 
         # Apply filters
@@ -29,10 +29,10 @@ class TicketListView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(ticket_status_id=ticket_status)
         if ticket_category:
             queryset = queryset.filter(ticket_category_id=ticket_category)
-        if summary:
-            queryset = queryset.filter(summary__icontains=summary)
-        if description:
-            queryset = queryset.filter(description__icontains=description)
+        if query:
+            queryset = queryset.filter(
+                Q(summary__icontains=query) | Q(description__icontains=query)
+            )
         if assigned_to:
             if assigned_to == "unassigned":
                 queryset = queryset.filter(assigned_to__isnull=True)
@@ -44,6 +44,59 @@ class TicketListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add filter options for dropdowns
+        context["ticket_count"] = models.Ticket.objects.filter(is_deleted=False).count()
+        context["statuses"] = models.TicketStatus.objects.all()
+        context["categories"] = models.TicketCategory.objects.all()
+        context["users"] = User.objects.filter(role__in=["technician", "manager"])
+        return context
+
+
+class UserTicketListView(LoginRequiredMixin, ListView):
+    model = models.Ticket
+    paginate_by = 20
+
+    def get_queryset(self):
+        queryset = (
+            super()
+            .get_queryset()
+            .filter(is_deleted=False)
+            .filter(created_by=self.request.user)
+        )
+
+        # Retrieve filter parameters
+        is_closed = self.request.GET.get("is_closed", "")
+        ticket_status = self.request.GET.get("ticket_status", "")
+        ticket_category = self.request.GET.get("ticket_category", "")
+        query = self.request.GET.get("q", "")
+        assigned_to = self.request.GET.get("assigned_to", "")
+
+        # Apply filters
+        if is_closed:
+            queryset = queryset.filter(is_closed=(is_closed.lower() == "true"))
+        if ticket_status:
+            queryset = queryset.filter(ticket_status_id=ticket_status)
+        if ticket_category:
+            queryset = queryset.filter(ticket_category_id=ticket_category)
+        if query:
+            queryset = queryset.filter(
+                Q(summary__icontains=query) | Q(description__icontains=query)
+            )
+        if assigned_to:
+            if assigned_to == "unassigned":
+                queryset = queryset.filter(assigned_to__isnull=True)
+            else:
+                queryset = queryset.filter(assigned_to_id=assigned_to)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add filter options for dropdowns
+        context["ticket_count"] = (
+            models.Ticket.objects.filter(is_deleted=False)
+            .filter(created_by=self.request.user)
+            .count()
+        )
         context["statuses"] = models.TicketStatus.objects.all()
         context["categories"] = models.TicketCategory.objects.all()
         context["users"] = User.objects.filter(role__in=["technician", "manager"])
@@ -53,6 +106,11 @@ class TicketListView(LoginRequiredMixin, ListView):
 class TicketDetailView(LoginRequiredMixin, DetailView):
     model = models.Ticket
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["comment_form"] = forms.CommentCreateForm()
+        return context
+
 
 class TicketUserCreateView(LoginRequiredMixin, CreateView):
     model = models.Ticket
@@ -60,15 +118,18 @@ class TicketUserCreateView(LoginRequiredMixin, CreateView):
     template_name = "tickets/users/ticket_user_create.html"
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        # Add the logged-in user to the ManyToMany field
         form.instance.created_by = self.request.user
-        return super().form_valid(form)
+        form.instance.updated_by = self.request.user
+        response = super().form_valid(form)
+        form.instance.user.add(self.request.user)
+        return response
 
 
 class TicketUserUpdateView(LoginRequiredMixin, UpdateView):
     model = models.Ticket
-    form_class = forms.TicketTechUpdateForm
-    template_name = "tickets/tech/ticket_user_update.html"
+    form_class = forms.TicketUserForm
+    template_name = "tickets/users/ticket_user_update.html"
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
@@ -81,7 +142,8 @@ class TicketTechnicianCreateView(LoginRequiredMixin, CreateView):
     template_name = "tickets/tech/ticket_tech_create.html"
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        form.instance.created_by = self.request.user
+        form.instance.updated_by = self.request.user
         return super().form_valid(form)
 
 
@@ -93,3 +155,38 @@ class TicketTechUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
         return super().form_valid(form)
+
+
+def ticket_delete_view(request, slug):
+    ticket = get_object_or_404(models.Ticket, slug=slug)
+    ticket.is_deleted = True
+    ticket.deleted_at = timezone.now()
+    ticket.deleted_by = request.user
+    ticket.save()
+
+    return redirect("ticket-list")
+
+    # If the form is not valid or the request method is not POST
+    return render(
+        request, "tickets/ticket_detail.html", {"ticket": ticket, "comment_form": form}
+    )
+
+
+def add_comment_view(request, slug):
+    ticket = get_object_or_404(models.Ticket, slug=slug)
+
+    if request.method == "POST":
+        form = forms.CommentCreateForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.ticket = ticket
+            if request.user.is_authenticated:
+                comment.created_by = request.user
+                comment.updated_by = request.user
+            comment.save()
+            return redirect("ticket-detail", slug=slug)
+
+    # If the form is not valid or the request method is not POST
+    return render(
+        request, "tickets/ticket_detail.html", {"ticket": ticket, "comment_form": form}
+    )

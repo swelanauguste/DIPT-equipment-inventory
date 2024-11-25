@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Load the JSON data
-        with open("./static/docs/t_statuses.json", "r") as file:
+        with open("./static/docs/tickets/ticket_status_list.json", "r") as file:
             data = json.load(file)
 
         added_count = 0
@@ -44,5 +44,3 @@ class Command(BaseCommand):
                 f"Summary: {added_count} added, {skipped_count} skipped."
             )
         )
-
-

@@ -24,14 +24,14 @@ class TicketCategory(models.Model):
         verbose_name_plural = "Ticket Categories"
 
     def __str__(self):
-        return self.name
+        return self.name.upper()
 
 
 class Ticket(models.Model):
-    user = models.ManyToManyField(User)
+    user = models.ManyToManyField(User, related_name="tickets")
     summary = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
-    is_closed = models.BooleanField(default=False)
+    # is_closed = models.BooleanField(default=False)
     ticket_id = models.CharField(
         default=get_random_string(length=8), editable=False, unique=True, max_length=8
     )
@@ -70,9 +70,18 @@ class Ticket(models.Model):
         blank=True,
         related_name="ticket_updated_by",
     )
+    deleted_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="ticket_deleted_by",
+    )
+    deleted_at = models.DateTimeField(null=True, blank=True)
+    is_deleted = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["is_closed", "-updated_at"]
+        ordering = ["-created_at"]
 
     def get_absolute_url(self):
         return reverse("ticket-detail", kwargs={"slug": self.slug})

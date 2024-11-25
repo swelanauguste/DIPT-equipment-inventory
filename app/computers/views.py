@@ -58,6 +58,8 @@ class ComputerListView(LoginRequiredMixin, ListView):
         context["locations"] = models.Location.objects.all()
         context["departments"] = models.Department.objects.all()
         context["users"] = models.User.objects.all()
+        context["computer_count"] = models.Computer.objects.all().count()
+        
 
         return context
 

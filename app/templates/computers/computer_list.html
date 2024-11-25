@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="py-2 small">
-    <h1 class="display-4">Computers</h1>
+    <h1 class="display-4"><a href="{% url 'computer-list' %}">Computers</a> ({{computer_count}})</h1>
     <hr>
     <div class="py-3 col-lg-8 mx-auto">
         <form method="get" action="">
@@ -106,8 +106,8 @@
 <div class="pagination">
   <span class="step-links">
       {% if page_obj.has_previous %}
-          <a href="?page=1">&laquo; first</a>
-          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+          <a href="?page=1{% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">previous</a>
       {% endif %}
 
       <span class="current">
@@ -115,9 +115,10 @@
       </span>
 
       {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">next</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+          <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">last &raquo;</a>
       {% endif %}
   </span>
 </div>
+
 {% endblock content %}

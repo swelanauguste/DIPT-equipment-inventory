@@ -2,61 +2,66 @@
 
 {% block content %}
 <div class="p-5 small">
-    <h1 class="display-4">Tickets</h1>
+    <h1 class="display-4">Tickets ({{ticket_count}})</h1>
     <hr>
     <div class="py-3 col-lg-8 mx-auto">
-        <form method="get" action="{% url 'ticket-list' %}">
-            <div class="d-flex justify-content-center gap-2">
-                <div>
-                    <label for="summary">Summary:</label>
-                    <input class="px-5" type="text" name="summary" placeholder="Summary" id="summary" value="{{ request.GET.summary }}">
-                </div>
-                <div>
-                    <label for="description">Description:</label>
-                    <input class="px-5" type="text" name="description" id="description" placeholder="Description" value="{{ request.GET.description }}">
-                </div>
+        <form method="get"
+            action="{% url 'ticket-list' %}">
+            <div class="col-lg-8 mx-auto">
+                <label for="summary">Search:</label>
+                <input type="text"
+                    name="q"
+                    placeholder="Search"
+                    id="summary"
+                    value="{{ request.GET.q }}">
             </div>
             <br>
             <div class="d-flex justify-content-center gap-2">
                 <div>
-                    <label for="is_closed">Status:</label>
-                    <select name="is_closed" id="is_closed" class="form-control" onchange="this.form.submit();">
-                        <option value="">All</option>
-                        <option value="true" {% if request.GET.is_closed == 'true' %}selected{% endif %}>Closed</option>
-                        <option value="false" {% if request.GET.is_closed == 'false' %}selected{% endif %}>Open</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="ticket_status">Ticket Status:</label>
-                    <select name="ticket_status" id="ticket_status" class="form-control" onchange="this.form.submit();">
-                        <option value="">All</option>
+                    <select name="ticket_status"
+                        id="ticket_status"
+                        class="form-control"
+                        onchange="this.form.submit();">
+                        <option value="">Ticket status </option>
                         {% for status in statuses %}
-                            <option value="{{ status.id }}" {% if request.GET.ticket_status == status.id|stringformat:"s" %}selected{% endif %}>
-                                {{ status.name|upper }}
-                            </option>
+                        <option value="{{ status.id }}"
+                            {% if request.GET.ticket_status == status.id|stringformat:"s" %}selected
+                            {% endif %}>
+                            {{ status.name|upper }}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
                 <div>
-                    <label for="ticket_category">Category:</label>
-                    <select name="ticket_category" id="ticket_category" class="form-control" onchange="this.form.submit();">
-                        <option value="">All</option>
+                    <select name="ticket_category"
+                        id="ticket_category"
+                        class="form-control"
+                        onchange="this.form.submit();">
+                        <option value="">Category</option>
                         {% for category in categories %}
-                            <option value="{{ category.id }}" {% if request.GET.ticket_category == category.id|stringformat:"s" %}selected{% endif %}>
-                                {{ category.name|upper }}
-                            </option>
+                        <option value="{{ category.id }}"
+                            {% if request.GET.ticket_category == category.id|stringformat:"s" %}selected
+                            {% endif %}>
+                            {{ category.name|upper }}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
                 <div>
-                    <label for="assigned_to">Assigned To:</label>
-                    <select name="assigned_to" id="assigned_to" class="form-control" onchange="this.form.submit();">
-                        <option value="">All</option>
-                        <option value="unassigned" {% if request.GET.assigned_to == 'unassigned' %}selected{% endif %}>Unassigned</option>
+                    <select name="assigned_to"
+                        id="assigned_to"
+                        class="form-control"
+                        onchange="this.form.submit();">
+                        <option value="">Assigned</option>
+                        <option value="unassigned"
+                            {% if request.GET.assigned_to == 'unassigned' %}selected
+                            {% endif %}>Unassigned</option>
                         {% for user in users %}
-                            <option value="{{ user.id }}" {% if request.GET.assigned_to == user.id|stringformat:"s" %}selected{% endif %}>
-                                {{ user }}
-                            </option>
+                        <option value="{{ user.id }}"
+                            {% if request.GET.assigned_to == user.id|stringformat:"s" %}selected
+                            {% endif %}>
+                            {{ user }}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -64,7 +69,7 @@
             <br>
             <button type="submit">Filter</button>
         </form>
-        
+
     </div>
 
     <div class="table-responsive">
@@ -84,33 +89,48 @@
                 {% for ob in object_list %}
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
-                    <td><a href="{{ob.get_absolute_url}}">{{ob.ticket_id|upper}}</a></td>
-                    <td><a href="#">{{ob.summary|upper}}</a></td>
-                    <td><a href="#">{{ob.ticket_status}}</a></td>
-                    <td><a href="#">{{ob.ticket_category|upper}}</a></td>
+                    <td><a
+                            href="{{ob.get_absolute_url}}">{{ob.ticket_id|upper}}</a>
+                    </td>
+                    <td><a href="{{ob.get_absolute_url}}">{{ob.summary}}</a>
+                    </td>
+                    <td>{{ob.ticket_status}}</td>
+                    <td>{{ob.ticket_category|upper}}</td>
                     <td><a href="#">{{ob.assigned_to}}</a></td>
-                    <td><a href="#">{{ob.user.last}}</a></td>
+                    <td>
+                        {% for user in ob.user.all %}
+                        <a href="{{user.get_absolute_url}}">{{user}}</a>
+                        {% endfor %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-</div>
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1{% for key, value in request.GET.items %}&{{ key }}={{ value }}
+                {% endfor %}">&laquo; first</a>
+            <a
+                href="?page={{ page_obj.previous_page_number }}
+                {% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+            <a
+                href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">next</a>
+            <a
+                href="?page={{ page_obj.paginator.num_pages }}
+                {% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">last
+                &raquo;</a>
+            {% endif %}
         </span>
-
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
+    </div>
 </div>
+
 {% endblock content %}

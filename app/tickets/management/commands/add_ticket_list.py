@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Load the JSON data
-        with open("./static/docs/tickets.json", "r") as file:
+        with open("./static/docs/tickets/ticket_list.json", "r") as file:
             data = json.load(file)
 
         added_count = 0
@@ -85,7 +85,6 @@ class Command(BaseCommand):
                 ticket_id=ticket_id,
                 summary=fields["summary"],
                 description=fields["description"],
-                is_closed=fields["is_closed"],
                 ticket_status=ticket_status,
                 ticket_category=ticket_category,
                 assigned_to=assigned_to,

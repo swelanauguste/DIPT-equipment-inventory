@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Load the JSON data
-        with open("./static/docs/c.json", "r") as file:
+        with open("./static/docs/computers/computer_list.json", "r") as file:
             data = json.load(file)
 
         added_count = 0

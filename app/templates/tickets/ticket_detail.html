@@ -1,47 +1,77 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="p-5">
     <h1>{{object.ticket_id|upper}}</h1>
     <hr>
-    <div class="px-3">
-        {% if request.user.role == 'technician' or request.user.role == 'manager' %}
-        <p class="text-end me-3"><a
-            class="btn btn-sm btn-warning px-5 rounded-pill"
-            href="{% url 'ticket-tech-update' object.slug %}">Edit</a>
-    </p>
+    <div class="row">
+        <div class="col">
+            <div class="px-3">
+    {% if request.user.role == 'technician' or request.user.role == 'manager' %}
+                <p class="d-flex justify-content-end gap-2"><a
+                        class="edit-ticket"
+                        href="{% url 'ticket-tech-update' object.slug %}">Edit</a>
+                    <a class="close-ticket"
+                        href="">Close</a>
+                </p>
+                {% else %}
+                <p class="text-end me-3"><a
+                        class="btn btn-sm btn-warning px-5 rounded-pill"
+                        href="{% url 'ticket-user-update' object.slug %}">Edit</a>
+                </p>
+                {% endif %}
+                <p><strong>User(s): </strong>
+                    {% for user in object.user.all %}
+                    <a href="{{user.get_absolute_url}}">{{user}}</a>
+                    {% endfor %}
+                </p>
+                <p><strong>Summary: </strong>{{object.summary}}</p>
+                <p><strong>Description: </strong><br>{{object.description}}</p>
+                <p><strong>Status: </strong>{{object.ticket_status}}</p>
+                <p><strong>Category: </strong>{{object.ticket_category|upper}}
+                </p>
+                <p><strong>Assigned to: </strong><a
+                        href="{{object.assigned_to.get_absolute_url}}">{{object.assigned_to}}</a>
+                </p>
+                <p class="text-end"> <a class="delete-ticket"
+                        href="{% url 'ticket-delete' object.slug %}">Delete</a>
+                </p>
+                <hr>
+                <p class="small text-muted"><strong>Created:
+                    </strong><span>{{object.created_at}} <a
+                            href="{{object.created_by.get_absolute_url}}">{{object.created_by}}</a></span>
+                    <span class="float-end"><strong>Updated:
+                        </strong>{{object.updated_at}} <a
+                            href="{object.updated_at.get_absolute_url}}">{{object.updated_by}}</a></span>
+                </p>
+            </div>
+        </div>
+        {% if object.comments %}
+        <div class="col-lg-3 p-3">
+            <form action="{% url 'ticket-add-comment' object.slug %}"
+                method="post">
+                {% csrf_token %}
+                {{comment_form|crispy}}
+                <div class="d-grid">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+            <br>
+            <div style="overflow-y: scroll; max-height: 400px;">
+                {% for comment in object.comments.all %}
+                <span class="small">{{comment.comments}} </span><br>
+                <p class="text-end small"><a
+                        href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
+                    <span>{{comment.created_at}}</span>
 
-        {% else %}
-        <p class="text-end me-3"><a
-            class="btn btn-sm btn-warning px-5 rounded-pill"
-            href="{% url 'ticket-user-update' object.slug %}">Edit</a>
-    </p>
-
+                </p>
+                <hr>
+                {% endfor %}
+            </div>
+        </div>
         {% endif %}
-     
-        <p><strong>User(s): </strong>
-
-            {% for user in object.user.all %}
-            <a href="{{user.get_absolute_url}}">{{user}}</a>
-            {% endfor %}
-
-        </p>
-        <p><strong>Summary#: </strong>{{object.summary}}</p>
-        <p><strong>Decription: </strong>{{object.description}}</p>
-        <p><strong>Status: </strong>{{object.ticket_status}}</p>
-        <p><strong>Category: </strong>{{object.ticket_category}}</p>
-        <p><strong>Assigned to: </strong><a
-                href="{{object.assigned_to.get_absolute_url}}">{{object.assigned_to}}</a>
-        </p>
-        <hr>
-        <p class="small text-muted"><strong>Created:
-            </strong><span>{{object.created_at}} <a
-                    href="{{object.created_by.get_absolute_url}}">{{object.created_by}}</a></span>
-            <span class="float-end"><strong>Updated:
-                </strong>{{object.updated_at}} <a
-                    href="{object.updated_at.get_absolute_url}}">{{object.updated_by}}</a></span>
-        </p>
     </div>
 </div>
 {% endblock content %}

@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Load the JSON data
-        with open("./static/docs/clients.json", "r") as file:
+        with open("./static/docs/users/user_list.json", "r") as file:
             data = json.load(file)
 
         added_count = 0
@@ -36,8 +36,10 @@ class Command(BaseCommand):
                 username=email,
                 job_title=str(fields["job_title"]).lower().strip(),
                 phone=fields["ext"],
-                password="Password2024",
+                
             )
+            user.set_password("Password2024"),
+            user.save()
             added_count += 1
 
             # Log output

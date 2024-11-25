@@ -15,19 +15,9 @@
         </h1>
         <hr>
         <form action=""
-            enctype="multipart/form-data"
             method="post">
             {% csrf_token %}
             {{form|crispy}}
-            <!-- <span class="col">
-                {{ form.summary|as_crispy_field }}
-            </span>
-            <span class="col">
-                {{ form.description|as_crispy_field }}
-            </span>
-            <div class="col">
-                <span>{{form.file|as_crispy_field}}</span>
-            </div> -->
             <br>
             <div class="d-grid">
                 <button type="submit">Submit</button>

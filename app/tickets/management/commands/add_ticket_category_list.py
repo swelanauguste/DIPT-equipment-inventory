@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Load the JSON data
-        with open("./static/docs/t_cat.json", "r") as file:
+        with open("./static/docs/tickets/ticket_category_list.json", "r") as file:
             data = json.load(file)
 
         added_count = 0

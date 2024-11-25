@@ -1,14 +1,20 @@
 <h3 class="pt-2 fw-bold"><a href="/">ICT Unit - DIPT</a></h3>
 <hr>
 <ul class="fw-bold">
-    <li><a href="{% url 'ticket-list' %}">Tickets</a>
+    {% if request.user.role == 'technician' or request.user.role == 'manager' %}
+        <li><a href="{% url 'ticket-list' %}">Tickets</a>
+        {% else %}
+
+        <li><a href="{% url 'user-ticket-list' %}">Tickets</a>
+        {% endif %}
+
         <ul>
 
             {% if request.user.role == 'technician' or request.user.role == 'manager' %}
             <li><a href="{% url 'ticket-tech-create' %}">Add ticket</a></li>
 
             {% else %}
-            <li><a href="{% url 'ticket-create' %}">Add ticket</a></li>
+            <li><a href="{% url 'ticket-user-create' %}">Add ticket</a></li>
 
             {% endif %}
 
