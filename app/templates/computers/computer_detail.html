@@ -13,11 +13,11 @@
         <div class="row">
             <div class="col">
                 <p><strong>Received: </strong>{{object.date_received}}</p>
-                <p><strong>Serial#: </strong>{{object.serial_number}}</p>
-                <p><strong>Computer name: </strong>{{object.computer_name}}</p>
+                <p><strong>Serial#: </strong>{{object.serial_number|upper}}</p>
+                <p><strong>Computer name: </strong>{{object.computer_name|upper}}</p>
                 <p><strong>Warranty: </strong>{{object.warranty_info}}</p>
                 <p><strong>Status: </strong><span
-                        class="text-bg-{{object.status.colour}} px-3 py-1 rounded-pill">{{object.status}}</span>
+                        class="text-bg-{{object.status.colour}} py-1 rounded-pill">{{object.status}}</span>
                 </p>
                 <p><strong>Operating System: </strong>{{object.os}}</p>
                 <p><strong>Monitor: </strong>

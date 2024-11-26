@@ -10,7 +10,7 @@ def ticket_created_email(instance):
     current_site = Site.objects.get_current()
     domain = current_site.domain
 
-    subject = f"Ticket {instance.ticket_id}"
+    subject = f"Ticket {instance.ticket_id.upper()}"
     ticket_url = reverse("ticket-detail", kwargs={"slug": instance.slug})
     full_url = f"https://{domain}{ticket_url}"
 
@@ -20,23 +20,34 @@ def ticket_created_email(instance):
     )
     plain_message = strip_tags(html_message)
 
-    send_mail(
-        subject,  # subject of email
-        plain_message,  # body of email
-        settings.DEFAULT_FROM_EMAIL,  # from email
-        [
-            instance.created_by.email,
-            settings.DEFAULT_FROM_EMAIL,
-        ],  # to emails
-        html_message=html_message,
-    )
+    if instance.created_by:
+        send_mail(
+            subject,  # subject of email
+            plain_message,  # body of email
+            settings.DEFAULT_FROM_EMAIL,  # from email
+            [
+                instance.created_by.email,
+                settings.DEFAULT_FROM_EMAIL,
+            ],  # to emails
+            html_message=html_message,
+        )
+    else:
+        send_mail(
+            subject,  # subject of email
+            plain_message,  # body of email
+            settings.DEFAULT_FROM_EMAIL,  # from email
+            [
+                settings.DEFAULT_FROM_EMAIL,
+            ],  # to emails
+            html_message=html_message,
+        )
 
 
 def ticket_updated_email(instance):
     current_site = Site.objects.get_current()
     domain = current_site.domain
 
-    subject = f"Ticket {instance.ticket_id}"
+    subject = f"Ticket {instance.ticket_id.upper()}"
     ticket_url = reverse("ticket-detail", kwargs={"slug": instance.slug})
     full_url = f"https://{domain}{ticket_url}"
 
@@ -46,16 +57,27 @@ def ticket_updated_email(instance):
     )
     plain_message = strip_tags(html_message)
 
-    send_mail(
-        subject,  # subject of email
-        plain_message,  # body of email
-        settings.DEFAULT_FROM_EMAIL,  # from email
-        [
-            instance.created_by.email,
-            settings.DEFAULT_FROM_EMAIL,
-        ],  # to emails
-        html_message=html_message,
-    )
+    if instance.created_by:
+        send_mail(
+            subject,  # subject of email
+            plain_message,  # body of email
+            settings.DEFAULT_FROM_EMAIL,  # from email
+            [
+                instance.created_by.email,
+                settings.DEFAULT_FROM_EMAIL,
+            ],  # to emails
+            html_message=html_message,
+        )
+    else:
+        send_mail(
+            subject,  # subject of email
+            plain_message,  # body of email
+            settings.DEFAULT_FROM_EMAIL,  # from email
+            [
+                settings.DEFAULT_FROM_EMAIL,
+            ],  # to emails
+            html_message=html_message,
+        )
 
 
 def ticket_comment_created_email(instance):
@@ -72,13 +94,24 @@ def ticket_comment_created_email(instance):
     )
     plain_message = strip_tags(html_message)
 
-    send_mail(
-        subject,  # subject of email
-        plain_message,  # body of email
-        settings.DEFAULT_FROM_EMAIL,  # from email
-        [
-            instance.created_by.email,
-            settings.DEFAULT_FROM_EMAIL,
-        ],  # to emails
-        html_message=html_message,
-    )
+    if instance.created_by:
+        send_mail(
+            subject,  # subject of email
+            plain_message,  # body of email
+            settings.DEFAULT_FROM_EMAIL,  # from email
+            [
+                instance.created_by.email,
+                settings.DEFAULT_FROM_EMAIL,
+            ],  # to emails
+            html_message=html_message,
+        )
+    else:
+        send_mail(
+            subject,  # subject of email
+            plain_message,  # body of email
+            settings.DEFAULT_FROM_EMAIL,  # from email
+            [
+                settings.DEFAULT_FROM_EMAIL,
+            ],  # to emails
+            html_message=html_message,
+        )

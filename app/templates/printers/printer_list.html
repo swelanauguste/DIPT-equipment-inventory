@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="py-2 small">
+    <h1 class="display-4"><a href="{% url 'printer-list' %}">Printers</a>
+        ({{printer_count}})</h1>
+    <hr>
+    <div class="py-3 col-lg-8 mx-auto">
+        <form method="get">
+            <input class="form-control"
+                type="text"
+                name="search"
+                placeholder="Search printers"
+                value="{{ request.GET.search }}">
+            <br>
+            <div class="d-flex justify-content-center gap-2">
+                <select name="model"
+                    class="form-control">
+                    <option value="">All Models</option>
+                    {% for model in models %}
+                    <option value="{{ model.id }}"
+                        {% if request.GET.model == model.id|stringformat:"s" %}selected
+                        {% endif %}>
+                        {{ model.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <select name="location"
+                    class="form-control">
+                    <option value="">All Locations</option>
+                    {% for location in locations %}
+                    <option value="{{ location.id }}"
+                        {% if request.GET.location == location.id|stringformat:"s" %}selected
+                        {% endif %}>
+                        {{ location.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <select name="department"
+                    class="form-control">
+                    <option value="">All Departments</option>
+                    {% for department in departments %}
+                    <option value="{{ department.id }}"
+                        {% if request.GET.department == department.id|stringformat:"s" %}selected
+                        {% endif %}>
+                        {{ department.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <select name="status"
+                    class="form-control">
+                    <option value="">All Statuses</option>
+                    {% for status in statuses %}
+                    <option value="{{ status.id }}"
+                        {% if request.GET.status == status.id|stringformat:"s" %}selected
+                        {% endif %}>
+                        {{ status.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <br>
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-sm small">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Printer (Serial#)</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">IP</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ob in printers %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td><a href="{{ob.get_absolute_url}}">{{ob.printer_name|upper}}
+                            ({{ob.serial_number|upper}})</a></td>
+                    <td><a href="#">{{ob.department}}</a></td>
+                    <td><a href="#">{{ob.location}}</a></td>
+                    <td><a href="#">{{ob.ip_addr|default:"N/A"}}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if is_paginated %}
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+          <a href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">previous</a>
+        {% endif %}
+    
+        <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+    
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+    {% endif %}
+
+
+</div>
+
+
+{% endblock content %}

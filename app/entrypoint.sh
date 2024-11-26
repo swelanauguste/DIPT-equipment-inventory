@@ -3,23 +3,33 @@
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser --noinput
+python manage.py collectstatic --noinput
 
-# users
-python manage.py add_department_list
-python manage.py add_location_list
-python manage.py add_user_list
+# # users
+# python manage.py loaddata ./static/docs/users/department_list.json
+# python manage.py loaddata ./static/docs/users/location_list.json
+# python manage.py add_user_list
 
-# computers
-python manage.py add_status_list
-python manage.py add_operating_system_list
-python manage.py add_maker_list
-python manage.py add_monitor_model_list
-python manage.py add_monitor_list
-python manage.py add_computer_model_list
-python manage.py add_computer_list
+# # computers
+# python manage.py loaddata ./static/docs/computers/status_list.json
+# python manage.py loaddata ./static/docs/computers/operating_system_list.json
+# python manage.py loaddata ./static/docs/computers/maker_list.json
+# python manage.py loaddata ./static/docs/computers/monitor_model_list.json
+# python manage.py loaddata ./static/docs/computers/monitor_list.json
+# python manage.py loaddata ./static/docs/computers/computer_model_list.json
+# python manage.py add_computer_list
+# python manage.py loaddata ./static/docs/computers/microsoft_version_list.json
+# python manage.py loaddata ./static/docs/computers/microsoft_list.json
 
-# tickets
-python manage.py add_ticket_status_list
-python manage.py add_ticket_category_list
-python manage.py add_ticket_list
-python manage.py add_ticket_comment_list
+# # printers
+# python manage.py loaddata ./static/docs/printers/printer_model_list.json
+# python manage.py loaddata ./static/docs/printers/printer_list.json
+
+# # tickets
+# python manage.py loaddata ./static/docs/tickets/ticket_status_list.json
+# python manage.py loaddata ./static/docs/tickets/ticket_category_list.json
+# python manage.py add_ticket_list
+# python manage.py loaddata ./static/docs/tickets/ticket_comment_list.json
+# python manage.py add_ticket_comment_list
+
+exec "$@"

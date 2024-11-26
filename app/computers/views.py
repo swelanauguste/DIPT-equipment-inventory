@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
@@ -7,12 +9,14 @@ from . import forms, models
 
 class ComputerListView(LoginRequiredMixin, ListView):
     model = models.Computer
+    template_name = "computer_list.html"
+    context_object_name = "computers"
     paginate_by = 20
 
     def get_queryset(self):
         queryset = super().get_queryset()
 
-        # Get query parameters
+        # Retrieve and apply filter parameters
         serial_number = self.request.GET.get("serial_number")
         computer_name = self.request.GET.get("computer_name")
         status = self.request.GET.get("status")
@@ -20,11 +24,8 @@ class ComputerListView(LoginRequiredMixin, ListView):
         os = self.request.GET.get("os")
         location = self.request.GET.get("location")
         department = self.request.GET.get("department")
-        date_received = self.request.GET.get("date_received")
-        date_installed = self.request.GET.get("date_installed")
         user = self.request.GET.get("user")
 
-        # Apply filters
         if serial_number:
             queryset = queryset.filter(serial_number__icontains=serial_number)
         if computer_name:
@@ -39,10 +40,6 @@ class ComputerListView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(location__id=location)
         if department:
             queryset = queryset.filter(department__id=department)
-        if date_received:
-            queryset = queryset.filter(date_received=date_received)
-        if date_installed:
-            queryset = queryset.filter(date_installed=date_installed)
         if user:
             queryset = queryset.filter(user__id=user)
 
@@ -51,15 +48,24 @@ class ComputerListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Pass related field data to the template
+        # Add filter dropdown options
         context["statuses"] = models.Status.objects.all()
         context["models"] = models.ComputerModel.objects.all()
         context["operating_systems"] = models.OperatingSystem.objects.all()
         context["locations"] = models.Location.objects.all()
         context["departments"] = models.Department.objects.all()
         context["users"] = models.User.objects.all()
-        context["computer_count"] = models.Computer.objects.all().count()
-        
+
+        # Count total computers
+        context["computer_count"] = self.get_queryset().count()
+
+        # Preserve query parameters for pagination
+        query_params = self.request.GET.copy()
+        if "page" in query_params:
+            query_params.pop(
+                "page"
+            )  # Remove 'page' from query parameters to prevent duplication
+        context["query_params"] = urlencode(query_params)
 
         return context
 

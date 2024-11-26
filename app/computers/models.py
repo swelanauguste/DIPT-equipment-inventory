@@ -1,6 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse
 from django.utils import timezone
+from django.utils.crypto import get_random_string
 from django.utils.text import slugify
 from users.models import Department, Location, User
 
@@ -189,7 +190,7 @@ class ComputerModel(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(f"{self.processor,self.name}")
         super(ComputerModel, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -282,7 +283,8 @@ class Computer(models.Model):
                 self.slug = slugify(self.serial_number)
             elif self.computer_name:
                 self.slug = slugify(self.computer_name)
-
+            else:
+                self.slug = slugify(get_random_string(length=8))
         super(Computer, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -298,3 +300,76 @@ class Computer(models.Model):
         if self.serial_number:
             return self.serial_number
         return self.computer_name
+
+
+class MicrosoftOfficeVersion(models.Model):
+    name = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="version_created_by",
+    )
+    updated_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="version_updated_by",
+    )
+
+    def __str__(self):
+        return f"Microsoft Office {self.name}"
+
+
+class MicrosoftOffice(models.Model):
+    version = models.ForeignKey(
+        MicrosoftOfficeVersion,
+        on_delete=models.CASCADE,
+        related_name="versions",
+        default=1,
+    )
+    product_key = models.CharField(max_length=30, unique=True)
+    computer = models.ForeignKey(
+        Computer,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        help_text="serial number",
+        related_name="office_installations",
+    )
+    date_installed = models.DateField(null=True, blank=True)
+    comments = models.TextField(blank=True, null=True)
+    is_installed = models.BooleanField(default=False)
+    has_failed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="ms_office_created_by",
+    )
+    updated_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="ms_office_updated_by",
+    )
+
+    class Meta:
+        ordering = ["-date_installed"]
+
+    def get_absolute_url(self):
+        return reverse("microsoft-office-detail", kwargs={"pk": self.pk})
+
+    def remove_hyphens(self):
+        return self.product_key.replace("-", "")
+
+    def __str__(self):
+        return f"{self.version} - XXXXX-XXXXX-XXXXX-{self.product_key[-11:]}"

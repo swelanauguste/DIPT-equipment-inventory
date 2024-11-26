@@ -2,10 +2,10 @@
 <hr>
 <ul class="fw-bold">
     {% if request.user.role == 'technician' or request.user.role == 'manager' %}
-        <li><a href="{% url 'ticket-list' %}">Tickets</a>
+    <li><a href="{% url 'ticket-list' %}">Tickets</a>
         {% else %}
 
-        <li><a href="{% url 'user-ticket-list' %}">Tickets</a>
+    <li><a href="{% url 'user-ticket-list' %}">Tickets</a>
         {% endif %}
 
         <ul>
@@ -45,9 +45,9 @@
         </ul>
     </li>
     <hr>
-    <li><a href="">Printers</a>
+    <li><a href="{% url 'printer-list' %}">Printers</a>
         <ul>
-            <li><a href="#">Add printer</a></li>
+            <li><a href="{% url 'printer-create' %}">Add printer</a></li>
             <li><a href="#">Models</a></li>
             <ul>
                 <li><a href="">Add model</a></li>

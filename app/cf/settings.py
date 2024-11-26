@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "users",
     "computers",
+    "printers",
     "tickets",
 ]
 
@@ -76,24 +77,24 @@ WSGI_APPLICATION = "cf.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
-if DEBUG:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
+# if DEBUG:
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-            "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-            "USER": os.environ.get("SQL_USER", "user"),
-            "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-            "HOST": os.environ.get("SQL_HOST", "localhost"),
-            "PORT": os.environ.get("SQL_PORT", "5432"),
-        }
-    }
+}
+# else:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+#             "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+#             "USER": os.environ.get("SQL_USER", "user"),
+#             "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+#             "HOST": os.environ.get("SQL_HOST", "localhost"),
+#             "PORT": os.environ.get("SQL_PORT", "5432"),
+#         }
+#     }
 
 
 # Password validation
