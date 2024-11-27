@@ -1,33 +1,40 @@
 services:
   web:
     build: ./app
-    command: python manage.py runserver 0.0.0.0:8888
-    # command: gunicorn cf.wsgi:application --bind 0.0.0.0:8000
-
+    # command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn cf.wsgi:application --bind 0.0.0.0:8003
     volumes:
-      - ./app/:/usr/src/app/
-    ports:
-      - 80:8888
+      # - ./app/:/usr/src/app/
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+
     env_file:
       - ./.env
-    restart: always
-    # depends_on:
-      # - db
+    expose:
+      - 8003
+    depends_on:
+      - db
+    restart: unless-stopped
+  db:
+    image: postgres:17rc1-bookworm
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    restart: unless-stopped
 
-  # db:
-  #   image: postgres:15
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data/
-  #   env_file:
-  #     - ./.env
-  #   restart: always
-  
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   ports:
-  #     - 5432:5432
-  #   env_file:
-  #     - ./.env
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - 80:80
+    depends_on:
+      - web
+    restart: unless-stopped
 
-# volumes:
-#   postgres_data:
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

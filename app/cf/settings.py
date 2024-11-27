@@ -18,9 +18,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-zc)6!7(rap5n*@!#3h#)bdtt&ix@@sq#wl9friuo&tp-%9qv+^"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+DEBUG = bool(int(os.environ.get("DEBUG", default=0)))
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(" ")
 
 
 # Application definition
@@ -77,24 +80,24 @@ WSGI_APPLICATION = "cf.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
-# if DEBUG:
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
-# else:
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-#             "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-#             "USER": os.environ.get("SQL_USER", "user"),
-#             "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-#             "HOST": os.environ.get("SQL_HOST", "localhost"),
-#             "PORT": os.environ.get("SQL_PORT", "5432"),
-#         }
-#     }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+            "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+            "USER": os.environ.get("SQL_USER", "user"),
+            "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+            "HOST": os.environ.get("SQL_HOST", "localhost"),
+            "PORT": os.environ.get("SQL_PORT", "5432"),
+        }
+    }
 
 
 # Password validation
