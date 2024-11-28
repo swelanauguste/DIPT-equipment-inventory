@@ -1,8 +1,16 @@
+import random
+import string
+
 from django.db import models
 from django.shortcuts import reverse
-from django.utils.crypto import get_random_string
 from django.utils.text import slugify
 from users.models import User
+
+
+def generate_short_id():
+    length = 8  # You can adjust the length as needed
+    characters = string.ascii_letters + string.digits
+    return "".join(random.choice(characters) for i in range(length)).upper()
 
 
 class TicketStatus(models.Model):
@@ -33,7 +41,7 @@ class Ticket(models.Model):
     description = models.TextField(blank=True, null=True)
     # is_closed = models.BooleanField(default=False)
     ticket_id = models.CharField(
-        default=get_random_string(length=8), editable=False, unique=True, max_length=8
+        default=generate_short_id, editable=False, unique=True, max_length=8
     )
     ticket_status = models.ForeignKey(
         TicketStatus,
