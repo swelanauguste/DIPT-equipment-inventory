@@ -11,6 +11,17 @@ from django.utils.http import urlsafe_base64_encode
 from .tokens import account_activation_token
 
 
+def forgot_password_email(email, user, reset_link, message, subject):
+    send_mail(
+        subject,  # subject of email
+        message,  # body of email
+        settings.DEFAULT_FROM_EMAIL,  # from email
+        [
+            email,
+        ],  # to emails
+    )
+
+
 def user_registration_email(request, user, to_email):
     current_site = Site.objects.get_current()
     domain = current_site.domain

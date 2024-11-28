@@ -159,7 +159,7 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 AUTH_USER_MODEL = "users.User"
 
 AUTHENTICATION_BACKENDS = [
-    "users.backends.EmailBackend",
+    "users.backends.EmailOrUsernameBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
 PASSWORD_RESET_TIMEOUT = 3600

@@ -4,6 +4,18 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 
 
+class CustomPasswordResetForm(forms.Form):
+    email = forms.EmailField(label="Email", max_length=254)
+
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if not User.objects.filter(email=email).exists():
+            raise forms.ValidationError(
+                "No user is associated with this email address."
+            )
+        return email
+
+
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User

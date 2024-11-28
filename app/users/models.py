@@ -64,6 +64,8 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.uid)
+        self.email = self.email.lower()
+        self.username = self.username.lower()
         super(User, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
