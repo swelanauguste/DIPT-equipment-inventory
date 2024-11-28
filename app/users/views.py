@@ -59,7 +59,7 @@ def forgot_password_view(request):
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             domain = get_current_site(request).domain
-            reset_link = f"http://{domain}/users/reset-password/{uid}/{token}/"
+            reset_link = f"{domain}/users/reset-password/{uid}/{token}/"
 
             # Send email
             subject = "Password Reset Requested"

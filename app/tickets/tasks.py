@@ -12,7 +12,7 @@ def ticket_created_email(instance):
 
     subject = f"Ticket {instance.ticket_id.upper()}"
     ticket_url = reverse("ticket-detail", kwargs={"slug": instance.slug})
-    full_url = f"https://{domain}{ticket_url}"
+    full_url = f"{domain}{ticket_url}"
 
     html_message = render_to_string(
         "tickets/emails/ticket_created_email.html",
@@ -49,7 +49,7 @@ def ticket_updated_email(instance):
 
     subject = f"Ticket {instance.ticket_id.upper()}"
     ticket_url = reverse("ticket-detail", kwargs={"slug": instance.slug})
-    full_url = f"https://{domain}{ticket_url}"
+    full_url = f"{domain}{ticket_url}"
 
     html_message = render_to_string(
         "tickets/emails/ticket_update_email.html",
@@ -86,7 +86,7 @@ def ticket_comment_created_email(instance):
 
     subject = f"Ticket {instance.ticket.ticket_id.upper()}"
     ticket_url = reverse("ticket-detail", kwargs={"slug": instance.ticket.slug})
-    full_url = f"https://{domain}{ticket_url}"
+    full_url = f"{domain}{ticket_url}"
 
     html_message = render_to_string(
         "tickets/emails/ticket_comment_email.html",
