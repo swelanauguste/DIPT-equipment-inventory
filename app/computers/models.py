@@ -343,8 +343,8 @@ class MicrosoftOffice(models.Model):
     )
     date_installed = models.DateField(null=True, blank=True)
     comments = models.TextField(blank=True, null=True)
-    # is_installed = models.BooleanField(default=False)
-    # has_failed = models.BooleanField(default=False)
+    is_installed = models.BooleanField(default=False)
+    has_failed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(

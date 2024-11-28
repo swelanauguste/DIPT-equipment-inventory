@@ -45,6 +45,5 @@ python manage.py loaddata ./static/docs/tickets/ticket_status_list.json
 python manage.py loaddata ./static/docs/tickets/ticket_category_list.json
 python manage.py add_ticket_list
 python manage.py loaddata ./static/docs/tickets/ticket_comment_list.json
-python manage.py add_ticket_comment_list
 
 exec "$@"

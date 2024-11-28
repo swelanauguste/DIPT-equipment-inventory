@@ -6,7 +6,6 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 from users.models import User
 
-
 def generate_short_id():
     length = 8  # You can adjust the length as needed
     characters = string.ascii_letters + string.digits
@@ -110,7 +109,7 @@ class Comment(models.Model):
     )
     comments = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
     created_by = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
@@ -124,6 +123,7 @@ class Comment(models.Model):
         null=True,
         blank=True,
         related_name="ticket_comment_updated_by",
+        default=1
     )
 
     class Meta:
