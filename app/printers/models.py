@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.utils.text import slugify
 from users.models import Department, Location, User
-
+from django.utils import timezone
 
 class PrinterModel(models.Model):
     name = models.CharField(max_length=100)
@@ -67,7 +67,7 @@ class Printer(models.Model):
         related_name="printer_departments",
     )
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
-    date_received = models.DateField(blank=True, null=True)
+    date_received = models.DateField(blank=True, null=True, default=timezone.now)
     date_installed = models.DateField(blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

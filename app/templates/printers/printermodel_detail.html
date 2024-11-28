@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="p-5">
+    <h1>{{object.name}} | {{object.maker}}</h1>
+    <hr>
+    <div class="px-3">
+        <p class="text-end me-3"><a
+                class="btn btn-sm btn-warning px-5 rounded-pill"
+                href="{% url 'printer-update' object.slug %}">Edit</a>
+        </p>
+        <p><strong>Name: </strong>{{object.name}}</p>
+        <p><strong>Maker:
+            </strong>{{object.maker}}</p>
+        {% if object.image %}
+        <p><strong>Att: </strong>{{object.image.url}}</p>
+        {% endif %}
+
+
+        <hr>
+        <p class="small text-muted"><strong>Created:
+            </strong><span>{{object.created_at}}
+                <a
+                    href="{{object.created_by.get_absolute_url}}">{{object.created_by|lower}}</a></span>
+            <span class="float-end"><strong>Updated:
+                </strong>{{object.updated_at}}
+                <a
+                    href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|lower}}</a></span>
+        </p>
+    </div>
+</div>
+{% endblock content %}

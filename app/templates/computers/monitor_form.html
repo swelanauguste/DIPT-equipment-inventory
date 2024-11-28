@@ -4,17 +4,17 @@
 
 {% block content %}
 
-<div class="m-5 small">
-    <div class="col-lg-6 mx-ato p-5 shadow rounded-4 border">
+<div class="small">
+    <div class="p-5">
         <h1>
             {% if object.pk %}
             {{object.serial_number}}
             {% else %}
-            New monitor model
+            New monitor
             {% endif %}
         </h1>
         <hr>
-        <form action=""
+        <form class="col-lg-6" action=""
             method="post">
             {% csrf_token %}
 

@@ -8,7 +8,6 @@ class ComputerForm(forms.ModelForm):
         model = models.Computer
         fields = "__all__"
         exclude = ["slug", "created_by", "updated_by"]
-        
 
 
 class ComputerModelForm(forms.ModelForm):
@@ -30,3 +29,10 @@ class MonitorModelForm(forms.ModelForm):
         model = models.MonitorModel
         fields = "__all__"
         exclude = ["slug", "created_by", "updated_by"]
+
+
+class MicrosoftOfficeForm(forms.ModelForm):
+    class Meta:
+        model = models.MicrosoftOffice
+        fields = "__all__"
+        exclude = ["created_by", "updated_by", "computer", "date_installed"]

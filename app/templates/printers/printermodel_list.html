@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="py-2 small">
+    <h1 class="display-4"><a href="{% url 'printer-list' %}">Printers
+            models</a>
+        ({{printer_model_count}})</h1>
+    <hr>
+    <div class="py-3 col-lg-8 mx-auto">
+        <form method="get">
+            <div class="d-flex justify-content-center gap-2">
+
+            <input class="form-control"
+                type="text"
+                name="search"
+                placeholder="Search printers"
+                value="{{ request.GET.search }}">
+
+                <select name="maker" onchange="this.form.submit()"
+                    class="form-control">
+                    <option value="">All Makers</option>
+                    {% for maker in makers %}
+                    <option value="{{ maker.id }}"
+                        {% if request.GET.model == maker.id|stringformat:"s" %}selected
+                        {% endif %}>
+                        {{ maker.name|upper }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-sm small">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ob in object_list %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td><a href="{{ob.get_absolute_url}}">{{ob.maker}} - {{ob.name|upper}}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
+
+
+{% endblock content %}

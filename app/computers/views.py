@@ -111,7 +111,7 @@ class ComputerModelListView(LoginRequiredMixin, ListView):
                 Q(name__icontains=search_query) | Q(processor__icontains=search_query)
             )
 
-        # Filter by maker (ForeignKey)
+        # Filter by maker (Foreign)
         if maker:
             queryset = queryset.filter(maker_id=maker)
 
@@ -214,3 +214,23 @@ class MonitorModelUpdateView(LoginRequiredMixin, UpdateView):
 
 class MonitorModelDetailView(LoginRequiredMixin, DetailView):
     model = models.MonitorModel
+    model = models.MonitorModel
+
+
+class MicrosoftOfficeListView(LoginRequiredMixin, ListView):
+    model = models.MicrosoftOffice
+    paginate_by = 20
+
+
+class MicrosoftOfficeDetailView(LoginRequiredMixin, DetailView):
+    model = models.MicrosoftOffice
+
+
+class MicrosoftOfficeCreateView(LoginRequiredMixin, CreateView):
+    model = models.MicrosoftOffice
+    form_class = forms.MicrosoftOfficeForm
+
+
+class MicrosoftOfficeUpdateView(LoginRequiredMixin, UpdateView):
+    model = models.MicrosoftOffice
+    form_class = forms.MicrosoftOfficeForm

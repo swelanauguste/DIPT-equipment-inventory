@@ -1,6 +1,7 @@
 import json
 
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 from users.models import User
 
 from ...models import Comment, Ticket
@@ -34,6 +35,8 @@ class Command(BaseCommand):
                             f"User with pk={fields['created_by']} does not exist. Skipping created_by."
                         )
                     )
+            updated_at = timezone.now()
+        
 
             # Check if a comment with the same ticket already exists
             if Comment.objects.filter(ticket=ticket).exists():
@@ -50,6 +53,7 @@ class Command(BaseCommand):
                 comments=fields["comments"],
                 created_at=fields["created_at"],
                 created_by=created_by,
+                updated_at=updated_at,
             )
             added_count += 1
 

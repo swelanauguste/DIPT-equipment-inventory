@@ -32,7 +32,10 @@
         </ul>
     </li>
     <hr>
-    <li><a href="#">Office Suite</a></li>
+    <li><a href="{% url 'microsoft-office-list' %}">Office Suite</a></li>
+    <ul>
+        <li><a href="{% url 'microsoft-office-create' %}">Add</a></li>
+    </ul>
     <hr>
     <li><a href="{% url 'monitor-list' %}">Monitors</a>
         <ul>
@@ -48,9 +51,9 @@
     <li><a href="{% url 'printer-list' %}">Printers</a>
         <ul>
             <li><a href="{% url 'printer-create' %}">Add printer</a></li>
-            <li><a href="#">Models</a></li>
+            <li><a href="{% url 'printer-model-list' %}">Models</a></li>
             <ul>
-                <li><a href="">Add model</a></li>
+                <li><a href="{% url 'printer-model-create' %}">Add model</a></li>
             </ul>
         </ul>
     </li>

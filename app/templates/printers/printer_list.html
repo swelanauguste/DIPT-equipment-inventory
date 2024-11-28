@@ -13,44 +13,45 @@
                 placeholder="Search printers"
                 value="{{ request.GET.search }}">
             <br>
+            
             <div class="d-flex justify-content-center gap-2">
-                <select name="model"
+                <select name="model" onchange="this.form.submit()"
                     class="form-control">
                     <option value="">All Models</option>
                     {% for model in models %}
                     <option value="{{ model.id }}"
                         {% if request.GET.model == model.id|stringformat:"s" %}selected
                         {% endif %}>
-                        {{ model.name }}
+                        {{ model.name|upper }}
                     </option>
                     {% endfor %}
                 </select>
 
-                <select name="location"
+                <select name="location" onchange="this.form.submit()"
                     class="form-control">
                     <option value="">All Locations</option>
                     {% for location in locations %}
                     <option value="{{ location.id }}"
                         {% if request.GET.location == location.id|stringformat:"s" %}selected
                         {% endif %}>
-                        {{ location.name }}
+                        {{ location.name|upper }}
                     </option>
                     {% endfor %}
                 </select>
 
-                <select name="department"
+                <select name="department" onchange="this.form.submit()"
                     class="form-control">
                     <option value="">All Departments</option>
                     {% for department in departments %}
                     <option value="{{ department.id }}"
                         {% if request.GET.department == department.id|stringformat:"s" %}selected
                         {% endif %}>
-                        {{ department.name }}
+                        {{ department.name|upper }}
                     </option>
                     {% endfor %}
                 </select>
 
-                <select name="status"
+                <select name="status" onchange="this.form.submit()"
                     class="form-control">
                     <option value="">All Statuses</option>
                     {% for status in statuses %}
@@ -86,7 +87,7 @@
                             ({{ob.serial_number|upper}})</a></td>
                     <td><a href="#">{{ob.department}}</a></td>
                     <td><a href="#">{{ob.location}}</a></td>
-                    <td><a href="#">{{ob.ip_addr|default:"N/A"}}</a></td>
+                    <td><a target="_blank" href="http://{{ob.ip_addr}}">{{ob.ip_addr|default:"N/A"}}</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

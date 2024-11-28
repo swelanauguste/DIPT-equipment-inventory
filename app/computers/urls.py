@@ -67,4 +67,24 @@ urlpatterns = [
         views.MonitorModelUpdateView.as_view(),
         name="monitor-model-update",
     ),
+    path(
+        "microsoft-office-list/",
+        views.MicrosoftOfficeListView.as_view(),
+        name="microsoft-office-list",
+    ),
+    path(
+        "microsoft-office-create/",
+        views.MicrosoftOfficeCreateView.as_view(),
+        name="microsoft-office-create",
+    ),
+    path(
+        "microsoft-office-detail/<int:pk>/",
+        views.MicrosoftOfficeDetailView.as_view(),
+        name="microsoft-office-detail",
+    ),
+    path(
+        "microsoft-office-update/<int:pk>/",
+        views.MicrosoftOfficeUpdateView.as_view(),
+        name="microsoft-office-update",
+    ),
 ]

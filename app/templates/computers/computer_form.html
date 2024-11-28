@@ -5,15 +5,14 @@
 {% block content %}
 
 <div class="small">
-    <div class="col-lg-10 mx-auto p-5  rounded-4 ">
-
-        {% if object.pk %}
-        <h2>{{object.serial_number}}</h2>
-        {% else %}
-        <h2>New computer</h2>
-
-        {% endif %}
-
+    <div class="p-5">
+        <h1>
+            {% if object.pk %}
+            {{object.serial_number}}
+            {% else %}
+            New computer
+            {% endif %}
+        </h1>
         <hr>
         <form action=""
             method="post">

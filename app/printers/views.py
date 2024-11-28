@@ -2,13 +2,13 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from . import models
+from . import forms, models
 
 
 class PrinterListView(ListView):
     model = models.Printer
     context_object_name = "printers"
-    paginate_by = 10  # Number of items per page
+    paginate_by = 20  # Number of items per page
     # paginate_by = 20  # Optional: for pagination
 
     def get_queryset(self):
@@ -58,7 +58,7 @@ class PrinterListView(ListView):
 
 class PrinterCreateView(CreateView):
     model = models.Printer
-    fields = "__all__"
+    form_class = forms.PrinterForm
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -82,10 +82,34 @@ class PrinterUpdateView(UpdateView):
 class PrinterModelListView(ListView):
     model = models.PrinterModel
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Search functionality
+        search_query = self.request.GET.get("search", "")
+        if search_query:
+            queryset = queryset.filter(
+                Q(name__icontains=search_query) | Q(maker__name__icontains=search_query)
+            )
+
+        # Filtering by fields
+        maker_id = self.request.GET.get("maker")
+        if maker_id:
+            queryset = queryset.filter(maker_id=maker_id)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Include filtering options in the context
+        context["printer_model_count"] = self.get_queryset().count()
+        context["makers"] = models.Maker.objects.all()
+        return context
+
 
 class PrinterModelCreateView(CreateView):
     model = models.PrinterModel
-    fields = "__all__"
+    form_class = forms.PrinterModelForm
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user

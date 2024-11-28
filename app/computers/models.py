@@ -95,7 +95,7 @@ class MonitorModel(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(f"{self.name}-{get_random_string(length=2)}")
         super(MonitorModel, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -136,7 +136,7 @@ class Monitor(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.serial_number)
+            self.slug = slugify(f"{self.serial_number}-{get_random_string(length=2)}")
         super(Monitor, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -298,8 +298,8 @@ class Computer(models.Model):
 
     def __str__(self):
         if self.serial_number:
-            return self.serial_number
-        return self.computer_name
+            return self.serial_number.upper()
+        return self.computer_name.upper()
 
 
 class MicrosoftOfficeVersion(models.Model):
@@ -343,8 +343,8 @@ class MicrosoftOffice(models.Model):
     )
     date_installed = models.DateField(null=True, blank=True)
     comments = models.TextField(blank=True, null=True)
-    is_installed = models.BooleanField(default=False)
-    has_failed = models.BooleanField(default=False)
+    # is_installed = models.BooleanField(default=False)
+    # has_failed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
@@ -363,7 +363,7 @@ class MicrosoftOffice(models.Model):
     )
 
     class Meta:
-        ordering = ["-date_installed"]
+        ordering = ["-created_at"]
 
     def get_absolute_url(self):
         return reverse("microsoft-office-detail", kwargs={"pk": self.pk})
@@ -373,3 +373,39 @@ class MicrosoftOffice(models.Model):
 
     def __str__(self):
         return f"{self.version} - XXXXX-XXXXX-XXXXX-{self.product_key[-11:]}"
+
+
+class MicrosoftOfficeInstalled(models.Model):
+    computer = models.ForeignKey(
+        Computer,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="office_installed",
+    )
+    microsoft_office = models.ForeignKey(
+        MicrosoftOffice,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="installed_office",
+    )
+    date_installed = models.DateField(null=True, blank=True)
+    comments = models.TextField(blank=True, null=True)
+    has_failed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="office_installed_created_by",
+    )
+    updated_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="office_installed_updated_by",
+    )
