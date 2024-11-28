@@ -10,6 +10,6 @@ class Command(BaseCommand):
         for monitor in monitors:
             monitor.save()
 
-        # monitor_models = MonitorModel.objects.all()
-        # for monitor_model in monitor_models:
-        #     monitor_model.save()
+        monitor_models = MonitorModel.objects.all()
+        for monitor_model in monitor_models:
+            monitor_model.save()

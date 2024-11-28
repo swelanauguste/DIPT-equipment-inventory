@@ -18,7 +18,7 @@
         <p><strong>Summary: </strong>{{object.summary}}</p>
         <p><strong>Description: </strong>{{object.description}}</p>
         <hr>
-        <form action=""
+        <form action="" enctype="multipart/form-data"
             method="post">
             {% csrf_token %}
             {{form|crispy}}

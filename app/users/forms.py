@@ -13,7 +13,6 @@ class UserUpdateForm(forms.ModelForm):
             "job_title",
             "department",
             "location",
-            "email",
             "phone",
         ]
 

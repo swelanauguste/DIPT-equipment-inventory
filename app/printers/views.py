@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
@@ -5,11 +6,10 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from . import forms, models
 
 
-class PrinterListView(ListView):
+class PrinterListView(LoginRequiredMixin, ListView):
     model = models.Printer
     context_object_name = "printers"
     paginate_by = 20  # Number of items per page
-    # paginate_by = 20  # Optional: for pagination
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -56,7 +56,7 @@ class PrinterListView(ListView):
         return context
 
 
-class PrinterCreateView(CreateView):
+class PrinterCreateView(LoginRequiredMixin, CreateView):
     model = models.Printer
     form_class = forms.PrinterForm
 
@@ -66,11 +66,11 @@ class PrinterCreateView(CreateView):
         return super().form_valid(form)
 
 
-class PrinterDetailView(DetailView):
+class PrinterDetailView(LoginRequiredMixin, DetailView):
     model = models.Printer
 
 
-class PrinterUpdateView(UpdateView):
+class PrinterUpdateView(LoginRequiredMixin, UpdateView):
     model = models.Printer
     fields = "__all__"
 
@@ -79,7 +79,7 @@ class PrinterUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class PrinterModelListView(ListView):
+class PrinterModelListView(LoginRequiredMixin, ListView):
     model = models.PrinterModel
 
     def get_queryset(self):
@@ -107,7 +107,7 @@ class PrinterModelListView(ListView):
         return context
 
 
-class PrinterModelCreateView(CreateView):
+class PrinterModelCreateView(LoginRequiredMixin, CreateView):
     model = models.PrinterModel
     form_class = forms.PrinterModelForm
 
@@ -117,11 +117,11 @@ class PrinterModelCreateView(CreateView):
         return super().form_valid(form)
 
 
-class PrinterModelDetailView(DetailView):
+class PrinterModelDetailView(LoginRequiredMixin, DetailView):
     model = models.PrinterModel
 
 
-class PrinterModelUpdateView(UpdateView):
+class PrinterModelUpdateView(LoginRequiredMixin, UpdateView):
     model = models.PrinterModel
     fields = "__all__"
 
