@@ -8,8 +8,8 @@ from users.models import Department, Location, User
 from django.utils import timezone
 
 class PrinterModel(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
     maker = models.ForeignKey(Maker, on_delete=models.CASCADE)
     image = models.FileField(upload_to="printer_models/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -45,9 +45,9 @@ class PrinterModel(models.Model):
 
 
 class Printer(models.Model):
-    serial_number = models.CharField(max_length=100, blank=True, null=True)
-    slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
-    printer_name = models.CharField(max_length=100, blank=True, null=True)
+    serial_number = models.CharField(max_length=255, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
+    printer_name = models.CharField(max_length=255, blank=True, null=True)
     model = models.ForeignKey(
         PrinterModel, on_delete=models.CASCADE, related_name="printers"
     )

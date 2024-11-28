@@ -154,7 +154,7 @@ class ComputerModel(models.Model):
         ("server", "Server"),
         ("other", "Other"),
     ]
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True, null=True)
     computer_type = models.CharField(
         max_length=10, choices=computer_type_list, default="desktop"
@@ -190,7 +190,7 @@ class ComputerModel(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(f"{self.processor,self.name}")
+            self.slug = slugify(f"{self.processor, self.name}")
         super(ComputerModel, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

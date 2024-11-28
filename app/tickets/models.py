@@ -13,7 +13,7 @@ def generate_short_id():
 
 
 class TicketStatus(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=255)
 
     class Meta:
         ordering = ["name"]
@@ -24,7 +24,7 @@ class TicketStatus(models.Model):
 
 
 class TicketCategory(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=255)
 
     class Meta:
         ordering = ["name"]
@@ -36,7 +36,7 @@ class TicketCategory(models.Model):
 
 class Ticket(models.Model):
     user = models.ManyToManyField(User, related_name="tickets")
-    summary = models.CharField(max_length=50)
+    summary = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     # is_closed = models.BooleanField(default=False)
     ticket_id = models.CharField(
@@ -52,7 +52,7 @@ class Ticket(models.Model):
     ticket_category = models.ForeignKey(
         TicketCategory, on_delete=models.PROTECT, null=True, verbose_name="category"
     )
-    slug = models.SlugField(max_length=8, unique=True, blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
     file = models.FileField(upload_to="tickets/", blank=True, null=True)
     assigned_to = models.ForeignKey(
         User,
