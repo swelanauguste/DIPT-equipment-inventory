@@ -1,14 +1,14 @@
-# import threading
+import threading
 
-# from django.db.models.signals import post_save
-# from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-# from .models import Comment, Ticket
-# from .tasks import (
-#     ticket_comment_created_email,
-#     ticket_created_email,
-#     ticket_updated_email,
-# )
+from .models import Comment, Ticket
+from .tasks import (
+    ticket_comment_created_email,
+    ticket_created_email,
+    ticket_updated_email,
+)
 
 
 @receiver(post_save, sender=Comment)
