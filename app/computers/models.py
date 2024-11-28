@@ -8,7 +8,7 @@ from users.models import Department, Location, User
 
 class Maker(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
 
     class Meta:
         ordering = ["name"]
@@ -27,7 +27,7 @@ class Maker(models.Model):
 
 class OperatingSystem(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
 
     class Meta:
         ordering = ["name"]
@@ -47,7 +47,7 @@ class OperatingSystem(models.Model):
 class Status(models.Model):
     name = models.CharField(max_length=100)
     colour = models.CharField(max_length=10, null=True, blank=True)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
 
     class Meta:
         ordering = ["name"]
@@ -67,7 +67,7 @@ class Status(models.Model):
 
 class MonitorModel(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     maker = models.ForeignKey(
         Maker, on_delete=models.PROTECT, related_name="monitor_models"
     )
@@ -107,7 +107,7 @@ class MonitorModel(models.Model):
 
 class Monitor(models.Model):
     serial_number = models.CharField(max_length=100, blank=True, null=True)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     model = models.ForeignKey(
         MonitorModel, on_delete=models.PROTECT, related_name="monitors"
     )
@@ -155,7 +155,7 @@ class ComputerModel(models.Model):
         ("other", "Other"),
     ]
     name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     computer_type = models.CharField(
         max_length=10, choices=computer_type_list, default="desktop"
     )
@@ -203,7 +203,7 @@ class ComputerModel(models.Model):
 class Computer(models.Model):
     from_project = models.BooleanField(default=False)
     serial_number = models.CharField(max_length=100, blank=True, null=True)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     warranty_info = models.CharField(
         "Warranty", max_length=100, default="N/A", blank=True, null=True
     )

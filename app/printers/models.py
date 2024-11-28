@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.utils.text import slugify
 from users.models import Department, Location, User
-from django.utils import timezone
+
 
 class PrinterModel(models.Model):
     name = models.CharField(max_length=255)

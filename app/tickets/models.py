@@ -6,6 +6,7 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 from users.models import User
 
+
 def generate_short_id():
     length = 8  # You can adjust the length as needed
     characters = string.ascii_letters + string.digits
@@ -52,7 +53,7 @@ class Ticket(models.Model):
     ticket_category = models.ForeignKey(
         TicketCategory, on_delete=models.PROTECT, null=True, verbose_name="category"
     )
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     file = models.FileField(upload_to="tickets/", blank=True, null=True)
     assigned_to = models.ForeignKey(
         User,
@@ -123,7 +124,7 @@ class Comment(models.Model):
         null=True,
         blank=True,
         related_name="ticket_comment_updated_by",
-        default=1
+        default=1,
     )
 
     class Meta:
