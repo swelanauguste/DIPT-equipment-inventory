@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<div class="py-5">
+<div class="p-5">
     <h1>{{object.version}} - {{object.product_key|slice:'-5:'}}</h1>
     <hr>
     <div class="px-3">
@@ -13,8 +13,9 @@
             <a
                 class="assign-btn"
                 href="{% url 'microsoft-office-assign' object.pk %}">Assign PC</a>
+
         </p>
-        <p><strong>Computer: </strong>{{object.computer}}</p>
+        <p><strong>Product key: </strong>{{object.product_key}}</p>
         <p><strong>Version: </strong>{{object.version}}</p>
         <hr>
         <p class="small text-muted"><strong>Created:

@@ -4,10 +4,13 @@
 
 {% block content %}
 
-<div class="m-5 small">
-    <div class="p-5">
+<div class="p-5 small">
         <h1>
-            {{microsoft_office_key}}
+            {% if object.pk %}
+            {{object.microsoft_office|upper}}
+            {% else %}
+            New Office Key
+            {% endif %}
         </h1>
         <hr>
         <form class="col-lg-4" action=""
@@ -16,10 +19,8 @@
             {{form|crispy}}
             <br>
             <div class="d-grid">
-                <button type="submit">Submit</button><br>
-                <a href="{% url 'microsoft-office-list' %}" class="btn btn-secondary">Cancel</a>
+                <button type="submit">Submit</button>
             </div>
         </form>
-    </div>
 </div>
 {% endblock content %}

@@ -4,6 +4,13 @@
 <div class="p-5 small">
     <h1 class="display-4">Used Microsoft Office Suite ({{key_count}})</h1>
     <hr>
+    <div class="d-flex justify-content-start gap-2">
+        <a class="fw-bold text-dark"
+            href="?no_assignment=1">Show Unassigned Keys</a>
+        <a class="fw-bold text-dark"
+            href="?">Show All Keys</a>
+    </div>
+    <br>
     <div class="table-responsive">
         <table class="table table-hover table-sm small">
             <thead>
@@ -11,6 +18,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Product key</th>
                     <th scope="col">Version</th>
+                    <th scope="col">Computers</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +27,14 @@
                     <th scope="row">{{forloop.counter}}</th>
                     <td><a href="{{ob.get_absolute_url}}">{{ob}}</a></td>
                     <td>{{ob.version}}</td>
+                    <td>
+                        {% for computer in ob.assignments.all %}
+                        {% for computer in computer.computers.all %}
+                        <a
+                            href="{{computer.get_absolute_url}}">{{computer}}</a>
+                        {% endfor %}
+                        {% endfor %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -27,17 +43,18 @@
     <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
             {% endif %}
-    
+
             <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                Page {{ page_obj.number }} of
+                {{ page_obj.paginator.num_pages }}.
             </span>
-    
+
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
     </div>

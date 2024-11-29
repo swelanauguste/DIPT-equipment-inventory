@@ -30,7 +30,7 @@
                 <p><strong>Assigned to: </strong>
                     
                     {% for user in  object.user.all %}
-                        <a href="{{user.get_absolute_url}}">{{user}}</a>
+                        <a href="{{user.get_absolute_url}}">{{user|default:"N/A"}}</a>
                     {% endfor %}
                         
                    </p>
@@ -51,6 +51,9 @@
                 <p><strong>Processor: </strong>{{object.model.processor}}</p>
                 <p><strong>RAM (GB): </strong>{{object.model.ram}}</p>
                 <p><strong>HDD: </strong>{{object.model.hdd}}</p>
+                <hr>
+                <p><strong>Office suite: </strong><a href="{{object.office_key_computers.last.get_absolute_url}}">{{object.office_key_computers.last}}</a></p>
+
             </div>
         </div>
 

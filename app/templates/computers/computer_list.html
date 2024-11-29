@@ -80,8 +80,10 @@
                 <tr>
                     <th>#</th>
                     <th>Computer (Serial#)</th>
+                    <th>Computer Type</th>
                     <th>Department</th>
                     <th>User</th>
+                    <th>Note</th>
                 </tr>
             </thead>
             <tbody>
@@ -91,6 +93,7 @@
                         <td>
                             <a href="{{ computer.get_absolute_url }}">{{ computer.computer_name|upper }} ({{ computer.serial_number|upper }})</a>
                         </td>
+                        <td>{{ computer.model.computer_type|upper }}</td>
                         <td>{{ computer.department }}</td>
                         <td>
                           {% for user in computer.user.all %}
@@ -98,6 +101,7 @@
                           {% endfor %}
                             
                         </td>
+                        <td>{{computer.notes}}</td>
                     </tr>
                 {% empty %}
                 <tr><td class="text-center" colspan="4">No computers</td></tr>
