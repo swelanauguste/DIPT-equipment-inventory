@@ -8,7 +8,7 @@
     <div class="p-5">
         <h1>
             {% if object.pk %}
-            {{object.serial_number}}
+            {{object.serial_number|upper}}
             {% else %}
             New computer
             {% endif %}

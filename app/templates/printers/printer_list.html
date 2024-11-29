@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="py-2 small">
+<div class="p-5 small">
     <h1 class="display-4"><a href="{% url 'printer-list' %}">Printers</a>
         ({{printer_count}})</h1>
     <hr>
     <div class="py-3 col-lg-8 mx-auto">
-        <form method="get">
+        <form class="select-form" method="get">
             <input class="form-control"
                 type="text"
                 name="search"
@@ -15,7 +15,7 @@
             <br>
             
             <div class="d-flex justify-content-center gap-2">
-                <select name="model" onchange="this.form.submit()"
+                <select name="model" 
                     class="form-control">
                     <option value="">All Models</option>
                     {% for model in models %}
@@ -27,7 +27,7 @@
                     {% endfor %}
                 </select>
 
-                <select name="location" onchange="this.form.submit()"
+                <select name="location" 
                     class="form-control">
                     <option value="">All Locations</option>
                     {% for location in locations %}
@@ -39,7 +39,7 @@
                     {% endfor %}
                 </select>
 
-                <select name="department" onchange="this.form.submit()"
+                <select name="department" 
                     class="form-control">
                     <option value="">All Departments</option>
                     {% for department in departments %}
@@ -51,7 +51,7 @@
                     {% endfor %}
                 </select>
 
-                <select name="status" onchange="this.form.submit()"
+                <select name="status" 
                     class="form-control">
                     <option value="">All Statuses</option>
                     {% for status in statuses %}
@@ -64,7 +64,9 @@
                 </select>
             </div>
             <br>
-            <button type="submit">Filter</button>
+            <div class="text-end">
+                <button type="submit">Filter</button>
+            </div>
         </form>
     </div>
 

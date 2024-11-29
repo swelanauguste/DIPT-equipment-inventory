@@ -73,6 +73,11 @@ urlpatterns = [
         name="microsoft-office-list",
     ),
     path(
+        "microsoft-office-installed-list/",
+        views.MicrosoftOfficeInstalledListView.as_view(),
+        name="microsoft-office-installed-list",
+    ),
+    path(
         "microsoft-office-create/",
         views.MicrosoftOfficeCreateView.as_view(),
         name="microsoft-office-create",
@@ -86,5 +91,20 @@ urlpatterns = [
         "microsoft-office-update/<int:pk>/",
         views.MicrosoftOfficeUpdateView.as_view(),
         name="microsoft-office-update",
+    ),
+    path(
+        "microsoft-office-assign/<int:pk>/",
+        views.MicrosoftOfficeAssignView.as_view(),
+        name="microsoft-office-assign",
+    ),
+    path(
+        "microsoft-office-assign-list/",
+        views.MicrosoftOfficeAssignListView.as_view(),
+        name="microsoft-office-assign-list",
+    ),
+    path(
+        "microsoft-office-assign-detail/<int:pk>/",
+        views.MicrosoftOfficeAssignDetailView.as_view(),
+        name="microsoft-office-assignment-detail",
     ),
 ]

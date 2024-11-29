@@ -34,5 +34,16 @@ class MonitorModelForm(forms.ModelForm):
 class MicrosoftOfficeForm(forms.ModelForm):
     class Meta:
         model = models.MicrosoftOffice
-        fields = "__all__"
-        exclude = ["created_by", "updated_by", "computer", "date_installed"]
+        fields = ["version", "product_key"]
+
+
+class MicrosoftOfficeAssignmentForm(forms.ModelForm):
+    class Meta:
+        model = models.MicrosoftOfficeAssignment
+        fields = ["computers", "date_assigned", "notes"]
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['computers'].queryset = models.Computer.objects.filter(
+            office_key_computers__isnull=True
+        )

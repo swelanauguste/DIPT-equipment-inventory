@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="py-2 small">
-    <h1 class="display-4">Computer model list</h1>
+<div class="p-5 small">
+    <h1 class="display-4"><a href="{% url 'computer-model-list' %}">Computer model list</a> ({{computer_model_count}})</h1>
     <hr>
     <div class="py-3 col-lg-8 mx-auto">
         <form method="get"
@@ -58,9 +58,10 @@
                     {% endfor %}
                 </select>
             </div>
+            <button type="submit">Filter</button>
+
         </div>
         <br>
-        <button type="submit">Filter</button>
         </form>
     </div>
     <div class="table-responsive">

@@ -24,6 +24,7 @@ class PrinterListView(LoginRequiredMixin, ListView):
                 | Q(location__name__icontains=search_query)
                 | Q(department__name__icontains=search_query)
                 | Q(status__name__icontains=search_query)
+                | Q(ip_addr__icontains=search_query)
             )
 
         # Filtering by fields
@@ -48,7 +49,7 @@ class PrinterListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Include filtering options in the context
-        context["printer_count"] = models.Printer.objects.all().count()
+        context["printer_count"] = self.get_queryset().count()
         context["models"] = models.PrinterModel.objects.all()
         context["locations"] = models.Location.objects.all()
         context["departments"] = models.Department.objects.all()

@@ -341,12 +341,14 @@ class MicrosoftOffice(models.Model):
         help_text="serial number",
         related_name="office_installations",
     )
+    computers = models.ManyToManyField(
+        Computer, related_name="office_computers", blank=True
+    )
     date_installed = models.DateField(null=True, blank=True)
     comments = models.TextField(blank=True, null=True)
     is_installed = models.BooleanField(default=False)
     has_failed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -354,12 +356,22 @@ class MicrosoftOffice(models.Model):
         blank=True,
         related_name="ms_office_created_by",
     )
+    updated_at = models.DateTimeField(auto_now=True)
+
     updated_by = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="ms_office_updated_by",
+    )
+    assigned_at = models.DateTimeField(auto_now=True)
+    assigned_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="ms_office_assigned_by",
     )
 
     class Meta:
@@ -375,37 +387,42 @@ class MicrosoftOffice(models.Model):
         return f"{self.version} - XXXXX-XXXXX-XXXXX-{self.product_key[-11:]}"
 
 
-class MicrosoftOfficeInstalled(models.Model):
-    computer = models.ForeignKey(
-        Computer,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="office_installed",
-    )
+class MicrosoftOfficeAssignment(models.Model):
     microsoft_office = models.ForeignKey(
-        MicrosoftOffice,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="installed_office",
+        MicrosoftOffice, on_delete=models.CASCADE, related_name="assignments"
     )
-    date_installed = models.DateField(null=True, blank=True)
-    comments = models.TextField(blank=True, null=True)
-    has_failed = models.BooleanField(default=False)
+    computers = models.ManyToManyField(Computer, related_name="office_key_computers")
+    notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name="office_installed_created_by",
+        related_name="office_key_created_by",
     )
+    updated_at = models.DateTimeField(auto_now_add=True)
     updated_by = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name="office_installed_updated_by",
+        related_name="office_key_updated_by",
     )
+    date_assigned = models.DateField(default=timezone.now)
+    assigned_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="office_key_assigned_by",
+    )
+    
+    class Meta:
+        ordering = ["-created_at"]
+        
+    def get_absolute_url(self):
+        return reverse("microsoft-office-assignment-detail", kwargs={"pk": self.pk})
+    
+    def __str__(self):
+        return f"{self.microsoft_office}"

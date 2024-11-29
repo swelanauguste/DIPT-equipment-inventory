@@ -1,26 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="py-2 small">
-    <h1 class="display-4">Microsoft Office Suite</h1>
+<div class="p-5 small">
+    <h1 class="display-4">Microsoft Office Suite ({{key_count}})</h1>
     <hr>
     <div class="table-responsive">
         <table class="table table-hover table-sm small">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Make</th>
-                    <th scope="col">Notes</th>
+                    <th scope="col">Product key</th>
+                    <th scope="col">Version</th>
+                    <th scope="col">Computer</th>
                 </tr>
             </thead>
             <tbody>
                 {% for ob in object_list %}
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
-                    <td><a href="{{ob.get_absolute_url}}">{{ob}}</a></td>
-                    <td>{{ob.version}}</td>
-                    <td><a href="{{ob.computer.get_absolute_url}}">{{ob.computer|upper}}</a></td>
+                    <td><a href="{{ob.get_absolute_url}}">XXXXX-XXXXX-XXXXX-{{ob.microsoft_office.product_key|slice:"-11:"}}</a></td>
+                    <td>{{ob.microsoft_office.version}}</td>
+                    <td>
+                        
+                        {% for computer in ob.computers.all %}
+                        <a href="{{computer.get_absolute_url}}">{{computer}}  </a> 
+                        {% endfor %}
+                            
+                        </td>
                 </tr>
                 {% endfor %}
             </tbody>

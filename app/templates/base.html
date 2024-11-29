@@ -10,6 +10,7 @@
     <link rel="stylesheet"
         href="{% static 'css/select2.min.css' %}">
     <script src="{% static 'js/select2.min.js'%}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
     <link rel="stylesheet"
         href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet"
@@ -44,44 +45,7 @@
         </div>
     </div>
     <script>
-        $(document).ready(function () {
-            $('#id_department').select2();
-            $('#id_location').select2();
-            $('#id_computer').select2();
-            $('#id_os').select2();
-            $('#id_maker').select2();
-            $('#id_status').select2();
-            $('#id_model').select2();
-            $('#id_user').select2();
-            $('#id_monitor').select2();
-            $('#status').select2();
-            $('#model').select2();
-            $('#os').select2();
-            $('#location').select2();
-            $('#department').select2();
-            $('#user').select2();
-            $('#maker').select2();
-            $('#computer_type').select2();
-            $('.computer-list a').addClass('btn btn-sm btn-dark px-5');
-            $('form button').addClass('btn btn-sm btn-dark px-5');
-            $('li a').addClass('text-white text-decoration-none');
-            $('.form-control').addClass('form-control-sm');
-            $('.selectmultiple').attr('type');
-            $('td a').addClass('text-dark');
-            $('h3 a').addClass('text-white text-decoration-none');
-            $('.col p a').addClass('text-dark fw-bold');
-            $('.dateinput').attr('type', 'date');
-            $('.textarea').attr('rows', 4);
-            $('.edit-btn').addClass('btn btn-sm btn-warning px-5');
-            $('span a').addClass('fw-bold text-dark');
-            $('.login').addClass('btn btn-sm btn-dark px-5');
-            $('.edit-computer').addClass('btn btn-sm btn-warning px-5');
-            $('.edit-ticket').addClass('btn btn-sm btn-warning px-5');
-            $('.close-ticket').addClass('btn btn-sm btn-success px-5');
-            $('.delete-ticket').addClass('btn btn-sm btn-danger px-5 text-white');
-            $('input[type="text"]').addClass('form-control form-control-sm');
-            $('h1 a').addClass('text-decoration-none text-dark');
-        });
+     
     </script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>

@@ -10,6 +10,6 @@ class Command(BaseCommand):
         for printer in printers:
             printer.save()
 
-        printer_models = Printer.objects.all()
+        printer_models = PrinterModel.objects.all()
         for printer_model in printer_models:
             printer_model.save()

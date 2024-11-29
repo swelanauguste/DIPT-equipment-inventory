@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="p-5">
-    <h1>{{object.model}} | {{object.serial_number}}</h1>
+    <h1>{{object.model|upper}} | {{object.serial_number|upper}}</h1>
     <hr>
     <div class="px-3">
         <p class="text-end me-3"><a

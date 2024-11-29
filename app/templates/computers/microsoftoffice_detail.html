@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="py-5">
+    <h1>{{object.version}} - {{object.product_key|slice:'-5:'}}</h1>
+    <hr>
+    <div class="px-3">
+        <p class="text-end me-3">
+            <a
+                class="edit-btn me-3"
+                href="{% url 'microsoft-office-update' object.pk %}">Edit</a>
+            <a
+                class="assign-btn"
+                href="{% url 'microsoft-office-assign' object.pk %}">Assign PC</a>
+        </p>
+        <p><strong>Computer: </strong>{{object.computer}}</p>
+        <p><strong>Version: </strong>{{object.version}}</p>
+        <hr>
+        <p class="small text-muted"><strong>Created:
+            </strong><span>{{object.created_at}} <a href="">{{object.created_by}}</a></span>
+           <span class="float-end"><strong>Updated: </strong>{{object.updated_at}} <a href="">{{object.updated_by}}</a></span>
+        </p>
+    </div>
+</div>
+{% endblock content %}
