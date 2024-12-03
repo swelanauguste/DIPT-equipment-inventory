@@ -11,6 +11,7 @@ from . import forms, models
 class TicketListView(LoginRequiredMixin, ListView):
     model = models.Ticket
     paginate_by = 20
+    template_name = "tickets/tech/ticket_list.html"
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(is_deleted=False)
@@ -54,6 +55,8 @@ class TicketListView(LoginRequiredMixin, ListView):
 class UserTicketListView(LoginRequiredMixin, ListView):
     model = models.Ticket
     paginate_by = 20
+    template_name = "tickets/users/ticket_list.html"
+    
 
     def get_queryset(self):
         queryset = (
@@ -165,6 +168,23 @@ def ticket_delete_view(request, slug):
     ticket.save()
 
     return redirect("ticket-list")
+
+    # If the form is not valid or the request method is not POST
+    return render(
+        request, "tickets/ticket_detail.html", {"ticket": ticket, "comment_form": form}
+    )
+
+
+def ticket_close_view(request, slug):
+    ticket = get_object_or_404(models.Ticket, slug=slug)
+    closed_status = get_object_or_404(models.TicketStatus, name__icontains="closed")
+    ticket.ticket_status = closed_status
+    ticket.is_closed = True
+    ticket.closed_at = timezone.now()
+    ticket.closed_by = request.user
+    ticket.save()
+
+    return redirect("ticket-detail", slug=slug)
 
     # If the form is not valid or the request method is not POST
     return render(

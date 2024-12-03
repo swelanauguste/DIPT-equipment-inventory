@@ -24,6 +24,9 @@ class TicketTechCreateForm(forms.ModelForm):
             "deleted_by",
             "deleted_at",
             "is_deleted",
+            "closed_by",
+            "closed_at",
+            "is_closed",
         ]
 
     def __init__(self, *args, **kwargs):

@@ -9,18 +9,26 @@
     <div class="row">
         <div class="col">
             <div class="px-3">
-    {% if request.user.role == 'technician' or request.user.role == 'manager' %}
-                <p class="d-flex justify-content-end gap-2"><a
-                        class="edit-ticket"
-                        href="{% url 'ticket-tech-update' object.slug %}">Edit</a>
+                {% if request.user.role == 'technician' or request.user.role == 'manager' %}
+                <p class="d-flex justify-content-end gap-2">
+
+                    {% if not object.is_closed %}
+
+                    <a
+                    class="edit-ticket"
+                    href="{% url 'ticket-tech-update' object.slug %}">Edit</a>
                     <a class="close-ticket"
-                        href="">Close</a>
+                        href="{% url 'ticket-close' object.slug %}">Close</a>
+                    {% endif %}
+
                 </p>
                 {% else %}
-                <p class="text-end me-3"><a
-                        class="edit-ticket"
+                {% if not object.is_closed %}
+                <p class="text-end me-3"><a class="edit-ticket"
                         href="{% url 'ticket-user-update' object.slug %}">Edit</a>
                 </p>
+                {% endif %}
+
                 {% endif %}
                 <p><strong>User(s): </strong>
                     {% for user in object.user.all %}
@@ -35,9 +43,13 @@
                 <p><strong>Assigned to: </strong><a
                         href="{{object.assigned_to.get_absolute_url}}">{{object.assigned_to}}</a>
                 </p>
+                {% if not object.is_closed %}
+
                 <p class="text-end"> <a class="delete-ticket"
                         href="{% url 'ticket-delete' object.slug %}">Delete</a>
                 </p>
+                {% endif %}
+
                 <hr>
                 <p class="small text-muted"><strong>Created:
                     </strong><span>{{object.created_at}} <a
@@ -48,8 +60,9 @@
                 </p>
             </div>
         </div>
-        {% if object.comments %}
+        {% if object.pk %}
         <div class="col-lg-3 p-3">
+            {% if not object.is_closed %}
             <form action="{% url 'ticket-add-comment' object.slug %}"
                 method="post">
                 {% csrf_token %}
@@ -58,6 +71,7 @@
                     <button type="submit">Submit</button>
                 </div>
             </form>
+            {% endif %}
             <br>
             <div style="overflow-y: scroll; max-height: 400px;">
                 {% for comment in object.comments.all %}

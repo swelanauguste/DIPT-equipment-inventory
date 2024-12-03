@@ -2,62 +2,55 @@
 
 {% block content %}
 <div class="p-5 small">
-    <h1 class="display-4"><a href=""></a>Tickets ({{ticket_count}})</h1>
+    <h1 class="display-4"><a href="{% url 'user-list' %}">Users</a> ({{user_count}})</h1>
     <hr>
     <div class="py-3 col-lg-8 mx-auto">
         <form method="get" class="select-form"
-            action="">
+            action="{% url 'user-list' %}">
             <div class="col-lg-8 mx-auto">
-                <label for="summary">Search:</label>
+                <label for="search">Search:</label>
                 <input type="text"
                     name="q"
                     placeholder="Search"
-                    id="summary"
+                    id="search"
                     value="{{ request.GET.q }}">
             </div>
             <br>
             <div class="d-flex justify-content-center gap-2">
                 <div>
-                    <select name="ticket_status"
-                        id="ticket_status"
+                    <select name="department"
+                        id="department"
                         class="form-control">
-                        <option value="">Ticket status </option>
-                        {% for status in statuses %}
-                        <option value="{{ status.id }}"
-                            {% if request.GET.ticket_status == status.id|stringformat:"s" %}selected
+                        <option value="">All Departments </option>
+                        {% for department in departments %}
+                        <option value="{{ department.id }}"
+                            {% if request.GET.department == department.id|stringformat:"s" %}selected
                             {% endif %}>
-                            {{ status.name|upper }}
+                            {{ department.name|upper }}
                         </option>
                         {% endfor %}
                     </select>
                 </div>
                 <div>
-                    <select name="ticket_category"
-                        id="ticket_category"
+                    <select name="location"
+                        id="location"
                         class="form-control">
-                        <option value="">Category</option>
-                        {% for category in categories %}
-                        <option value="{{ category.id }}"
-                            {% if request.GET.ticket_category == category.id|stringformat:"s" %}selected
+                        <option value="">All Locations</option>
+                        {% for location in locations %}
+                        <option value="{{ location.id }}"
+                            {% if request.GET.location == location.id|stringformat:"s" %}selected
                             {% endif %}>
-                            {{ category.name|upper }}
+                            {{ location.name|upper }}
                         </option>
                         {% endfor %}
                     </select>
                 </div>
                 <div>
-                    <select name="assigned_to"
-                        id="assigned_to"
-                        class="form-control">
-                        <option value="">Assigned</option>
-                        <option value="unassigned"
-                            {% if request.GET.assigned_to == 'unassigned' %}selected
-                            {% endif %}>Unassigned</option>
-                        {% for user in users %}
-                        <option value="{{ user.id }}"
-                            {% if request.GET.assigned_to == user.id|stringformat:"s" %}selected
-                            {% endif %}>
-                            {{ user }}
+                    <select class="form-control" name="role">
+                        <option value="">Select Role</option>
+                        {% for value, label in roles %}
+                        <option value="{{ value }}" {% if request.GET.role == value %}selected{% endif %}>
+                            {{ label|title }}
                         </option>
                         {% endfor %}
                     </select>
@@ -74,12 +67,12 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Ref#</th>
-                    <th scope="col">Summary</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Assigned to</th>
                     <th scope="col">User</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Job title</th>
+                    <th scope="col">Phone</th>
                 </tr>
             </thead>
             <tbody>
@@ -87,18 +80,13 @@
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
                     <td><a
-                            href="{{ob.get_absolute_url}}">{{ob.ticket_id|upper}}</a>
+                            href="{{ob.get_absolute_url}}">{{ob|upper}}</a>
                     </td>
-                    <td><a href="{{ob.get_absolute_url}}">{{ob.summary}}</a>
-                    </td>
-                    <td>{{ob.ticket_status}}</td>
-                    <td>{{ob.ticket_category|upper}}</td>
-                    <td><a href="#">{{ob.assigned_to}}</a></td>
-                    <td>
-                        {% for user in ob.user.all %}
-                        <a href="{{user.get_absolute_url}}">{{user}}</a>
-                        {% endfor %}
-                    </td>
+                    <td>{{ob.department|upper}}</td>
+                    <td>{{ob.location|upper}}</td>
+                    <td>{{ob.role|upper}}</td>
+                    <td>{{ob.job_title|upper}}</td>
+                    <td>{{ob.phone}}</td>
                 </tr>
                 {% endfor %}
             </tbody>

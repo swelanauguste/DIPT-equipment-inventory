@@ -1,8 +1,10 @@
+import uuid
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.text import slugify
-import uuid
+
 
 class Location(models.Model):
     name = models.CharField(max_length=100)
@@ -64,8 +66,8 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.uid)
-        self.email = self.email.lower()
-        self.username = self.username.lower()
+        # self.email = self.email.lower()
+        # self.username = self.username.lower()
         super(User, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

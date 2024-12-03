@@ -5,3 +5,37 @@ body, html {
   margin: 0;
   padding: 0;
 }
+
+
+.hide-me {
+  -webkit-animation: cssAnimation 7s forwards;
+  animation: cssAnimation 7s forwards;
+}
+
+@keyframes cssAnimation {
+  0% {
+      opacity: 1;
+  }
+
+  90% {
+      opacity: 1;
+  }
+
+  100% {
+      opacity: 0;
+  }
+}
+
+@-webkit-keyframes cssAnimation {
+  0% {
+      opacity: 1;
+  }
+
+  90% {
+      opacity: 1;
+  }
+
+  100% {
+      opacity: 0;
+  }
+}

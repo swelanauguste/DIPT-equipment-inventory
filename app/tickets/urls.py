@@ -16,7 +16,11 @@ urlpatterns = [
         views.TicketTechUpdateView.as_view(),
         name="ticket-tech-update",
     ),
-    path("ticket-user-create", views.TicketUserCreateView.as_view(), name="ticket-user-create"),
+    path(
+        "ticket-user-create",
+        views.TicketUserCreateView.as_view(),
+        name="ticket-user-create",
+    ),
     path(
         "tech-create/",
         views.TicketTechnicianCreateView.as_view(),
@@ -26,4 +30,5 @@ urlpatterns = [
         "ticket-comment/<slug:slug>/", views.add_comment_view, name="ticket-add-comment"
     ),
     path("ticket-delete/<slug:slug>/", views.ticket_delete_view, name="ticket-delete"),
+    path("ticket-close/<slug:slug>/", views.ticket_close_view, name="ticket-close"),
 ]

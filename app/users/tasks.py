@@ -34,10 +34,9 @@ def user_registration_email(request, user, to_email):
     )
     full_activation_url = f"{domain}{activation_url}"
     # activation_url = f"{domain}users/activate/{urlsafe_base64_encode(force_bytes(user.pk))}/{account_activation_token.make_token(user)}"
-    subject = "Activate Your Accountant General's Department Payslips Account"
-
+    subject = "Activate your account"
     html_message = render_to_string(
-        "users/email/user_registration_email.html",
+        "users/emails/user_registration_email.html",
         {
             "user": user.username,
             "domain": domain,
@@ -47,7 +46,6 @@ def user_registration_email(request, user, to_email):
             "full_activation_url": full_activation_url,
         },
     )
-
     plain_message = strip_tags(html_message)
 
     send_mail(

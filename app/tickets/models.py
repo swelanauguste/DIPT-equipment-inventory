@@ -87,6 +87,15 @@ class Ticket(models.Model):
     )
     deleted_at = models.DateTimeField(null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
+    closed_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="ticket_closed_by",
+    )
+    closed_at = models.DateTimeField(null=True, blank=True)
+    is_closed = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-created_at"]

@@ -34,7 +34,8 @@
                 <div>
                     <select name="ticket_category"
                         id="ticket_category"
-                        class="form-control">
+                        class="form-control"
+                        onchange="this.form.submit();">
                         <option value="">Category</option>
                         {% for category in categories %}
                         <option value="{{ category.id }}"
@@ -48,7 +49,8 @@
                 <div>
                     <select name="assigned_to"
                         id="assigned_to"
-                        class="form-control">
+                        class="form-control"
+                        onchange="this.form.submit();">
                         <option value="">Assigned</option>
                         <option value="unassigned"
                             {% if request.GET.assigned_to == 'unassigned' %}selected
