@@ -244,6 +244,7 @@ def user_registration_view(request):
         if form.is_valid():
             user = form.save(commit=False)
             to_email = form.cleaned_data.get("email")
+            password = form.cleaned_data.get("password1")
             user.is_active = False
             user.save()
             # user_registration_email.after_response(
@@ -251,7 +252,7 @@ def user_registration_view(request):
             # )
             user_registration_email_thread = threading.Thread(
                 target=user_registration_email,
-                args=(request, user, to_email),
+                args=(request, user, to_email, password),
             )
             user_registration_email_thread.start()
             messages.success(
