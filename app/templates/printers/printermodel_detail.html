@@ -7,7 +7,7 @@
     <hr>
     <div class="px-3">
         <p class="text-end me-3"><a
-                class="btn btn-sm btn-warning px-5 rounded-pill"
+                class="edit-btn"
                 href="{% url 'printer-update' object.slug %}">Edit</a>
         </p>
         <p><strong>Name: </strong>{{object.name}}</p>
@@ -16,8 +16,6 @@
         {% if object.image %}
         <p><strong>Att: </strong>{{object.image.url}}</p>
         {% endif %}
-
-
         <hr>
         <p class="small text-muted"><strong>Created:
             </strong><span>{{object.created_at}}
@@ -28,6 +26,19 @@
                 <a
                     href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|lower}}</a></span>
         </p>
+        <hr>
+        <ul>
+            {% for printer in object.printers.all %}
+            <a class="list" href="{{printer.get_absolute_url}}"><li>({{printer.serial_number}}) - {{printer}}
+                <ul>
+                    <li>{{printer.department|title}}/{{printer.location|title}}</li>
+                </ul>
+            </li></a>
+            <br>
+            {% endfor %}
+        </ul>
+
+   
     </div>
 </div>
 {% endblock content %}

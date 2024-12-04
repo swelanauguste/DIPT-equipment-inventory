@@ -19,7 +19,6 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import DetailView, ListView, UpdateView
 from users.models import User
-from django.shortcuts import render
 
 from . import models
 from .forms import CustomPasswordResetForm, UserCustomCreationForm, UserUpdateForm
@@ -139,10 +138,8 @@ class UserLoginView(auth_views.LoginView):
 
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
-            messages.info(self.request, f"Your are already logged in {request.user}")
-            return redirect(
-                reverse_lazy("user-list")
-            )  # Redirect to the home page
+            messages.info(self.request, f"Your are already logged in as{request.user}")
+            return redirect(reverse_lazy("user-detail"))  # Redirect to the home page
         return super().get(request, *args, **kwargs)
 
 
@@ -165,8 +162,6 @@ def change_password_change_view(request):
         form = PasswordChangeForm(user=request.user)
 
     return render(request, "users/password_change.html", {"form": form})
-
-
 
 
 def password_change_done_view(request):
@@ -219,6 +214,7 @@ class UserPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
 
 def logout_view(request):
     logout(request)
+    messages.success(request, "You have been logged out.")
     return redirect("login")
 
 
@@ -237,6 +233,7 @@ def activate(request, uidb64, token):
         return redirect("/")
     else:
         return redirect("login")
+
 
 @login_required
 def user_registration_view(request):

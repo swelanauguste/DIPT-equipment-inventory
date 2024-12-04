@@ -22,6 +22,7 @@ $('.location').select2();
 $('.department').select2();
 $('.computer-list a').addClass('btn btn-sm btn-dark px-5');
 $('form button').addClass('btn btn-sm btn-dark px-5');
+$('.list').addClass('text-dark');
 $('li a').addClass('text-white text-decoration-none');
 $('.form-control').addClass('form-control-sm');
 $('.selectmultiple').attr('type');
