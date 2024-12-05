@@ -63,12 +63,12 @@ class UserCustomCreationForm(UserCreationForm):
 
         return username
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.username = self.cleaned_data["email"].split("@")[
-            0
-        ]  # Set username based on email
-        user.is_active = False  # Set user as inactive by default
-        if commit:
-            user.save()
-        return user
+    # def save(self, commit=True):
+    #     user = super().save(commit=False)
+    #     user.username = self.cleaned_data["email"].split("@")[
+    #         0
+    #     ]  # Set username based on email
+    #     user.is_active = False  # Set user as inactive by default
+    #     if commit:
+    #         user.save()
+    #     return user
