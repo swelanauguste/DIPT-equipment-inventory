@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="p-5 small">
-    <h1 class="display-4"><a href=""></a>Tickets ({{ticket_count}})</h1>
+    <h1 class="display-4"><a href="{% url 'ticket-list' %}">Tickets</a> ({{ticket_count}})</h1>
     <hr>
     <div class="py-3 col-lg-8 mx-auto">
         <form method="get" class="select-form"
