@@ -32,6 +32,7 @@ python manage.py get_monitor_and_models_slug
 python manage.py loaddata ./static/docs/computers/computer_model_list.json
 python manage.py update_computer_type
 python manage.py add_computer_list
+python manage.py loaddata ./static/docs/computers/computercomments.json
 
 # printers
 python manage.py loaddata ./static/docs/printers/printer_model_list.json

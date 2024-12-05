@@ -11,6 +11,9 @@ urlpatterns = [
         name="computer-detail",
     ),
     path(
+        "computer-comment/<slug:slug>/", views.add_comment_view, name="computer-add-comment"
+    ),
+    path(
         "computer-update/<slug:slug>/",
         views.ComputerUpdateView.as_view(),
         name="computer-update",

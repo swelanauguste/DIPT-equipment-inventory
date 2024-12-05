@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
@@ -97,6 +98,32 @@ class ComputerUpdateView(LoginRequiredMixin, UpdateView):
 
 class ComputerDetailView(LoginRequiredMixin, DetailView):
     model = models.Computer
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["comments_form"] = forms.CommentCreateForm
+        return context
+
+
+
+def add_comment_view(request, slug):
+    computer = get_object_or_404(models.Computer, slug=slug)
+
+    if request.method == "POST":
+        form = forms.CommentCreateForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.computer = computer
+            if request.user.is_authenticated:
+                comment.created_by = request.user
+                comment.updated_by = request.user
+            comment.save()
+            return redirect("computer-detail", slug=slug)
+
+    # If the form is not valid or the request method is not POST
+    return render(
+        request, "computer/computer_detail.html", {"computer": computer, "comment_form": form}
+    )
 
 
 class ComputerModelListView(LoginRequiredMixin, ListView):
@@ -223,5 +250,3 @@ class MonitorModelUpdateView(LoginRequiredMixin, UpdateView):
 
 class MonitorModelDetailView(LoginRequiredMixin, DetailView):
     model = models.MonitorModel
-
-

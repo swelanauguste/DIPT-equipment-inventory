@@ -300,3 +300,32 @@ class Computer(models.Model):
         if self.serial_number:
             return self.serial_number.upper()
         return self.computer_name.upper()
+
+
+class ComputerComment(models.Model):
+    computer = models.ForeignKey(
+        Computer, on_delete=models.CASCADE, related_name="comments"
+    )
+    comment = models.TextField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="computer_comment_created_by",
+    )
+    updated_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="computer_comment_updated_by",
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.computer.computer_name} - comment {self.pk}"

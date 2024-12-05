@@ -30,3 +30,11 @@ class MonitorModelForm(forms.ModelForm):
         fields = "__all__"
         exclude = ["slug", "created_by", "updated_by"]
 
+
+class CommentCreateForm(forms.ModelForm):
+    class Meta:
+        model = models.ComputerComment
+        fields = ["comment"]
+        widgets = {
+            "comments": forms.Textarea(attrs={"rows": 3, "cols": 30}),
+        }

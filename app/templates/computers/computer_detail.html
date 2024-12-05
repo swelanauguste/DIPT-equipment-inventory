@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="p-5">
     <h1>{{object.model|upper}} | {{object.serial_number|upper}}</h1>
     <hr>
     <div class="px-3">
-        <p class="text-end me-3"><a
-                class="edit-computer"
+        <p class="text-end me-3"><a class="edit-computer"
                 href="{% url 'computer-update' object.slug %}">Edit</a>
         </p>
         <div class="row">
             <div class="col">
                 <p><strong>Received: </strong>{{object.date_received}}</p>
                 <p><strong>Serial#: </strong>{{object.serial_number|upper}}</p>
-                <p><strong>Computer name: </strong>{{object.computer_name|upper}}</p>
+                <p><strong>Computer name:
+                    </strong>{{object.computer_name|upper}}</p>
                 <p><strong>Warranty: </strong>{{object.warranty_info}}</p>
                 <p><strong>Status: </strong><span
                         class="text-bg-{{object.status.colour}} py-1 rounded-pill">{{object.status}}</span>
@@ -28,12 +29,13 @@
                 <p><strong>Location: </strong>{{object.location}}</p>
                 <p><strong>Department: </strong>{{object.department}}</p>
                 <p><strong>Assigned to: </strong>
-                    
-                    {% for user in  object.user.all %}
-                        <a href="{{user.get_absolute_url}}">{{user|default:"N/A"}}</a>
+
+                    {% for user in object.user.all %}
+                    <a
+                        href="{{user.get_absolute_url}}">{{user|default:"N/A"}}</a>
                     {% endfor %}
-                        
-                   </p>
+
+                </p>
                 <p><strong>Installed: </strong>{{object.date_installed}}</p>
                 {% if object.image %}
                 <p><strong>Att: </strong>{{object.image.url}}</p>
@@ -52,7 +54,9 @@
                 <p><strong>RAM (GB): </strong>{{object.model.ram}}</p>
                 <p><strong>HDD: </strong>{{object.model.hdd}}</p>
                 <hr>
-                <p><strong>Office suite: </strong><a href="{{object.office_key_computers.last.get_absolute_url}}">{{object.office_key_computers.last}}</a></p>
+                <p><strong>Office suite: </strong><a
+                        href="{{object.office_key_computers.last.get_absolute_url}}">{{object.office_key_computers.last}}</a>
+                </p>
 
             </div>
         </div>
@@ -61,12 +65,41 @@
         <p class="small text-muted"><strong>Created:
             </strong><span>{{object.created_at}}
                 <a
-                    href="{{object.created_by.get_absolute_url}}">{{object.created_by|title}}</a></span>
-            <span class="float-end"><strong>Updated:
+                    href="{{object.created_by.get_absolute_url}}">{{object.created_by|title}}</a></span><br>
+            <span class=""><strong>Updated:
                 </strong>{{object.updated_at}}
                 <a
                     href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|title}}</a></span>
         </p>
     </div>
+    <br>
+    <hr>
+    <br>
+    {% if object.pk %}
+    {% if not object.is_closed %}
+    <form action="{% url 'computer-add-comment' object.slug %}"
+        method="post">
+        {% csrf_token %}
+        {{comments_form|crispy}}
+        <div class="text-end">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+    {% endif %}
+    <br>
+    <hr>
+    <br>
+    <div>
+        {% for comment in object.comments.all %}
+        <span class="small">{{comment.comment}} </span><br>
+        <p class="text-end small"><a
+                href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
+            <span>{{comment.created_at}}</span>
+
+        </p>
+        <hr>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 {% endblock content %}
