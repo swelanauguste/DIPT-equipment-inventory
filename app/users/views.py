@@ -245,7 +245,6 @@ def user_registration_view(request):
             user = form.save(commit=False)
             to_email = form.cleaned_data.get("email")
             password = form.cleaned_data.get("password1")
-            user.username = form.cleaned_data["email"].split("@")[0]
             user.is_active = False
             user.save()
             # user_registration_email.after_response(
