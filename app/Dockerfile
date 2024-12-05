@@ -14,8 +14,7 @@ ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc \
-    apt-get install -y postgresql
+    apt-get install -y --no-install-recommends gcc postgresql
 
 # lint
 RUN pip install --upgrade pip
