@@ -14,7 +14,7 @@ ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc postgresql
+    apt-get install -y --no-install-recommends gcc postgresql-client
 
 # lint
 RUN pip install --upgrade pip
@@ -49,7 +49,7 @@ RUN mkdir $APP_HOME/mediafiles
 WORKDIR $APP_HOME
 
 # install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends netcat-traditional
+RUN apt-get update && apt-get install -y --no-install-recommends netcat-traditional postgresql-client
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
