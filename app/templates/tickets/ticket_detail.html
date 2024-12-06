@@ -35,7 +35,10 @@
         <p><strong>Summary: </strong>{{object.summary}}</p>
         <p><strong>Description: </strong><br>{{object.description}}</p>
         <p><strong>Status: </strong>{{object.ticket_status}}</p>
-        <p><strong>Category: </strong>{{object.ticket_category|upper}}
+        <p><strong>Category: </strong> 
+            {% for category in object.ticket_category.all %}
+            <span>{{category}},</span>
+            {% endfor %}
         </p>
         <p><strong>Assigned to: </strong><a
                 href="{{object.assigned_to.get_absolute_url}}">{{object.assigned_to}}</a>

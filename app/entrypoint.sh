@@ -16,7 +16,6 @@ python manage.py migrate
 # python manage.py createsuperuser --noinput
 python manage.py collectstatic --noinput
 
-python manage.py update_ticket_category --file ./static/docs/tickets/ticket_list.json
 
 
 
