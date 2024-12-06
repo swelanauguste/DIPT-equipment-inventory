@@ -50,7 +50,7 @@ class TicketListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add filter options for dropdowns
-        context["ticket_count"] = self.get_queryset().filter(is_deleted=False).count()
+        context["ticket_count"] = self.get_queryset().count()
         context["statuses"] = models.TicketStatus.objects.all()
         context["categories"] = models.TicketCategory.objects.all()
         context["users"] = User.objects.filter(role__in=["technician", "manager"])
@@ -114,11 +114,7 @@ class UserTicketListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add filter options for dropdowns
-        context["ticket_count"] = (
-            models.Ticket.objects.filter(is_deleted=False)
-            .filter(created_by=self.request.user)
-            .count()
-        )
+        context["ticket_count"] = self.get_queryset().count()
         context["statuses"] = models.TicketStatus.objects.all()
         context["categories"] = models.TicketCategory.objects.all()
         context["users"] = User.objects.filter(role__in=["technician", "manager"])

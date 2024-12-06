@@ -20,7 +20,8 @@
                 <div>
                     <select name="ticket_status"
                         id="ticket_status"
-                        class="form-control">
+                        class="form-control"
+                        onchange="this.form.submit();">
                         <option value="">Ticket status </option>
                         {% for status in statuses %}
                         <option value="{{ status.id }}"
