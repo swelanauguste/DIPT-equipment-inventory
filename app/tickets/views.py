@@ -59,11 +59,10 @@ class UserTicketListView(LoginRequiredMixin, ListView):
     
 
     def get_queryset(self):
-        queryset = (
-            super()
-            .get_queryset()
-            .filter(is_deleted=False)
-            .filter(created_by=self.request.user)
+        user = self.request.user
+        queryset = super().get_queryset().filter(
+            Q(is_deleted=False) & 
+            (Q(created_by=user) | Q(user=user))
         )
 
         # Retrieve filter parameters

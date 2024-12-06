@@ -53,6 +53,7 @@ class Ticket(models.Model):
     ticket_category = models.ForeignKey(
         TicketCategory, on_delete=models.PROTECT, null=True, verbose_name="category"
     )
+    tags = models.ManyToManyField(TicketCategory, blank=True, related_name='tags')
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     file = models.FileField(upload_to="tickets/", blank=True, null=True)
     assigned_to = models.ForeignKey(

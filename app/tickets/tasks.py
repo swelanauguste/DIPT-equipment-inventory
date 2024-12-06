@@ -91,7 +91,7 @@ def ticket_comment_created_email(instance):
     plain_message = strip_tags(html_message)
 
     # Collect email recipients
-    recipients = list(instance.user.values_list("email", flat=True))
+    recipients = []
 
     # Add `created_by` email if it exists and is not already included
     if instance.created_by and instance.created_by.email not in recipients:
