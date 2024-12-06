@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
@@ -49,6 +51,15 @@ class TicketListView(LoginRequiredMixin, ListView):
         context["statuses"] = models.TicketStatus.objects.all()
         context["categories"] = models.TicketCategory.objects.all()
         context["users"] = User.objects.filter(role__in=["technician", "manager"])
+        
+        # Preserve query parameters for pagination
+        query_params = self.request.GET.copy()
+        if "page" in query_params:
+            query_params.pop(
+                "page"
+            )  # Remove 'page' from query parameters to prevent duplication
+        context["query_params"] = urlencode(query_params)
+
         return context
 
 
@@ -56,13 +67,13 @@ class UserTicketListView(LoginRequiredMixin, ListView):
     model = models.Ticket
     paginate_by = 20
     template_name = "tickets/users/ticket_list.html"
-    
 
     def get_queryset(self):
         user = self.request.user
-        queryset = super().get_queryset().filter(
-            Q(is_deleted=False) & 
-            (Q(created_by=user) | Q(user=user))
+        queryset = (
+            super()
+            .get_queryset()
+            .filter(Q(is_deleted=False) & (Q(created_by=user) | Q(user=user)))
         )
 
         # Retrieve filter parameters
@@ -102,6 +113,15 @@ class UserTicketListView(LoginRequiredMixin, ListView):
         context["statuses"] = models.TicketStatus.objects.all()
         context["categories"] = models.TicketCategory.objects.all()
         context["users"] = User.objects.filter(role__in=["technician", "manager"])
+        
+         # Preserve query parameters for pagination
+        query_params = self.request.GET.copy()
+        if "page" in query_params:
+            query_params.pop(
+                "page"
+            )  # Remove 'page' from query parameters to prevent duplication
+        context["query_params"] = urlencode(query_params)
+
         return context
 
 
