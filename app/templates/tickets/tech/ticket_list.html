@@ -96,7 +96,11 @@
                     <td><a href="{{ob.get_absolute_url}}">{{ob.summary}}</a>
                     </td>
                     <td>{{ob.ticket_status}}</td>
-                    <td>{{ob.ticket_category|upper}}</td>
+                    <td>
+                        {% for category in ob.ticket_category.all %}
+                            {{category.name|upper}},
+                        {% endfor %}
+                    </td>
                     <td><a href="#">{{ob.assigned_to}}</a></td>
                     <td>
                         {% for user in ob.user.all %}
