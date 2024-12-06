@@ -26,12 +26,15 @@ class TicketListView(LoginRequiredMixin, ListView):
         assigned_to = self.request.GET.get("assigned_to", "")
 
         # Apply filters
+        if ticket_category:
+            category_ids = ticket_category.split(",")
+            queryset = queryset.filter(ticket_category__id__in=category_ids)
+
         if is_closed:
             queryset = queryset.filter(is_closed=(is_closed.lower() == "true"))
         if ticket_status:
             queryset = queryset.filter(ticket_status_id=ticket_status)
-        if ticket_category:
-            queryset = queryset.filter(ticket_category_id=ticket_category)
+
         if query:
             queryset = queryset.filter(
                 Q(summary__icontains=query) | Q(description__icontains=query)
@@ -51,7 +54,13 @@ class TicketListView(LoginRequiredMixin, ListView):
         context["statuses"] = models.TicketStatus.objects.all()
         context["categories"] = models.TicketCategory.objects.all()
         context["users"] = User.objects.filter(role__in=["technician", "manager"])
-        
+
+        # Get selected categories as a list
+        selected_categories = self.request.GET.getlist("ticket_category")
+        context["selected_categories"] = [
+            int(category) for category in selected_categories
+        ]
+
         # Preserve query parameters for pagination
         query_params = self.request.GET.copy()
         if "page" in query_params:
@@ -113,8 +122,8 @@ class UserTicketListView(LoginRequiredMixin, ListView):
         context["statuses"] = models.TicketStatus.objects.all()
         context["categories"] = models.TicketCategory.objects.all()
         context["users"] = User.objects.filter(role__in=["technician", "manager"])
-        
-         # Preserve query parameters for pagination
+
+        # Preserve query parameters for pagination
         query_params = self.request.GET.copy()
         if "page" in query_params:
             query_params.pop(

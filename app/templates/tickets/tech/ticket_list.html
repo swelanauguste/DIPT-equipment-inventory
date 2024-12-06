@@ -5,7 +5,7 @@
     <h1 class="display-4"><a href="{% url 'ticket-list' %}">Tickets</a> ({{ticket_count}})</h1>
     <hr>
     <div class="py-3 col-lg-8 mx-auto">
-        <form method="get" class="select-form"
+        <form method="get"
             action="">
             <div class="col-lg-8 mx-auto">
                 <label for="summary">Search:</label>
@@ -32,15 +32,14 @@
                     </select>
                 </div>
                 <div>
-                    <select name="ticket_category"
-                        id="ticket_category"
-                        class="form-control"
-                        onchange="this.form.submit();">
-                        <option value="">Category</option>
+                    <select name="ticket_category" 
+                            id="ticket_category" 
+                            class="form-control" 
+                            multiple
+                            onchange="this.form.submit();">
                         {% for category in categories %}
                         <option value="{{ category.id }}"
-                            {% if request.GET.ticket_category == category.id|stringformat:"s" %}selected
-                            {% endif %}>
+                            {% if category.id in selected_categories %}selected{% endif %}>
                             {{ category.name|upper }}
                         </option>
                         {% endfor %}
