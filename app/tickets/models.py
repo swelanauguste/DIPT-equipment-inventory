@@ -39,7 +39,6 @@ class Ticket(models.Model):
     user = models.ManyToManyField(User, related_name="tickets")
     summary = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    # is_closed = models.BooleanField(default=False)
     ticket_id = models.CharField(
         default=generate_short_id, editable=False, unique=True, max_length=8
     )
@@ -53,7 +52,6 @@ class Ticket(models.Model):
     ticket_category = models.ManyToManyField(
         TicketCategory, verbose_name="categories"
     )
-    # tags = models.ManyToManyField(TicketCategory, blank=True, related_name='tags')
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     file = models.FileField(upload_to="tickets/", blank=True, null=True)
     assigned_to = models.ForeignKey(
