@@ -3,7 +3,15 @@
 {% load md_extras %}
 
 {% block content %}
-<div class="p-5 small">
+
+{% if not request.user.is_authenticated %}
+<div class="text-end px-5 shadow">
+<a href="{% url 'login' %}"
+    class="text-dark">login</a>
+</div>
+{% endif %}
+
+<div class="p-5">
     <form class="select-form"
         method="get">
         <div class="col-lg-4 mx-auto">
@@ -28,10 +36,5 @@
         </div>
 
 </div>
-
-
-
-</div>
-
 
 {% endblock content %}
