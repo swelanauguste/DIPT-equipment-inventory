@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load md_extras %}
+
+{% block content %}
+<div class="p-5 small">
+    <form class="select-form"
+        method="get">
+        <div class="col-lg-4 mx-auto">
+            <input class="form-control form-control-lg rounded-pill"
+                type="text"
+                name="notice"
+                placeholder="Search notices"
+                value="{{ request.GET.notice }}">
+        </div>
+        <br>
+        <div class="col-lg-8 mx-auto">
+
+            {% for ob in object_list %}
+            <div class="border p-5 rounded-5 shadow">
+                <p>{{ob.message|markdown|safe}}</p>
+            </div>
+            <br>
+            {% empty %}
+            <p class="text-center">No notices</p>
+            {% endfor %}
+
+        </div>
+
+</div>
+
+
+
+</div>
+
+
+{% endblock content %}

@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "printers",
     "tickets",
     "officekeys",
+    "stocks",
+    "notices",
 ]
 
 MIDDLEWARE = [

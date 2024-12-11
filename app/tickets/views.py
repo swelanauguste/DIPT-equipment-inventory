@@ -1,5 +1,6 @@
 from urllib.parse import urlencode
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
@@ -184,6 +185,7 @@ class TicketTechUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
+@login_required
 def ticket_delete_view(request, slug):
     ticket = get_object_or_404(models.Ticket, slug=slug)
     ticket.is_deleted = True
@@ -199,6 +201,7 @@ def ticket_delete_view(request, slug):
     )
 
 
+@login_required
 def ticket_close_view(request, slug):
     ticket = get_object_or_404(models.Ticket, slug=slug)
     closed_status = get_object_or_404(models.TicketStatus, name__icontains="closed")
@@ -216,6 +219,7 @@ def ticket_close_view(request, slug):
     )
 
 
+@login_required
 def add_comment_view(request, slug):
     ticket = get_object_or_404(models.Ticket, slug=slug)
 

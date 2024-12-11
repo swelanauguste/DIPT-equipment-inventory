@@ -33,6 +33,8 @@ $('.dateinput').attr('type', 'date');
 $('.select-form select').attr('onchange', 'this.form.submit()');
 $('select').select2();
 $('.textarea').attr('rows', 4);
+$('.notice-title').attr('rows', 6);
+$('.notice-message').attr('rows', 25);
 $('.edit-btn').addClass('btn btn-sm btn-warning px-5');
 $('.assign-btn').addClass('btn btn-sm btn-success px-5');
 $('span a').addClass('fw-bold text-dark');
