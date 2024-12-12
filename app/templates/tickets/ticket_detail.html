@@ -29,10 +29,12 @@
         {% endif %}
 
         {% if object.file %}
-        
-        <img  src="{{object.file.url}}"
-            alt="{{object.file.url}}"
-            class="img-fluid" style="max-width: 18rem;">
+        <a target="_blank" href="{{object.file.url}}">
+            <img src="{{object.file.url}}"
+                alt="{{object.file.url}}"
+                class="img-fluid"
+                style="max-width: 18rem;">
+        </a>
         <br><br>
         {% endif %}
 

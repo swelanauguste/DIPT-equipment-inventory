@@ -13,7 +13,7 @@ class Notice(models.Model):
     message = models.TextField()
     priority = models.IntegerField(default=1)
     post = models.FileField(upload_to="announcements/", null=True, blank=True)
-    expiration_date = models.DateTimeField(null=True, blank=True)
+    expiration_date = models.DateField(null=True, blank=True)
     draft = models.BooleanField(default=True)
     created_by = models.ForeignKey(
         User, on_delete=models.PROTECT, null=True, blank=True

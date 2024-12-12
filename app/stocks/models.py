@@ -22,6 +22,7 @@ class Item(models.Model):
     slug = models.SlugField(unique=True, max_length=8, blank=True, null=True)
     category = models.CharField(max_length=100, blank=True, null=True)
     stock_quantity = models.PositiveIntegerField(default=0)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

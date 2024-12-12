@@ -3,7 +3,6 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
     <div class="p-5">
         <h1>
             {% if object.pk %}
@@ -18,7 +17,7 @@
             {% csrf_token %}
             {{form|crispy}}
             <br>
-            <div class="d-grid">
+            <div class="text-end">
                 <button type="submit">Submit</button>
             </div>
         </form>

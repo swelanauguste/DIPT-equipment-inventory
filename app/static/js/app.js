@@ -45,4 +45,5 @@ $('.close-ticket').addClass('btn btn-sm btn-success px-5');
 $('.delete-ticket').addClass('btn btn-sm btn-danger px-5 text-white');
 $('input[type="text"]').addClass('form-control form-control-sm');
 $('h1 a').addClass('text-decoration-none text-dark');
+$('td a').attr('target', '_blank');
 });

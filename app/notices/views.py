@@ -19,9 +19,9 @@ class NoticeListView(LoginRequiredMixin, ListView):
         draft = self.request.GET.get("draft")
         query = self.request.GET.get("notice", "")
 
-        if draft == '1':
+        if draft == "1":
             queryset = queryset.filter(draft=True)
-        if draft == '0':
+        if draft == "0":
             queryset = queryset.filter(draft=False)
         if query:
             queryset = queryset.filter(
@@ -51,11 +51,35 @@ class PublishedNoticeListView(ListView):
     template_name = "notices/published_list.html"
 
     def get_queryset(self):
-        return (
-            models.Notice.objects.filter(expiration_date__gte=timezone.now())
+        queryset = (
+            super()
+            .get_queryset()
+            .filter(expiration_date__gte=timezone.now())
             .filter(draft=False)
             .order_by("priority")
         )
+
+        query = self.request.GET.get("notice", "")
+
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query) | Q(message__icontains=query)
+            )
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add filter options for dropdowns
+        context["notice_count"] = self.get_queryset().count()
+        # Preserve query parameters for pagination
+        query_params = self.request.GET.copy()
+        if "page" in query_params:
+            query_params.pop(
+                "page"
+            )  # Remove 'page' from query parameters to prevent duplication
+        context["query_params"] = urlencode(query_params)
+        return context
 
 
 class NoticeCreateView(LoginRequiredMixin, CreateView):
