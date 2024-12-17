@@ -73,7 +73,7 @@ class PrinterDetailView(LoginRequiredMixin, DetailView):
 
 class PrinterUpdateView(LoginRequiredMixin, UpdateView):
     model = models.Printer
-    fields = "__all__"
+    form_class = forms.PrinterForm
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
@@ -124,8 +124,7 @@ class PrinterModelDetailView(LoginRequiredMixin, DetailView):
 
 class PrinterModelUpdateView(LoginRequiredMixin, UpdateView):
     model = models.PrinterModel
-    fields = "__all__"
-
+    form_class = forms.PrinterModelForm
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
         return super().form_valid(form)

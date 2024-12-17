@@ -2,12 +2,12 @@
 
 
 {% block content %}
-<div class="py-5">
+<div class="p-5">
     <h1>{{object.maker}} {{object.name}}</h1>
     <hr>
     <div class="px-3">
         <p class="text-end me-3"><a
-                class="btn btn-sm btn-warning px-5 rounded-pill"
+                class="edit-btn"
                 href="{% url 'computer-model-update' object.slug %}">Edit</a>
         </p>
         <p><strong>Name: </strong>{{object.name}}</p>

@@ -7,8 +7,8 @@ from django.utils.text import slugify
 
 
 class Location(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, blank=True, null=True, max_length=255)
 
     class Meta:
         ordering = ["name"]
@@ -26,8 +26,8 @@ class Location(models.Model):
 
 
 class Department(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, blank=True, null=True, max_length=255)
 
     class Meta:
         ordering = ["name"]
@@ -49,8 +49,8 @@ class User(AbstractUser):
         ("user", "User"),
     )
     uid = models.UUIDField(default=uuid.uuid4, editable=False)
-    role = models.CharField(max_length=100, choices=ROLE_CHOICES, default="user")
-    job_title = models.CharField(max_length=100, null=True, blank=True)
+    role = models.CharField(max_length=255, choices=ROLE_CHOICES, default="user")
+    job_title = models.CharField(max_length=255, null=True, blank=True)
     department = models.ForeignKey(
         Department, on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -66,8 +66,8 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.uid)
-        # self.email = self.email.lower()
-        # self.username = self.username.lower()
+        self.email = self.email.lower()
+        self.username = self.username.lower()
         super(User, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

@@ -15,6 +15,12 @@ class ComputerModelForm(forms.ModelForm):
         model = models.ComputerModel
         fields = "__all__"
         exclude = ["slug", "created_by", "updated_by"]
+        
+    def clean_slug(self):
+        slug = self.cleaned_data.get('slug')
+        if ComputerModel.objects.filter(slug=slug).exists():
+            raise forms.ValidationError("This slug already exists. Please choose a unique one.")
+        return slug
 
 
 class MonitorForm(forms.ModelForm):
