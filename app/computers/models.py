@@ -143,7 +143,10 @@ class Monitor(models.Model):
         return reverse("monitor-detail", kwargs={"slug": self.slug})
 
     def __str__(self):
-        return f"{self.model.name.upper()} - {self.serial_number.upper()}"
+        model_name = self.model.name.upper() if self.model and self.model.name else "UNKNOWN MODEL"
+        serial_number = self.serial_number.upper() if self.serial_number else "NO SERIAL"
+        return f"{model_name} - {serial_number}"
+
 
 
 class ComputerModel(models.Model):
