@@ -4,6 +4,7 @@
 <div class="p-5 small">
     <h1 class="display-4"><a href="{% url 'user-list' %}">Users</a> ({{user_count}})</h1>
     <hr>
+    <a href="{% url 'register' %}" class="add-btn">Register user</a>
     <div class="py-3 col-lg-8 mx-auto">
         <form method="get" class="select-form"
             action="{% url 'user-list' %}">

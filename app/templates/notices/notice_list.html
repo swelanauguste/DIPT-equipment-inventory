@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-5 small">
+<div class="p-5">
     <h1 class="display-4"><a href="{% url 'notice-list' %}">Notice list
         </a>
         ({{notice_count}})</h1>
     <hr>
-    <div class="py-3 col-lg-8 mx-auto">
+    <div class="text-end">
+        <a class="add-btn" href="{% url 'notice-create' %}">Add notice</a>
+    </div>
+    <div class="py-3 col-lg-4 mx-auto">
         <form class="select-form"
             method="get">
 
@@ -27,7 +30,7 @@
             href="?">Show All</a>
     </div><br>
     <div class="table-responsive">
-        <table class="table table-hover table-sm small">
+        <table class="table table-hover table-sm">
             <thead>
                 <tr>
                     <th scope="col">#</th>

@@ -3,6 +3,8 @@
 
 {% block content %}
     <div class="p-5">
+        <div class="col-lg-6 mx-auto bg-white p-5 rounded-4">
+
         <h1>{{request.user}}</h1>
         <hr>
         <p class="text-end"><a class="edit-btn" href="{% url 'user-update' %}">Edit</a></p>
@@ -19,6 +21,7 @@
         </p>
         <hr>
         <p class="d-flex justify-content-between"><a href="{% url 'change-password' %}">Change password</a><a href="{% url 'logout' %}">Logout</a></p>
+    </div>
     </div>
 {% endblock content %}
     

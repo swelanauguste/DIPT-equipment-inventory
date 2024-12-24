@@ -10,5 +10,5 @@ class NoticeCreateForm(forms.ModelForm):
         widgets = {
             "title": forms.Textarea(attrs={"class": "notice-title"}),
             "message": forms.Textarea(attrs={"class": "notice-message"}),
-            "expiration_date": forms.DateTimeInput(attrs={"type": "date"}),
+            "expiration_date": forms.DateInput(attrs={"type": "date"}),
         }

@@ -4,65 +4,75 @@
 <div class="p-5 small">
     <h1 class="display-4"><a href="{% url 'stock-list' %}">Stock list</a></h1>
     <hr>
-    <div class="py-3 col-lg-8 mx-auto">
-        <form class="select-form" method="get">
+    <a class="add-btn"
+        href="{% url 'stock-create' %}">Add item</a>
+    <div class="py-3 col-lg-4 mx-auto">
+        <form class="select-form"
+            method="get">
             <input class="form-control"
                 type="text"
                 name="stock"
                 placeholder="Search stock..."
                 value="{{ request.GET.stock }}">
-            <br>
-            
             <div class="text-end">
-                <button type="submit">Filter</button>
+                <a class="text-muted me-3 fw-bold"
+                    href="{% url 'stock-list' %}">reset</a>
             </div>
+            <br>
+
         </form>
     </div>
-
-    <div class="table-responsive">
-        <table class="table table-hover table-sm small">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Items</th>
-                    <th scope="col">Count</th>
-                    <th scope="col">IN/OUT</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ob in object_list %}
-                <tr>
-                    <th scope="row">{{forloop.counter}}</th>
-                    <td>{{ob.name}}</td>
-                    <td>{{ob.stock_quantity}}</td>
-                    <td><a href="{% url 'stock-transaction' %}">In/Out</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="col-lg-6 mx-auto">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm small">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Items</th>
+                        <th scope="col">Count</th>
+                        <th scope="col">IN/OUT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ob in object_list %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{ob.name}}</td>
+                        <td>{{ob.stock_quantity}}</td>
+                        <td><a href="{% url 'stock-transaction' %}">In/Out</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-
     {% if is_paginated %}
     <div class="pagination">
-      <span class="step-links">
-        {% if page_obj.has_previous %}
-          <a href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">&laquo; first</a>
-          <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">previous</a>
-        {% endif %}
-    
-        <span class="current">
-          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a
+                href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">&laquo;
+                first</a>
+            <a
+                href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages
+                }}
+            </span>
+
+            {% if page_obj.has_next %}
+            <a
+                href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">next</a>
+            <a
+                href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">last
+                &raquo;</a>
+            {% endif %}
         </span>
-    
-        {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">next</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">last &raquo;</a>
-        {% endif %}
-      </span>
     </div>
     {% endif %}
 </div>
 
 {% endblock content %}
-    
-

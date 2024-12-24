@@ -4,8 +4,8 @@
 
 {% block content %}
 
-<div class="small">
-    <div class="p-5">
+<div class="p-5 small">
+    <div class="p-5 col-lg-4 mx-auto bg-white rounded-4 border shadow">
         <h1>
             {% if object.pk %}
             {{object.name|upper}}
@@ -14,7 +14,7 @@
             {% endif %}
         </h1>
         <hr>
-        <form class="col-lg-6"
+        <form
             action=""
             method="post">
             {% csrf_token %}

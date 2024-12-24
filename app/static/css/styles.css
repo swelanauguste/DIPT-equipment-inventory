@@ -6,6 +6,11 @@ body, html {
   padding: 0;
 }
 
+body {
+  background-image: url('../images/bush.png');
+  background-size:auto
+}
+
 
 .hide-me {
   -webkit-animation: cssAnimation 7s forwards;

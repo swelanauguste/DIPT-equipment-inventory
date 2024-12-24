@@ -25,7 +25,7 @@
         <div class="col-lg-8 mx-auto">
 
             {% for ob in object_list %}
-            <div class="border p-5 rounded-5 shadow">
+            <div class="bg-white border p-5 rounded-4 shadow">
                 <p>{{ob.message|markdown|safe}}</p>
             </div>
             <br>
@@ -34,7 +34,6 @@
             {% endfor %}
 
         </div>
-
 </div>
 
 {% endblock content %}

@@ -3,7 +3,8 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="p-5">
+<div class="p-5">
+    <div class="col-lg-8 mx-auto">
         <h1>
             {% if object.pk %}
             Edit
@@ -12,14 +13,32 @@
             {% endif %}
         </h1>
         <hr>
-        <form class="col-lg-12" action=""
+        <form class="col-lg-12"
+            action=""
             method="post">
             {% csrf_token %}
-            {{form|crispy}}
+            <div class="row">
+                <div class="col">
+                    {{ form.expiration_date|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.priority|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.post|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                {{ form.title|as_crispy_field }}
+            </div>
+            <div class="row">
+                {{ form.message|as_crispy_field }}
+            </div>
             <br>
             <div class="text-end">
                 <button type="submit">Submit</button>
             </div>
         </form>
     </div>
+</div>
 {% endblock content %}

@@ -6,7 +6,7 @@
 <div class="p-5">
     <h1 class="display-4 text-center">Register</h1>
     <hr>
-    <form action="" class="col-lg-4 mx-auto"
+    <form action="" class="col-lg-4 mx-auto bg-white p-5 rounded-4"
         method="post">
         {% csrf_token %}
         {{form|crispy}}
@@ -14,9 +14,11 @@
         <div class="d-grid">
             <button type="submit">Login</button>
         </div>
+        <br>
+        <p class="text-end"> <a href="{% url 'forgot-password' %}">Forgot
+            password</a></p>
     </form>
     <br>
-    <p class="text-end"> <a href="{% url 'forgot-password' %}">Forgot
-            password</a></p>
+   
 </div>
 {% endblock content %}

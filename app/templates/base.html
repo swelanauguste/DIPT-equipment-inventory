@@ -30,25 +30,18 @@
 </head>
 
 <body class="small">
-    <div class="d-flex min-vh-100">
-        {% if request.user.is_authenticated %}
-
-        <div class="px-4 text-bg-dark min-vh-100">
-            {% include 'nav.html' %}
-        </div>
-        {% endif %}
-
-        <div class="col">
-            {% include 'messages.html' %}
-
-            {% block content %}
-
-            {% endblock content %}
-        </div>
+    {% if request.user.is_authenticated %}
+    <div class="mb-5">
+        {% include 'nav.html' %}
     </div>
-    <script>
+    {% endif %}
 
-    </script>
+    {% include 'messages.html' %}
+
+    {% block content %}
+
+    {% endblock content %}
+
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
