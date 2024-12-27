@@ -215,7 +215,7 @@ class UserPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
 def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out.")
-    return redirect("login")
+    return redirect("/")
 
 
 def activate(request, uidb64, token):

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-5">
+<div class="p-5 small">
     <h1 class="display-4"><a href="{% url 'ticket-list' %}">Tickets</a> ({{ticket_count}})</h1>
     <hr>
     <div class="text-end">
@@ -77,11 +77,10 @@
                 <button type="submit">Filter</button>
             </div>
         </form>
-
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover table-sm small">
+        <table class="table table-hover table-sm">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -100,12 +99,12 @@
                     <td><a
                             href="{{ob.get_absolute_url}}">{{ob.ticket_id|upper}}</a>
                     </td>
-                    <td><a href="{{ob.get_absolute_url}}">{{ob.summary}}</a>
+                    <td><a href="{{ob.get_absolute_url}}">{{ob.summary|truncatechars:20}}</a>
                     </td>
-                    <td>{{ob.ticket_status}}</td>
+                    <td>{{ob.ticket_status|title}}</td>
                     <td>
                         {% for category in ob.ticket_category.all %}
-                            {{category.name|upper}},
+                            {{category.name|capfirst}},
                         {% endfor %}
                     </td>
                     <td><a href="#">{{ob.assigned_to}}</a></td>

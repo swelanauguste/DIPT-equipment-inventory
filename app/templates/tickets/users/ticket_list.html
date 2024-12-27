@@ -7,7 +7,6 @@
     <div class="py-3 col-lg-8 mx-auto">
         <form method="get" class="select-form"
             action="">
-        
             <br>
             <div class="d-flex justify-content-center gap-2">
                 <div class="col-lg-8 mx-auto">
@@ -32,17 +31,11 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="text-end">
-                    <button type="submit">Filter</button>
-                </div>
             </div>
-           
         </form>
-
     </div>
-
     <div class="table-responsive">
-        <table class="table table-hover table-sm small">
+        <table class="table table-hover table-sm">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -58,7 +51,7 @@
                     <td><a
                             href="{{ob.get_absolute_url}}">{{ob.ticket_id|upper}}</a>
                     </td>
-                    <td><a href="{{ob.get_absolute_url}}">{{ob.summary}}</a>
+                    <td><a href="{{ob.get_absolute_url}}">{{ob.summary|truncatechars:30}}</a>
                     </td>
                     <td>{{ob.ticket_status}}</td>
                 </tr>

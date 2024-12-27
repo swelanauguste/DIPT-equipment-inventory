@@ -15,7 +15,7 @@ class ComputerListView(LoginRequiredMixin, ListView):
     model = models.Computer
     template_name = "computer_list.html"
     context_object_name = "computers"
-    paginate_by = 20
+    paginate_by = 100
 
     def get_queryset(self):
         queryset = super().get_queryset()

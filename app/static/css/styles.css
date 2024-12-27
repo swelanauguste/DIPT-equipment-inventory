@@ -7,8 +7,8 @@ body, html {
 }
 
 body {
-  background-image: url('../images/bush.png');
-  background-size:auto
+  background-color: #DFDBE5;
+  background-image: url("../images/texture.svg");
 }
 
 
@@ -44,3 +44,4 @@ body {
       opacity: 0;
   }
 }
+

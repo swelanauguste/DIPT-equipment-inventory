@@ -172,7 +172,7 @@ SITE_ID = 1
 # Redirect URLs
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/users/"
-LOGOUT_URL = "/users/"
+LOGOUT_URL = "/"
 
 # Email settings
 ADMINS = [
