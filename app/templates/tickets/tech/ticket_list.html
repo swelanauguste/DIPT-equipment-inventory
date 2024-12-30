@@ -39,16 +39,31 @@
                         {% endfor %}
                     </select>
                 </div>
+            
+                <div>
+                    <select name="ticket_users" 
+                            id="ticket_users" 
+                            class="form-control" 
+                            onchange="this.form.submit();">
+                            <option value="">Users</option>
+                        {% for ticket_user in ticket_users %}
+                        <option value="{{ ticket_user.id }}"
+                            {% if ticket_user.id in selected_ticket_users %}selected{% endif %}>
+                            {{ ticket_user|title }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
                 <div>
                     <select name="ticket_category" 
                             id="ticket_category" 
                             class="form-control" 
-                            multiple
                             onchange="this.form.submit();">
+                            <option value="">Category</option>
                         {% for category in categories %}
                         <option value="{{ category.id }}"
                             {% if category.id in selected_categories %}selected{% endif %}>
-                            {{ category.name|upper }}
+                            {{ category.name|title }}
                         </option>
                         {% endfor %}
                     </select>

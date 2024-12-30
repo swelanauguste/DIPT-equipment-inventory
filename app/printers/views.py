@@ -9,7 +9,7 @@ from . import forms, models
 class PrinterListView(LoginRequiredMixin, ListView):
     model = models.Printer
     context_object_name = "printers"
-    paginate_by = 20  # Number of items per page
+    paginate_by = 100  # Number of items per page
 
     def get_queryset(self):
         queryset = super().get_queryset()
