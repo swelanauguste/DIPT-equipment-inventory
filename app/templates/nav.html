@@ -138,29 +138,15 @@
                 <li><a href="{% url 'ticket-list' %}"
                         class="nav-link px-2 link-body-emphasis">Tickets</a>
                 </li>
-
-                <div class="dropdown">
-                    <span style="cursor: pointer;"
-                        class="nav-link px-2 link-body-emphasis"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Computers
-                    </span>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item"
-                                href="{% url 'computer-list' %}">Computers</a>
-                        </li>
-                        <li><a class="dropdown-item"
-                                href="{% url 'monitor-list' %}">Monitors</a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item"
-                                href="{% url 'microsoft-office-list' %}">Microsoft
-                                office</a></li>
-                    </ul>
-                </div>
+                <li><a href="{% url 'computer-list' %}"
+                        class="nav-link px-2 link-body-emphasis">Computers</a>
+                </li>
+                <li><a href="{% url 'monitor-list' %}"
+                        class="nav-link px-2 link-body-emphasis">Monitors</a>
+                </li>
+                <li><a href="{% url 'microsoft-office-list' %}"
+                        class="nav-link px-2 link-body-emphasis">Office Install</a>
+                </li>
                 <li><a href="{% url 'printer-list' %}"
                         class="nav-link px-2 link-body-emphasis">Printers</a>
                 </li>

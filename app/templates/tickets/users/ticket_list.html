@@ -4,6 +4,13 @@
 <div class="p-5">
     <h1 class="display-4"><a href="{% url 'user-ticket-list' %}">Tickets</a> ({{ticket_count}})</h1>
     <hr>
+    <div class="text-end">
+        {% if request.user.role == 'user' %}
+        <a class="edit-btn" href="{% url 'ticket-user-create' %}">Add ticket</a>
+        {% else %}
+        <a class="edit-btn" href="{% url 'ticket-tech-create' %}">Add ticket</a>
+        {% endif %}
+    </div>
     <div class="py-3 col-lg-8 mx-auto">
         <form method="get" class="select-form"
             action="">
