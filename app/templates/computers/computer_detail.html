@@ -10,7 +10,7 @@
         <p class="text-end me-3"><a class="edit-computer"
                 href="{% url 'computer-update' object.slug %}">Edit</a>
         </p>
-        <div class="row">
+        <div class="bg-light p-5 rounded-4 shadow row">
             <div class="col-lg-4">
                 <p><strong>Serial#: </strong>{{object.serial_number|upper}}</p>
                 <p><strong>Computer name:
@@ -87,7 +87,7 @@
                 <br>
                 <div>
                     {% for comment in object.comments.all %}
-                    <span class="small">{{comment.comment}} </span><br>
+                    <span>{{comment.comment}} </span><br>
                     <p class="text-end small"><a
                             href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
                         <span>{{comment.created_at}}</span>

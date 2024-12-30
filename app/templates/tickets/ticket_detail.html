@@ -5,8 +5,8 @@
 {% block content %}
 <div class="p-5">
     <h1>{{object.ticket_id|upper}}</h1>
-    <hr>
-    <div class="row gap-3">
+    <br>
+    <div class="row gap-3 bg-light p-5 shdow rounded-4">
         <div class="col">
             {% if not request.user.role == 'user' %}
             <p class="d-flex justify-content-end gap-2">
@@ -94,7 +94,7 @@
                 <h3>Comments</h3>
                 <hr>
                 {% for comment in object.comments.all %}
-                <span class="small">{{comment.comments}} </span><br>
+                <span>{{comment.comments}} </span><br>
                 <p class="text-end small"><a
                         href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
                     <span>{{comment.created_at}}</span>

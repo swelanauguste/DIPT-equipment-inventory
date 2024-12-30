@@ -6,10 +6,10 @@ body, html {
   padding: 0;
 }
 
-body {
+/* body {
   background-color: #DFDBE5;
   background-image: url("../images/texture.svg");
-}
+} */
 
 
 .hide-me {

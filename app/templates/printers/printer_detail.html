@@ -6,11 +6,10 @@
     <h1>{{object.model}} | {{object.serial_number}}</h1>
     <hr>
     <div class="px-3">
-        <p class="text-end me-3"><a
-                class="edit-btn"
+        <p class="text-end me-3"><a class="edit-btn"
                 href="{% url 'printer-update' object.slug %}">Edit</a>
         </p>
-        <div class="row">
+        <div class="row bg-light p-5 rounded-4 shadow">
             <div class="col">
                 <p><strong>Received: </strong>{{object.date_received}}</p>
                 <p><strong>Serial#: </strong>{{object.serial_number}}</p>
@@ -19,39 +18,35 @@
                 <p><strong>Printer IP address: </strong><a target="_blank"
                         href="http://{{object.ip_addr}}">{{object.ip_addr|default:"N/A"}}</a>
                 </p>
-                <p><strong>Warranty: </strong>{{object.warranty_info}}</p>
                 <p><strong>Status:</strong><span
                         class="text-bg-{{object.status.colour}} px-3 py-1 rounded-pill">{{object.status}}</span>
                 </p>
-                <p><strong>Location: </strong>{{object.location}}</p>
-                <p><strong>Department: </strong>{{object.department}}</p>
+           
                 <p><strong>Installed: </strong>{{object.date_installed}}</p>
+                <p><strong>Model: </strong><a
+                        href="{{object.model.get_absolute_url}}">{{object.model.name}}</a>
+                </p>
+                <p><strong>Maker: </strong>{{object.model.maker}}</p>
                 {% if object.image %}
                 <p><strong>Att: </strong>{{object.image.url}}</p>
                 {% endif %}
                 <p><strong>Notes: </strong>{{object.notes|default:'N/A'}}</p>
-
-
             </div>
             <div class="col">
-                <p><strong>Model: </strong><a
-                        href="{{object.model.get_absolute_url}}">{{object.model.name}}</a>
+                <p><strong>Location: </strong>{{object.location}}</p>
+                <p><strong>Department: </strong>{{object.department}}</p>
+                <p><strong>Created:
+                    </strong><span>{{object.created_at}}
+                        <a
+                            href="{{object.created_by.get_absolute_url}}">{{object.created_by|lower}}</a></span>
                 </p>
-                <p><strong>Type: </strong>{{object.model.printer_type}}</p>
-                <p><strong>Maker: </strong>{{object.model.maker}}</p>
+                <p> <span><strong>Updated:
+                        </strong>{{object.updated_at}}
+                        <a
+                            href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|lower}}</a></span>
+                </p>
             </div>
         </div>
-
-        <hr>
-        <p class="small text-muted"><strong>Created:
-            </strong><span>{{object.created_at}}
-                <a
-                    href="{{object.created_by.get_absolute_url}}">{{object.created_by|lower}}</a></span>
-            <span class="float-end"><strong>Updated:
-                </strong>{{object.updated_at}}
-                <a
-                    href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|lower}}</a></span>
-        </p>
     </div>
 </div>
 {% endblock content %}
