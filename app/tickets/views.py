@@ -23,7 +23,6 @@ class TicketListView(LoginRequiredMixin, ListView):
         is_closed = self.request.GET.get("is_closed", "")
         ticket_status = self.request.GET.get("ticket_status", "")
         ticket_category = self.request.GET.get("ticket_category", "")
-        ticket_users = self.request.GET.get("ticket_users", "")
         query = self.request.GET.get("q", "")
         assigned_to = self.request.GET.get("assigned_to", "")
 
@@ -31,10 +30,6 @@ class TicketListView(LoginRequiredMixin, ListView):
         if ticket_category:
             category_ids = ticket_category.split(",")
             queryset = queryset.filter(ticket_category__id__in=category_ids)
-    
-        if ticket_users:
-            users_ids = ticket_users.split(",")
-            queryset = queryset.filter(user__id__in=users_ids)
 
         if is_closed:
             queryset = queryset.filter(is_closed=(is_closed.lower() == "true"))
@@ -59,7 +54,6 @@ class TicketListView(LoginRequiredMixin, ListView):
         context["ticket_count"] = self.get_queryset().count()
         context["statuses"] = models.TicketStatus.objects.all()
         context["categories"] = models.TicketCategory.objects.all()
-        context["ticket_users"] = User.objects.all()
         context["users"] = User.objects.filter(role__in=["technician", "manager"])
 
         # Get selected categories as a list
