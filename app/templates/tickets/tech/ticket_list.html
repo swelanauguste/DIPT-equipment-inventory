@@ -39,31 +39,30 @@
                         {% endfor %}
                     </select>
                 </div>
-            
-                <!-- <div>
-                    <select name="ticket_users" 
-                            id="ticket_users" 
-                            class="form-control" 
-                            onchange="this.form.submit();">
-                            <option value="">Users</option>
-                        {% for ticket_user in ticket_users %}
-                        <option value="{{ ticket_user.id }}"
-                            {% if ticket_user.id in selected_ticket_users %}selected{% endif %}>
-                            {{ ticket_user|title }}
-                        </option>
+              
+                <div>
+                    <select id="ticket_users" name="ticket_users" class="form-control" onchange="this.form.submit();">
+                        <option value="" {% if not selected_users %}selected{% endif %}>Users</option>
+                        {% for user in users %}
+                            <option value="{{ user.id }}" {% if user.id in selected_users %}selected{% endif %}>
+                                {{ user }}
+                            </option>
                         {% endfor %}
                     </select>
-                </div> -->
+                </div>
+
                 <div>
                     <select name="ticket_category" 
                             id="ticket_category" 
                             class="form-control" 
                             onchange="this.form.submit();">
-                            <option value="">Category</option>
+                            <option value="" {% if not ticket_category %}selected{% endif %}>Category</option>
                         {% for category in categories %}
                         <option value="{{ category.id }}"
-                            {% if category.id in selected_categories %}selected{% endif %}>
-                            {{ category.name|title }}
+                            {% if  request.GET.ticket_category == category.id|stringformat:"s"  %}
+                            selected
+                            {% endif %}>
+                            {{ category }}
                         </option>
                         {% endfor %}
                     </select>
@@ -77,7 +76,7 @@
                         <option value="unassigned"
                             {% if request.GET.assigned_to == 'unassigned' %}selected
                             {% endif %}>Unassigned</option>
-                        {% for user in users %}
+                        {% for user in ict_users %}
                         <option value="{{ user.id }}"
                             {% if request.GET.assigned_to == user.id|stringformat:"s" %}selected
                             {% endif %}>
