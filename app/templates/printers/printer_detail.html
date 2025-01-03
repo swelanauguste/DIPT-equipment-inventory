@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 
 {% block content %}
 <div class="p-5">
@@ -45,6 +47,34 @@
                         <a
                             href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|lower}}</a></span>
                 </p>
+            </div>
+            <div class="col">
+                <h3>Comments</h3>
+                <hr>
+                {% if object.pk %}
+                <form action="{% url 'printer-add-comment' object.slug %}"
+                    method="post">
+                    {% csrf_token %}
+                    {{comments_form|crispy}}
+                    <div class="text-end">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+                <br>
+                <hr>
+                <br>
+                <div>
+                    {% for comment in object.comments.all %}
+                    <span>{{comment.comment}} </span><br>
+                    <p class="text-end small"><a
+                            href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
+                        <span>{{comment.created_at}}</span>
+            
+                    </p>
+                    <hr>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

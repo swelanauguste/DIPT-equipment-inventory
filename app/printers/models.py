@@ -105,3 +105,33 @@ class Printer(models.Model):
 
     def __str__(self):
         return f"{self.model.maker} - {self.model.name}"
+
+
+
+class PrinterComment(models.Model):
+    printer = models.ForeignKey(
+        Printer, on_delete=models.CASCADE, related_name="comments"
+    )
+    comment = models.TextField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="printer_comment_created_by",
+    )
+    updated_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="printer_comment_updated_by",
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.printer.printer_name} - comment {self.pk}"

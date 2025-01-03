@@ -1,7 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.shortcuts import redirect
 
 from . import forms, models
 
@@ -70,6 +71,11 @@ class PrinterCreateView(LoginRequiredMixin, CreateView):
 class PrinterDetailView(LoginRequiredMixin, DetailView):
     model = models.Printer
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["comments_form"] = forms.CommentCreateForm
+        return context
+
 
 class PrinterUpdateView(LoginRequiredMixin, UpdateView):
     model = models.Printer
@@ -125,6 +131,29 @@ class PrinterModelDetailView(LoginRequiredMixin, DetailView):
 class PrinterModelUpdateView(LoginRequiredMixin, UpdateView):
     model = models.PrinterModel
     form_class = forms.PrinterModelForm
+
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
         return super().form_valid(form)
+
+
+def add_comment_view(request, slug):
+    printer = get_object_or_404(models.Printer, slug=slug)
+
+    if request.method == "POST":
+        form = forms.CommentCreateForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.printer = printer
+            if request.user.is_authenticated:
+                comment.created_by = request.user
+                comment.updated_by = request.user
+            comment.save()
+            return redirect("printer-detail", slug=slug)
+
+    # If the form is not valid or the request method is not POST
+    return render(
+        request,
+        "printer/printer_detail.html",
+        {"printer": printer, "comment_form": form},
+    )

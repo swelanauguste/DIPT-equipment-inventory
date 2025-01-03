@@ -31,4 +31,9 @@ urlpatterns = [
         views.PrinterModelUpdateView.as_view(),
         name="printer-model-update",
     ),
+    path(
+        "printer-comment/<slug:slug>/",
+        views.add_comment_view,
+        name="printer-add-comment",
+    ),
 ]
