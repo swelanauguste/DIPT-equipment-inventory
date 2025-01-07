@@ -2,24 +2,24 @@
 
 {% block content %}
 <div class="p-5 small">
-    <h1 class="display-4"><a href="{% url 'stock-list' %}">Stock list</a></h1>
+    <h1 class="display-4"><a href="{% url 'transaction-list' %}">Transaction list</a></h1>
     <hr>
     <div class="d-flex justify-content-between mx-5">
     <a class="add-btn"
-        href="{% url 'stock-create' %}">Add item</a>
-        <a class="text-dark fw-bold" href="{% url 'transaction-list' %}">Transactions</a>
+        href="{% url 'stock-transaction' %}">Add transaction</a>
+        <a class="text-dark fw-bold" href="{% url 'stock-list' %}">Stock</a>
     </div>
     <div class="py-3 col-lg-4 mx-auto">
         <form class="select-form"
             method="get">
             <input class="form-control"
                 type="text"
-                name="stock"
-                placeholder="Search stock..."
-                value="{{ request.GET.stock }}">
+                name="transactions"
+                placeholder="Search transactions..."
+                value="{{ request.GET.transactions }}">
             <div class="text-end">
                 <a class="text-muted me-3 fw-bold"
-                    href="{% url 'stock-list' %}">reset</a>
+                    href="{% url 'transaction-list' %}">reset</a>
             </div>
             <br>
 
@@ -32,16 +32,22 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Items</th>
-                        <th scope="col">Count</th>
+                        <th scope="col">In/Out</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">By</th>
+                        <th scope="col">Created</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for ob in object_list %}
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
-                        <td><a href="{{ob.get_absolute_url}}">{{ob.name}}</a>
+                        <td><a href="{{ob.get_absolute_url}}">{{ob}}</a>
                         </td>
-                        <td>{{ob.stock_quantity}}</td>
+                        <td>{{ob.transaction_type}}</td>
+                        <td>{{ob.quantity}}</td>
+                        <td>{{ob.performed_by}}</td>
+                        <td>{{ob.created_at}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

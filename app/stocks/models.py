@@ -23,6 +23,7 @@ class Item(models.Model):
     category = models.CharField(max_length=100, blank=True, null=True)
     stock_quantity = models.PositiveIntegerField(default=0)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="+")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -34,6 +35,10 @@ class Item(models.Model):
             # Newly created object, so set slug
             self.slug = slugify(self.sku)
         super(Item, self).save(*args, **kwargs)
+        
+    def get_absolute_url(self):
+        return reverse("stock-detail", kwargs={"slug": self.slug})
+    
 
     def __str__(self):
         return self.name
@@ -45,7 +50,7 @@ class Transaction(models.Model):
         ("OUT", "Stock Out"),
     ]
 
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="transactions")
     transaction_type = models.CharField(max_length=3, choices=TRANSACTION_TYPE)
     quantity = models.PositiveIntegerField()
     performed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -61,6 +66,9 @@ class Transaction(models.Model):
         ):
             self.item.stock_quantity -= self.quantity
         self.item.save()
+        
+    def get_absolute_url(self):
+        return reverse("trans-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
         return f"{self.get_transaction_type_display()} - {self.item.name} ({self.quantity})"

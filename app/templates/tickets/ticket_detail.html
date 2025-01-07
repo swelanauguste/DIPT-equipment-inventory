@@ -6,7 +6,7 @@
 <div class="p-5">
     <h1>{{object.ticket_id|upper}}</h1>
     <br>
-    <div class="row gap-3 bg-light p-5 shdow rounded-4">
+    <div class="row gap-3 bg-light p-5 shadow rounded-4">
         <div class="col">
             {% if not request.user.role == 'user' %}
             <p class="d-flex justify-content-end gap-2">
@@ -71,7 +71,7 @@
                     href="{% url 'ticket-delete' object.slug %}">Delete</a>
             </p>
             {% endif %}
-        
+
         </div>
         <div class="col-lg-4 border-start border-dark px-5">
             {% if object.pk %}
@@ -85,15 +85,14 @@
                 </div>
             </form>
             {% endif %}
-            
+
             {% if object.comments.all %}
-                
-                
             <br><br>
             <div>
                 <h3>Comments</h3>
                 <hr>
                 {% for comment in object.comments.all %}
+        
                 <span>{{comment.comments}} </span><br>
                 <p class="text-end small"><a
                         href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>

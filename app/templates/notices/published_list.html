@@ -5,7 +5,7 @@
 {% block content %}
 
 {% if not request.user.is_authenticated %}
-<div class="text-end px-5 shadow bg-white">
+<div class="text-end px-5 bg-white">
 <a href="{% url 'login' %}"
     class=" rounded-pill my-2 px-5 fw-bold btn btn-info text-dark">Sign in</a>
 </div>

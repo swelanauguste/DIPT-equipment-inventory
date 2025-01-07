@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="p-5 ">
+    <h1 class="display-4">{{object}}</h1>
+    <br>
+    <div class="row gap-3 bg-white p-5 shadow rounded-4">
+        <div class="col">
+            <h3>Details</h3>
+            <hr>
+            <p><strong>Name: </strong>{{object.item.name}}</p>
+            <p><strong>SKU: </strong>{{object.transaction_type}}</p>
+            <p><strong>Quantity: </strong>{{object.quantity}}</p>
+            <p><strong>By: </strong>{{object.performed_by}}</p>
+            <p><strong>Notes: </strong>{{object.notes|default:"----"}}</p>
+            <p><strong>Created at: </strong>{{object.created_at}}</p>
+        </div>
+      
+    </div>
+</div>
+{% endblock content %}

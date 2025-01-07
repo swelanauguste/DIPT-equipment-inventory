@@ -1,185 +1,92 @@
 {% load static %}
-<!-- <button class="mx-2 mt-2 btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
-    ICT Unit - DIPT
-  </button>
-  
-  <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="staticBackdropLabel">ICT Unit - DIPT</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div>
-        {% if request.user.role == 'technician' or request.user.role == 'manager' %}
-        <h3 class="pt-2 fw-bold"><a href="/">ICT Unit - DIPT</a></h3>
-        <hr>
-        <ul class="list-unstyled fw-bold">
-            <li><a href="{% url 'ticket-list' %}">Tickets</a>
-            <li><a href="{% url 'ticket-tech-create' %}">Add ticket</a></li>
-        
-            </li>
-            <hr>
-            <li><a href="{% url 'computer-list' %}">Computers</a>
-            <li><a href="{% url 'computer-create' %}">Add computer</a></li>
-            <li><a href="{% url 'computer-model-list' %}">Models</a></li>
-            <li><a href="{% url 'computer-model-create' %}">Add model</a>
-            </li>
-            </li>
-            <hr>
-            <li><a href="{% url 'monitor-list' %}">Monitors</a>
-            <li><a href="{% url 'monitor-create' %}">Add monitor</a></li>
-            <li><a href="{% url 'monitor-model-list' %}">Models</a></li>
-            <li><a href="{% url 'monitor-model-create' %}">Add model</a>
-            </li>
-            </li>
-            <hr>
-            <li><a href="{% url 'microsoft-office-list' %}">Office Suite</a></li>
-            <li><a href="{% url 'microsoft-office-create' %}">Add</a></li>
-            <hr>
-            <li><a href="{% url 'printer-list' %}">Printers</a>
-            <li><a href="{% url 'printer-create' %}">Add printer</a></li>
-            <li><a href="{% url 'printer-model-list' %}">Models</a></li>
-            </li>
-            </li>
-            <hr>
-            <li><a href="{% url 'stock-list' %}">Stock</a>
-            <li><a href="{% url 'stock-create' %}">Add stock</a></li>
-            </li>
-            <hr>
-            <li><a href="{% url 'notice-list' %}">Notices</a></li>
-            <li><a href="{% url 'notice-published-list' %}">Published</a></li>
-            <li><a href="{% url 'notice-create' %}">Add notice</a></li>
-            <hr>
-            <li><a href="{% url 'user-list' %}">Users</a>
-            <li><a href="{% url 'register' %}">Add user</a></li>
-            </li>
-            <hr>
-            <li><a href="{% url 'user-detail' %}">{{request.user|truncatechars:15}}</a>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-            </li>
-        </ul>
-        {% else %}
-        <h3 class="pt-2 fw-bold"><a href="{% url 'user-ticket-list' %}">ICT Unit -
-                DIPT</a></h3>
-        <hr>
-        <ul class="fw-bold">
-            <li><a href="{% url 'user-ticket-list' %}">Tickets</a></li>
-        
-            <li><a href="{% url 'ticket-user-create' %}">Add ticket</a></li>
-            <hr>
-            <li><a href="{% url 'user-detail' %}">{{request.user|truncatechars:15}}</a>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-            </li>
-        </ul>
-        {% endif %}
-      </div>
-    </div>
-  </div> -->
 
-{% if request.user.role == 'user' %}
-
-<div class="fixed-top">
-<header class="p-3 border-bottom">
-    <div class="container">
-        <div
-            class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/"
-                class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none me-lg-5">
-                <h3 class="fw-bold">ICT Unit -DIPT</h3>
-            </a>
-
-            <ul
-                class="fw-bold nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/"
-                        class="nav-link px-2 link-body-emphasis">Home</a></li>
-                <li><a href="{% url 'user-ticket-list' %}"
-                        class="nav-link px-2 link-body-emphasis">Tickets</a>
-                </li>
-            </ul>
-            <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-        </form> -->
-            <div class="dropdown text-end">
-                <a href="#"
-                    class="fw-bold d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                   {{request.user}}
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item small fw-bold"
-                            href="{% url 'user-detail' %}">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
+<nav class="navbar navbar-white bg-white"
+    aria-label="Dark offcanvas navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold"
+            href="/">ICT Unit - DIPT</a>
+        <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbarDark"
+            aria-controls="offcanvasNavbarDark"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end text-bg-white"
+            tabindex="-1"
+            id="offcanvasNavbarDark"
+            aria-labelledby="offcanvasNavbarDarkLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title"
+                    id="offcanvasNavbarDarkLabel">ICT Unit - DIPT</h5>
+                <button type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                            aria-current="page"
+                            href="/">Home</a>
                     </li>
-                    <li><a class="dropdown-item small fw-bold"
-                            href="{% url 'logout' %}">Sign out</a></li>
+                    {% if request.user.role == 'user' %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'user-ticket-list' %}">Tickets</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'ticket-list' %}">Tickets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'computer-list' %}">Computers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'monitor-list' %}">Monitors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'microsoft-office-list' %}">Office
+                            Suite</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'printer-list' %}">Printer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'user-list' %}">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'notice-list' %}">Notice</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'stock-list' %}">Stock</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link"
+                            href="#">Knowledge Base</a>
+                    </li> -->
+                    {% endif %}
+                    <hr>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'user-detail' %}">{{request.user}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'logout' %}">Sign out</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
-</header>
-</div>
-{% else %}
-<div class="fixed-top">
-<header class="bg-white p-3 border-bottom">
-    <div class="container">
-        <div
-            class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/"
-                class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none me-lg-5">
-                <h3 class="fw-bold">ICT Unit -DIPT</h3>
-            </a>
-
-            <ul
-                class="fw-bold nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/"
-                        class="nav-link px-2 link-body-emphasis">Home</a></li>
-                <li><a href="{% url 'ticket-list' %}"
-                        class="nav-link px-2 link-body-emphasis">Tickets</a>
-                </li>
-                <li><a href="{% url 'computer-list' %}"
-                        class="nav-link px-2 link-body-emphasis">Computers</a>
-                </li>
-                <li><a href="{% url 'monitor-list' %}"
-                        class="nav-link px-2 link-body-emphasis">Monitors</a>
-                </li>
-                <li><a href="{% url 'microsoft-office-list' %}"
-                        class="nav-link px-2 link-body-emphasis">Office Install</a>
-                </li>
-                <li><a href="{% url 'printer-list' %}"
-                        class="nav-link px-2 link-body-emphasis">Printers</a>
-                </li>
-                <li><a href="{% url 'user-list' %}"
-                        class="nav-link px-2 link-body-emphasis">Users</a></li>
-                <li><a href="{% url 'notice-list' %}"
-                        class="nav-link px-2 link-body-emphasis">Notices</a>
-                </li>
-                <li><a href="{% url 'stock-list' %}"
-                        class="nav-link px-2 link-body-emphasis">Stock</a></li>
-            </ul>
-            <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-        </form> -->
-            <div class="dropdown text-end">
-                <a href="#"
-                    class="fw-bold d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-              {{request.user}}
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item small fw-bold"
-                            href="{% url 'user-detail' %}">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item small fw-bold"
-                            href="{% url 'logout' %}">Sign out</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</header>
-</div>
-{% endif %}
+</nav>
