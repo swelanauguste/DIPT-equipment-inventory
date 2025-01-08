@@ -11,6 +11,7 @@ urlpatterns = [
     path("printers/", include("printers.urls")),
     path("users/", include("users.urls")),
     path("stocks/", include("stocks.urls")),
+    path("knowledge-base/", include("knowledge_base.urls")),
     path("", include("notices.urls")),
 ]
 

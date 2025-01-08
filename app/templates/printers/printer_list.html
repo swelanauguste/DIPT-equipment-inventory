@@ -33,9 +33,7 @@
                     <th scope="row">{{forloop.counter}}</th>
                     <td><a href="{{ob.get_absolute_url}}">{{ob.printer_name|upper}}
                             ({{ob.serial_number|upper}})</a></td>
-                    <td><a
-                            href="{{ob.model.get_absolute_url}}">{{ob.model}}</a>
-                    </td>
+                    <td>{{ob.model}}</td>
                     <td>{{ob.department}}</td>
                     <td>{{ob.location}}</td>
                     <td><a target="_blank"

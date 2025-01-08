@@ -26,7 +26,7 @@
                     aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 fw-bold">
                     <li class="nav-item">
                         <a class="nav-link active"
                             aria-current="page"
@@ -65,16 +65,16 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'notice-list' %}">Notice</a>
+                            href="{% url 'notice-list' %}">Notices</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
                             href="{% url 'stock-list' %}">Stock</a>
                     </li>
-                    <!-- <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link"
-                            href="#">Knowledge Base</a>
-                    </li> -->
+                            href="{% url 'article-list' %}">Knowledge Base</a>
+                    </li>
                     {% endif %}
                     <hr>
                     <li class="nav-item">

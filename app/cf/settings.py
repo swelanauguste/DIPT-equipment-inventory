@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "officekeys",
     "stocks",
     "notices",
+    "knowledge_base",
 ]
 
 MIDDLEWARE = [
