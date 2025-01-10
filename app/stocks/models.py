@@ -56,6 +56,9 @@ class Transaction(models.Model):
     performed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ["-created_at"]
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

@@ -2,6 +2,7 @@
 
 {% load crispy_forms_tags %}
 
+{% load md_extras %}
 
 {% block content %}
 <div class="p-5">
@@ -32,7 +33,7 @@
                 {% if object.image %}
                 <p><strong>Att: </strong>{{object.image.url}}</p>
                 {% endif %}
-                <p><strong>Notes: </strong>{{object.notes|default:'N/A'}}</p>
+                <p><strong>Notes: </strong>{{object.notes|markdown|safe|default:'N/A'}}</p>
             </div>
             <div class="col">
                 <p><strong>Location: </strong>{{object.location}}</p>
@@ -65,7 +66,7 @@
                 <br>
                 <div>
                     {% for comment in object.comments.all %}
-                    <span>{{comment.comment}} </span><br>
+                    <span>{{comment.comment|markdown|safe}} </span><br>
                     <p class="text-end small"><a
                             href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
                         <span>{{comment.created_at}}</span>
