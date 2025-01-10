@@ -26,7 +26,7 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
 
 class ItemListView(LoginRequiredMixin, ListView):
     model = Item
-    paginate_by = 20
+    paginate_by = 100
 
     def get_queryset(self):
         queryset = super().get_queryset()
