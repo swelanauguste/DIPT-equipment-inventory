@@ -5,6 +5,22 @@
     <div class="container-fluid">
         <a class="navbar-brand fw-bold"
             href="/">ICT Unit - DIPT</a>
+        {% if request.user.role == 'user' %}
+        <a class="text-dark text-decoration-none"
+            href="{% url 'ticket-user-create' %}"> <img class="me-2"
+            src="{% static 'svg/add-ticket.svg' %}"
+            alt="{% static 'svg/add-ticket.svg' %}"></a>
+        {% else %}
+        <a class="text-dark text-decoration-none"
+            href="{% url 'ticket-tech-create' %}"> <img class="me-2"
+            src="{% static 'svg/add-ticket.svg' %}"
+            alt="{% static 'svg/add-ticket.svg' %}"></a>
+        <a class="text-dark text-decoration-none"
+            href="{% url 'computer-list' %}"> <img class="me-2"
+            src="{% static 'svg/computer.svg' %}"
+            alt="{% static 'svg/computer.svg' %}"></a>
+        {% endif %}
+
         <button class="navbar-toggler"
             type="button"
             data-bs-toggle="offcanvas"
@@ -25,8 +41,10 @@
                     data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
+            <hr>
             <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 fw-bold">
+                <ul
+                    class="navbar-nav justify-content-end flex-grow-1 pe-3 fw-bold">
                     <li class="nav-item">
                         <a class="nav-link active"
                             aria-current="page"
@@ -35,55 +53,85 @@
                     {% if request.user.role == 'user' %}
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'user-ticket-list' %}">Tickets</a>
+                            href="{% url 'user-ticket-list' %}">
+                            <img class="me-2"
+                                src="{% static 'svg/ticket.svg' %}"
+                                alt="{% static 'svg/ticket.svg' %}">
+                            Tickets</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'ticket-list' %}">Tickets</a>
+                            href="{% url 'ticket-list' %}">
+                            <img class="me-2"
+                                src="{% static 'svg/ticket.svg' %}"
+                                alt="{% static 'svg/ticket.svg' %}">Tickets</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'computer-list' %}">Computers</a>
+                            href="{% url 'computer-list' %}"> <img class="me-2"
+                                src="{% static 'svg/computer.svg' %}"
+                                alt="{% static 'svg/computer.svg' %}">Computers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'monitor-list' %}">Monitors</a>
+                            href="{% url 'monitor-list' %}"><img class="me-2"
+                                src="{% static 'svg/monitor.svg' %}"
+                                alt="{% static 'svg/monitor.svg' %}">Monitors</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'microsoft-office-list' %}">Office
+                            href="{% url 'microsoft-office-list' %}"><img
+                                class="me-2"
+                                src="{% static 'svg/office-key.svg' %}"
+                                alt="{% static 'svg/office-key.svg' %}">Office
                             Suite</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'printer-list' %}">Printer</a>
+                            href="{% url 'printer-list' %}"><img class="me-2"
+                                src="{% static 'svg/printer.svg' %}"
+                                alt="{% static 'svg/printer.svg' %}">Printers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'user-list' %}">Users</a>
+                            href="{% url 'user-list' %}"><img class="me-2"
+                                src="{% static 'svg/users.svg' %}"
+                                alt="{% static 'svg/users.svg' %}">Users</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'notice-list' %}">Notices</a>
+                            href="{% url 'notice-list' %}"><img class="me-2"
+                                src="{% static 'svg/notice.svg' %}"
+                                alt="{% static 'svg/notice.svg' %}">Notices</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'stock-list' %}">Stock</a>
+                            href="{% url 'stock-list' %}"><img class="me-2"
+                                src="{% static 'svg/stock.svg' %}"
+                                alt="{% static 'svg/stock.svg' %}">Stock</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'article-list' %}">Knowledge Base</a>
+                            href="{% url 'article-list' %}"><img class="me-2"
+                                src="{% static 'svg/knowledge-base.svg' %}"
+                                alt="{% static 'svg/knowledge-base.svg' %}">Knowledge
+                            Base</a>
                     </li>
                     {% endif %}
                     <hr>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'user-detail' %}">{{request.user}}</a>
+                            href="{% url 'user-detail' %}"><img class="me-2"
+                                src="{% static 'svg/user.svg' %}"
+                                alt="{% static 'svg/user.svg' %}">{{request.user}}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="{% url 'logout' %}">Sign out</a>
+                            href="{% url 'logout' %}"><img class="me-2"
+                                src="{% static 'svg/logout.svg' %}"
+                                alt="{% static 'svg/logout.svg' %}">Sign
+                            out</a>
                     </li>
                 </ul>
             </div>

@@ -2,21 +2,24 @@
 
 {% block content %}
 <div class="p-5 small">
-    <h1 class="display-4"><a href="{% url 'computer-list' %}">Computers</a> ({{ computer_count }})</h1>
-    <hr>
-    <div class="d-flex justify-content-between gap-3">
-        <div class="add">
-        <a class="add-btn" href="{% url 'computer-create' %}">Add computer</a>
+    <h1 class="display-4"><a href="{% url 'computer-list' %}">Computers</a>
+        ({{ computer_count }})</h1>
+    <br>
+    <div class="text-end">
+        <a class="text-dark px-2 link-body-emphasis"
+            href="{% url 'computer-create' %}">Add computer</a>
+        <a class="text-dark px-2 link-body-emphasis"
+            href="{% url 'monitor-list' %}">Monitors</a>
+        <a class="text-dark px-2 link-body-emphasis"
+            href="{% url 'microsoft-office-list' %}">Office Suite</a>
+        <a class="text-dark px-2 link-body-emphasis"
+            href="{% url 'printer-list' %}">Printers</a>
     </div>
-    <div class="list">
-        <a class="list-btn px-2 link-body-emphasis" href="{% url 'monitor-list' %}">Monitors</a>
-        <a class="list-btn" href="{% url 'microsoft-office-list' %}">Office Suite</a>
-        <a class="list-btn" href="{% url 'printer-list' %}">Printers</a>
-    </div>
-    </div>
-    <div class="py-3 col-lg-8 mx-auto">
+    <br>
+
+    <div class="py-3">
         <!-- Filter Form -->
-     {% include 'computers/includes/computer_filter_form.html' %}
+        {% include 'computers/includes/computer_filter_form.html' %}
     </div>
 
     <!-- Table -->
@@ -34,47 +37,32 @@
             </thead>
             <tbody>
                 {% for computer in computers %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>
-                            <a href="{{ computer.get_absolute_url }}">{{ computer.computer_name|upper }} ({{ computer.serial_number|upper }})</a>
-                        </td>
-                        <td>{{ computer.model.computer_type|upper }}</td>
-                        <td>{{ computer.department }}</td>
-                        <td>
-                          {% for user in computer.user.all %}
-                            <a href="">{{user}}</a>
-                          {% endfor %}
-                            
-                        </td>
-                        <td>{{computer.notes|truncatechars:30}}</td>
-                    </tr>
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                        <a href="{{ computer.get_absolute_url }}">
+                            {{ computer.computer_name|upper }}
+                            ({{ computer.serial_number|upper }})</a>
+                    </td>
+                    <td>{{ computer.model.computer_type|upper }}</td>
+                    <td>{{ computer.department }}</td>
+                    <td>
+                        {% for user in computer.user.all %}
+                        <a href="">{{user}}</a>
+                        {% endfor %}
+
+                    </td>
+                    <td>{{computer.notes|truncatechars:30}}</td>
+                </tr>
                 {% empty %}
-                <tr><td class="text-center" colspan="4">No computers</td></tr>
+                <tr>
+                    <td class="text-center"
+                        colspan="4">No computers</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-
-    <div class="pagination">
-      {% if is_paginated %}
-          <span class="step-links">
-              {% if page_obj.has_previous %}
-                  <a href="?page=1&{{ query_params }}">&laquo; First</a>
-                  <a href="?page={{ page_obj.previous_page_number }}&{{ query_params }}">Previous</a>
-              {% endif %}
-  
-              <span class="current">
-                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-              </span>
-  
-              {% if page_obj.has_next %}
-                  <a href="?page={{ page_obj.next_page_number }}&{{ query_params }}">Next</a>
-                  <a href="?page={{ page_obj.paginator.num_pages }}&{{ query_params }}">Last &raquo;</a>
-              {% endif %}
-          </span>
-      {% endif %}
-  </div>
-  
+    {% include 'computers/includes/computer_list_pagination.html' %}
 </div>
 {% endblock %}
