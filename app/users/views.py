@@ -237,6 +237,9 @@ def activate(request, uidb64, token):
 
 @login_required
 def user_registration_view(request):
+    if request.user.role == "user":
+        messages.info(request, "Your request could not be completed.")
+        return redirect("get-user-detail", slug=request.user.slug)
     current_site = Site.objects.get_current()
     domain = current_site.domain
     if request.method == "POST":

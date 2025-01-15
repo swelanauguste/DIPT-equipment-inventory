@@ -8,5 +8,5 @@ class UserAccessMixin(LoginRequiredMixin, UserPassesTestMixin):
         return not self.request.user.role == "user"
 
     def handle_no_permission(self):
-        messages.warning(self.request, "Your request could not be completed.")
+        messages.info(self.request, "Your request could not be completed.")
         return redirect("get-user-detail", slug=self.request.user.slug)

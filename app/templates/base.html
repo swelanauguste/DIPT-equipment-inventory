@@ -31,9 +31,7 @@
 
 <body class="small fw-bold bg-info">
     {% if request.user.is_authenticated %}
-    <div class="mb-5">
-        {% include 'nav.html' %}
-    </div>
+    {% include 'nav.html' %}
     {% endif %}
 
     {% include 'messages.html' %}
