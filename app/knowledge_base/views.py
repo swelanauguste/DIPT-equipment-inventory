@@ -1,19 +1,19 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from users.user_permission import UserAccessMixin
 
 from .models import Article
 
 
-class ArticleListView(LoginRequiredMixin, ListView):
+class ArticleListView(UserAccessMixin, ListView):
     model = Article
 
 
-class ArticleDetailView(LoginRequiredMixin, DetailView):
+class ArticleDetailView(UserAccessMixin, DetailView):
     model = Article
 
 
-class ArticleCreateView(LoginRequiredMixin, CreateView):
+class ArticleCreateView(UserAccessMixin, CreateView):
     model = Article
     fields = ["title", "content"]
 
@@ -22,6 +22,6 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+class ArticleUpdateView(UserAccessMixin, UpdateView):
     model = Article
     fields = ["title", "content"]

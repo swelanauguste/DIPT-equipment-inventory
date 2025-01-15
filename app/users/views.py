@@ -5,7 +5,6 @@ from django.contrib.auth import get_backends, login, logout, update_session_auth
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
@@ -24,11 +23,12 @@ from . import models
 from .forms import CustomPasswordResetForm, UserCustomCreationForm, UserUpdateForm
 from .tasks import forgot_password_email, user_registration_email
 from .tokens import account_activation_token
+from .user_permission import UserAccessMixin
 
 backends = get_backends()
 
 
-class UserListView(LoginRequiredMixin, ListView):
+class UserListView(UserAccessMixin, ListView):
     model = models.User
     paginate_by = 20
 

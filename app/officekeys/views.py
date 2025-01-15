@@ -1,24 +1,25 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from users.user_permission import UserAccessMixin
 
 from . import forms, models
 
 
-class MicrosoftOfficeListView(LoginRequiredMixin, ListView):
+class MicrosoftOfficeListView(UserAccessMixin, ListView):
     model = models.MicrosoftOffice
     paginate_by = 20
-    
+
     def get_queryset(self):
         queryset = models.MicrosoftOffice.objects.all()
-        no_assignment = self.request.GET.get("no_assignment")  # Check for a filter param
+        no_assignment = self.request.GET.get(
+            "no_assignment"
+        )  # Check for a filter param
         if no_assignment == "1":
             queryset = queryset.filter(assignments__isnull=True)
         return queryset
-    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,11 +27,11 @@ class MicrosoftOfficeListView(LoginRequiredMixin, ListView):
         return context
 
 
-class MicrosoftOfficeDetailView(LoginRequiredMixin, DetailView):
+class MicrosoftOfficeDetailView(UserAccessMixin, DetailView):
     model = models.MicrosoftOffice
 
 
-class MicrosoftOfficeCreateView(LoginRequiredMixin, CreateView):
+class MicrosoftOfficeCreateView(UserAccessMixin, CreateView):
     model = models.MicrosoftOffice
     form_class = forms.MicrosoftOfficeForm
 
@@ -40,7 +41,7 @@ class MicrosoftOfficeCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class MicrosoftOfficeUpdateView(LoginRequiredMixin, UpdateView):
+class MicrosoftOfficeUpdateView(UserAccessMixin, UpdateView):
     model = models.MicrosoftOffice
     form_class = forms.MicrosoftOfficeForm
 
@@ -49,7 +50,7 @@ class MicrosoftOfficeUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class MicrosoftOfficeAssignView(LoginRequiredMixin, CreateView):
+class MicrosoftOfficeAssignView(UserAccessMixin, CreateView):
     model = models.MicrosoftOfficeAssignment
     form_class = forms.MicrosoftOfficeAssignmentForm
 
@@ -88,15 +89,15 @@ class MicrosoftOfficeAssignView(LoginRequiredMixin, CreateView):
         return context
 
 
-class MicrosoftOfficeAssignDetailView(LoginRequiredMixin, DetailView):
+class MicrosoftOfficeAssignDetailView(UserAccessMixin, DetailView):
     model = models.MicrosoftOfficeAssignment
 
 
-class MicrosoftOfficeAssignListView(LoginRequiredMixin, ListView):
+class MicrosoftOfficeAssignListView(UserAccessMixin, ListView):
     model = models.MicrosoftOfficeAssignment
 
 
-class MicrosoftOfficeAssignUpdateView(LoginRequiredMixin, UpdateView):
+class MicrosoftOfficeAssignUpdateView(UserAccessMixin, UpdateView):
     model = models.MicrosoftOfficeAssignment
     fields = "__all__"
 

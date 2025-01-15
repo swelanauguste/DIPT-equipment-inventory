@@ -1,16 +1,16 @@
 from urllib.parse import urlencode
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from users.user_permission import UserAccessMixin
 
 from . import forms, models
 
 
-class NoticeListView(LoginRequiredMixin, ListView):
+class NoticeListView(UserAccessMixin, ListView):
     model = models.Notice
     template_name = "notices/notice_list.html"
 
@@ -82,7 +82,7 @@ class PublishedNoticeListView(ListView):
         return context
 
 
-class NoticeCreateView(LoginRequiredMixin, CreateView):
+class NoticeCreateView(UserAccessMixin, CreateView):
     model = models.Notice
     form_class = forms.NoticeCreateForm
 
@@ -92,7 +92,7 @@ class NoticeCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class NoticeUpdateView(LoginRequiredMixin, UpdateView):
+class NoticeUpdateView(UserAccessMixin, UpdateView):
     model = models.Notice
     form_class = forms.NoticeCreateForm
 
@@ -101,7 +101,7 @@ class NoticeUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class NoticeDetailView(LoginRequiredMixin, DetailView):
+class NoticeDetailView(UserAccessMixin, DetailView):
     model = models.Notice
 
 

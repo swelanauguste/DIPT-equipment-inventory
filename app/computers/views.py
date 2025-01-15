@@ -1,21 +1,21 @@
 from urllib.parse import urlencode
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from users.user_permission import UserAccessMixin
 
 from . import forms, models
 
 
-class ComputerListView(LoginRequiredMixin, ListView):
+class ComputerListView(UserAccessMixin, ListView):
     model = models.Computer
     template_name = "computer_list.html"
     context_object_name = "computers"
-    paginate_by = 100
+    paginate_by = 20
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -77,7 +77,7 @@ class ComputerListView(LoginRequiredMixin, ListView):
         return context
 
 
-class ComputerCreateView(LoginRequiredMixin, CreateView):
+class ComputerCreateView(UserAccessMixin, CreateView):
     model = models.Computer
     form_class = forms.ComputerForm
 
@@ -87,7 +87,7 @@ class ComputerCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ComputerUpdateView(LoginRequiredMixin, UpdateView):
+class ComputerUpdateView(UserAccessMixin, UpdateView):
     model = models.Computer
     form_class = forms.ComputerForm
 
@@ -96,14 +96,13 @@ class ComputerUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class ComputerDetailView(LoginRequiredMixin, DetailView):
+class ComputerDetailView(UserAccessMixin, DetailView):
     model = models.Computer
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["comments_form"] = forms.CommentCreateForm
         return context
-
 
 
 def add_comment_view(request, slug):
@@ -122,11 +121,13 @@ def add_comment_view(request, slug):
 
     # If the form is not valid or the request method is not POST
     return render(
-        request, "computer/computer_detail.html", {"computer": computer, "comment_form": form}
+        request,
+        "computer/computer_detail.html",
+        {"computer": computer, "comment_form": form},
     )
 
 
-class ComputerModelListView(LoginRequiredMixin, ListView):
+class ComputerModelListView(UserAccessMixin, ListView):
     model = models.ComputerModel
     paginate_by = 20
 
@@ -174,7 +175,7 @@ class ComputerModelListView(LoginRequiredMixin, ListView):
         return context
 
 
-class ComputerModelCreateView(LoginRequiredMixin, CreateView):
+class ComputerModelCreateView(UserAccessMixin, CreateView):
     model = models.ComputerModel
     form_class = forms.ComputerModelForm
 
@@ -184,7 +185,7 @@ class ComputerModelCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ComputerModelUpdateView(LoginRequiredMixin, UpdateView):
+class ComputerModelUpdateView(UserAccessMixin, UpdateView):
     model = models.ComputerModel
     form_class = forms.ComputerModelForm
 
@@ -193,15 +194,15 @@ class ComputerModelUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class ComputerModelDetailView(LoginRequiredMixin, DetailView):
+class ComputerModelDetailView(UserAccessMixin, DetailView):
     model = models.ComputerModel
 
 
-class MonitorListView(LoginRequiredMixin, ListView):
+class MonitorListView(UserAccessMixin, ListView):
     model = models.Monitor
 
 
-class MonitorCreateView(LoginRequiredMixin, CreateView):
+class MonitorCreateView(UserAccessMixin, CreateView):
     model = models.Monitor
     form_class = forms.MonitorForm
 
@@ -211,7 +212,7 @@ class MonitorCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class MonitorUpdateView(LoginRequiredMixin, UpdateView):
+class MonitorUpdateView(UserAccessMixin, UpdateView):
     model = models.Monitor
     form_class = forms.MonitorForm
 
@@ -220,16 +221,16 @@ class MonitorUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class MonitorDetailView(LoginRequiredMixin, DetailView):
+class MonitorDetailView(UserAccessMixin, DetailView):
     model = models.Monitor
 
 
-class MonitorModelListView(LoginRequiredMixin, ListView):
+class MonitorModelListView(UserAccessMixin, ListView):
     model = models.MonitorModel
     paginate_by = 20
 
 
-class MonitorModelCreateView(LoginRequiredMixin, CreateView):
+class MonitorModelCreateView(UserAccessMixin, CreateView):
     model = models.MonitorModel
     form_class = forms.MonitorModelForm
 
@@ -239,7 +240,7 @@ class MonitorModelCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class MonitorModelUpdateView(LoginRequiredMixin, UpdateView):
+class MonitorModelUpdateView(UserAccessMixin, UpdateView):
     model = models.MonitorModel
     form_class = forms.MonitorModelForm
 
@@ -248,5 +249,5 @@ class MonitorModelUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class MonitorModelDetailView(LoginRequiredMixin, DetailView):
+class MonitorModelDetailView(UserAccessMixin, DetailView):
     model = models.MonitorModel

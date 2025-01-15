@@ -1,17 +1,17 @@
 from urllib.parse import urlencode
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 from django.views.generic.edit import CreateView
+from users.user_permission import UserAccessMixin
 
 from .forms import ItemForm
 from .models import Item, Transaction
 
 
-class ItemCreateView(LoginRequiredMixin, CreateView):
+class ItemCreateView(UserAccessMixin, CreateView):
     model = Item
     form_class = ItemForm
     success_url = reverse_lazy(
@@ -24,7 +24,7 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ItemListView(LoginRequiredMixin, ListView):
+class ItemListView(UserAccessMixin, ListView):
     model = Item
     paginate_by = 100
 
@@ -54,11 +54,11 @@ class ItemListView(LoginRequiredMixin, ListView):
         return context
 
 
-class ItemDetailView(LoginRequiredMixin, DetailView):
+class ItemDetailView(UserAccessMixin, DetailView):
     model = Item
 
 
-class TransactionCreateView(LoginRequiredMixin, CreateView):
+class TransactionCreateView(UserAccessMixin, CreateView):
     model = Transaction
     fields = ["item", "transaction_type", "quantity", "notes"]
     success_url = reverse_lazy("stock-list")
@@ -76,11 +76,11 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TransactionDetailView(LoginRequiredMixin, DetailView):
+class TransactionDetailView(UserAccessMixin, DetailView):
     model = Transaction
 
 
-class TransactionListView(LoginRequiredMixin, ListView):
+class TransactionListView(UserAccessMixin, ListView):
     model = Transaction
     paginate_by = 100
 

@@ -37,9 +37,13 @@
     {% endif %}
 
     {% include 'messages.html' %}
-    {% block content %}
+    <div class="min-vh-100">
+        {% block content %}
 
-    {% endblock content %}
+        {% endblock content %}
+    </div>
+    {% include 'footer.html' %}
+
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>

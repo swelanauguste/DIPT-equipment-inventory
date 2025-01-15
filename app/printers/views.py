@@ -1,13 +1,13 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
-from django.shortcuts import redirect
+from users.user_permission import UserAccessMixin
 
 from . import forms, models
 
 
-class PrinterListView(LoginRequiredMixin, ListView):
+class PrinterListView(UserAccessMixin, ListView):
     model = models.Printer
     context_object_name = "printers"
     paginate_by = 100  # Number of items per page
@@ -58,7 +58,7 @@ class PrinterListView(LoginRequiredMixin, ListView):
         return context
 
 
-class PrinterCreateView(LoginRequiredMixin, CreateView):
+class PrinterCreateView(UserAccessMixin, CreateView):
     model = models.Printer
     form_class = forms.PrinterForm
 
@@ -68,7 +68,7 @@ class PrinterCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PrinterDetailView(LoginRequiredMixin, DetailView):
+class PrinterDetailView(UserAccessMixin, DetailView):
     model = models.Printer
 
     def get_context_data(self, **kwargs):
@@ -77,7 +77,7 @@ class PrinterDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class PrinterUpdateView(LoginRequiredMixin, UpdateView):
+class PrinterUpdateView(UserAccessMixin, UpdateView):
     model = models.Printer
     form_class = forms.PrinterForm
 
@@ -86,7 +86,7 @@ class PrinterUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class PrinterModelListView(LoginRequiredMixin, ListView):
+class PrinterModelListView(UserAccessMixin, ListView):
     model = models.PrinterModel
 
     def get_queryset(self):
@@ -114,7 +114,7 @@ class PrinterModelListView(LoginRequiredMixin, ListView):
         return context
 
 
-class PrinterModelCreateView(LoginRequiredMixin, CreateView):
+class PrinterModelCreateView(UserAccessMixin, CreateView):
     model = models.PrinterModel
     form_class = forms.PrinterModelForm
 
@@ -124,11 +124,11 @@ class PrinterModelCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PrinterModelDetailView(LoginRequiredMixin, DetailView):
+class PrinterModelDetailView(UserAccessMixin, DetailView):
     model = models.PrinterModel
 
 
-class PrinterModelUpdateView(LoginRequiredMixin, UpdateView):
+class PrinterModelUpdateView(UserAccessMixin, UpdateView):
     model = models.PrinterModel
     form_class = forms.PrinterModelForm
 
@@ -137,6 +137,7 @@ class PrinterModelUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
+@login_required
 def add_comment_view(request, slug):
     printer = get_object_or_404(models.Printer, slug=slug)
 

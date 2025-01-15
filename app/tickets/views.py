@@ -1,17 +1,17 @@
 from urllib.parse import urlencode
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from users.models import User
+from users.user_permission import UserAccessMixin
 
 from . import forms, models
 
 
-class TicketListView(LoginRequiredMixin, ListView):
+class TicketListView(UserAccessMixin, ListView):
     model = models.Ticket
     paginate_by = 100
     template_name = "tickets/tech/ticket_list.html"
@@ -50,7 +50,7 @@ class TicketListView(LoginRequiredMixin, ListView):
                 queryset = queryset.filter(assigned_to_id=assigned_to)
 
         if ticket_users:
-        # Filter out invalid user IDs
+            # Filter out invalid user IDs
             valid_user_ids = [user_id for user_id in ticket_users if user_id.isdigit()]
             if valid_user_ids:
                 queryset = queryset.filter(user__id__in=valid_user_ids)
@@ -107,7 +107,7 @@ class TicketListView(LoginRequiredMixin, ListView):
     #     return context
 
 
-class UserTicketListView(LoginRequiredMixin, ListView):
+class UserTicketListView(UserAccessMixin, ListView):
     model = models.Ticket
     paginate_by = 100
     template_name = "tickets/users/ticket_list.html"
@@ -167,7 +167,7 @@ class UserTicketListView(LoginRequiredMixin, ListView):
         return context
 
 
-class TicketDetailView(LoginRequiredMixin, DetailView):
+class TicketDetailView(UserAccessMixin, DetailView):
     model = models.Ticket
 
     def get_context_data(self, **kwargs):
@@ -176,7 +176,7 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class TicketUserCreateView(LoginRequiredMixin, CreateView):
+class TicketUserCreateView(UserAccessMixin, CreateView):
     model = models.Ticket
     form_class = forms.TicketUserForm
     template_name = "tickets/users/ticket_user_create.html"
@@ -190,7 +190,7 @@ class TicketUserCreateView(LoginRequiredMixin, CreateView):
         return response
 
 
-class TicketUserUpdateView(LoginRequiredMixin, UpdateView):
+class TicketUserUpdateView(UserAccessMixin, UpdateView):
     model = models.Ticket
     form_class = forms.TicketUserForm
     template_name = "tickets/users/ticket_user_update.html"
@@ -200,7 +200,7 @@ class TicketUserUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class TicketTechnicianCreateView(LoginRequiredMixin, CreateView):
+class TicketTechnicianCreateView(UserAccessMixin, CreateView):
     model = models.Ticket
     form_class = forms.TicketTechCreateForm
     template_name = "tickets/tech/ticket_tech_create.html"
@@ -211,7 +211,7 @@ class TicketTechnicianCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TicketTechUpdateView(LoginRequiredMixin, UpdateView):
+class TicketTechUpdateView(UserAccessMixin, UpdateView):
     model = models.Ticket
     form_class = forms.TicketTechUpdateForm
     template_name = "tickets/tech/ticket_tech_update.html"
