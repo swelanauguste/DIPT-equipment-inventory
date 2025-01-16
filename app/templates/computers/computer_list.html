@@ -9,11 +9,14 @@
         <a class="text-dark px-2 link-body-emphasis"
             href="{% url 'computer-create' %}">Add computer</a>
         <a class="text-dark px-2 link-body-emphasis"
+            href="{% url 'computer-model-list' %}">Models</a>
+        <a class="text-dark px-2 link-body-emphasis"
             href="{% url 'monitor-list' %}">Monitors</a>
         <a class="text-dark px-2 link-body-emphasis"
-            href="{% url 'microsoft-office-list' %}">Office Suite</a>
-        <a class="text-dark px-2 link-body-emphasis"
             href="{% url 'printer-list' %}">Printers</a>
+        <a class="text-dark px-2 link-body-emphasis"
+            href="{% url 'microsoft-office-list' %}">Office Suite</a>
+
     </div>
     <br>
 
@@ -57,7 +60,7 @@
                 {% empty %}
                 <tr>
                     <td class="text-center"
-                        colspan="4">No computers</td>
+                        colspan="6">No computers</td>
                 </tr>
                 {% endfor %}
             </tbody>

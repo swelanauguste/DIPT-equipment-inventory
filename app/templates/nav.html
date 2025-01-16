@@ -10,11 +10,19 @@
             href="{% url 'ticket-user-create' %}"> <img class="me-2"
             src="{% static 'svg/add-ticket.svg' %}"
             alt="{% static 'svg/add-ticket.svg' %}"></a>
+            <a class="text-dark text-decoration-none"
+            href="{% url 'user-ticket-list' %}"> <img class="me-2"
+            src="{% static 'svg/ticket.svg' %}"
+            alt="{% static 'svg/ticket.svg' %}"></a>
         {% else %}
         <a class="text-dark text-decoration-none"
             href="{% url 'ticket-tech-create' %}"> <img class="me-2"
             src="{% static 'svg/add-ticket.svg' %}"
             alt="{% static 'svg/add-ticket.svg' %}"></a>
+        <a class="text-dark text-decoration-none"
+            href="{% url 'ticket-list' %}"> <img class="me-2"
+            src="{% static 'svg/ticket.svg' %}"
+            alt="{% static 'svg/ticket.svg' %}"></a>
         <a class="text-dark text-decoration-none"
             href="{% url 'computer-list' %}"> <img class="me-2"
             src="{% static 'svg/computer.svg' %}"

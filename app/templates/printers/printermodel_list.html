@@ -6,7 +6,7 @@
             models</a>
         ({{printer_model_count}})</h1>
     <hr>
-    <div class="py-3"><a class="add-btn"
+    <div class="py-3 text-end"><a class="text-dark"
             href="{% url 'printer-model-create' %}">Add printer model</a></div>
     <div class="py-3 col-lg-8 mx-auto">
         <form class="select-form"
@@ -24,13 +24,9 @@
                     <option value="">All Makers</option>
                     {% for maker in makers %}
                     <option value="{{ maker.id }}"
-                        {%
-                        if
-                        request.GET.model==maker.id|stringformat:"s"
-                        %}selected
-                        {%
-                        endif
-                        %}>
+                        {% if request.GET.model == maker.id|stringformat:"s" %}
+                        selected
+                        {% endif %}>
                         {{ maker.name|upper }}
                     </option>
                     {% endfor %}
@@ -57,10 +53,5 @@
             </tbody>
         </table>
     </div>
-
-
-
 </div>
-
-
 {% endblock content %}

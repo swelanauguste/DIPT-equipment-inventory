@@ -5,9 +5,10 @@
 <div class="p-5">
     <h1>{{object.maker}} {{object.name}}</h1>
     <hr>
-    <div class="px-3">
+    <div class="p-5 col-lg-6 mx-auto bg-white shadow-sm rounded-4">
+
         <p class="text-end me-3"><a
-                class="edit-btn"
+                class="btn btn-sm btn-outline-dark px-5"
                 href="{% url 'computer-model-update' object.slug %}">Edit</a>
         </p>
         <p><strong>Name: </strong>{{object.name}}</p>

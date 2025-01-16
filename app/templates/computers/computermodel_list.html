@@ -3,7 +3,10 @@
 {% block content %}
 <div class="p-5">
     <h1 class="display-4"><a href="{% url 'computer-model-list' %}">Computer model list</a> ({{computer_model_count}})</h1>
-    <hr>
+    <br>
+    <div class="text-end py-3">
+        <a class="text-dark" href="{% url 'computer-model-create' %}">Add model</a>
+    </div>
     <div class="py-3 col-lg-8 mx-auto">
         <form method="get"
             action="">
