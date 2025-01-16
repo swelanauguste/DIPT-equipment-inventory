@@ -1,7 +1,10 @@
+import csv
+from datetime import datetime
 from urllib.parse import urlencode
 
 from django.contrib import messages
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
@@ -75,6 +78,40 @@ class ComputerListView(UserAccessMixin, ListView):
         context["query_params"] = urlencode(query_params)
 
         return context
+
+    def export_to_csv(self, queryset):
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        filename = f"computers_{current_date}.csv"
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = f'attachment; filename="{filename}"'
+
+        writer = csv.writer(response)
+        writer.writerow(
+            [
+                "Model",
+                "Serial Number",
+                "Status",
+                "Operating System",
+            ]
+        )
+
+        for computer in queryset:
+            writer.writerow(
+                [
+                    computer.model.name.upper(),
+                    computer.serial_number.upper(),
+                    computer.status.name,
+                    computer.os,
+                ]
+            )
+
+        return response
+
+    def get(self, request, *args, **kwargs):
+        if "export" in request.GET:
+            queryset = self.get_queryset()
+            return self.export_to_csv(queryset)
+        return super().get(request, *args, **kwargs)
 
 
 class ComputerCreateView(UserAccessMixin, CreateView):
