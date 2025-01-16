@@ -80,7 +80,7 @@ class ComputerListView(UserAccessMixin, ListView):
         return context
 
     def export_to_csv(self, queryset):
-        current_date = datetime.now().strftime("%Y-%m-%d")
+        current_date = datetime.now().strftime("%Y%m%d%H%M%S")
         filename = f"computers_{current_date}.csv"
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = f'attachment; filename="{filename}"'
