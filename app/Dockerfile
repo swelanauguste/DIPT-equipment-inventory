@@ -14,18 +14,14 @@ ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc postgresql-client
-
-# lint
-RUN pip install --upgrade pip
-# RUN pip install flake8==6.0.0
-COPY . /usr/src/app/
-# RUN flake8 --ignore=E501,F401 .
+    apt-get install -y --no-install-recommends gcc postgresql-client && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # install python dependencies
+RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
-
 
 #########
 # FINAL #
@@ -34,40 +30,29 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requir
 # pull official base image
 FROM python:3.13.0rc2-bookworm
 
-# create directory for the app user
-RUN mkdir -p /home/app
+# set work directory
+WORKDIR /usr/src/app
 
-# create the app user
-RUN addgroup --system app && adduser --system --group app
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# create the appropriate directories
-ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
-RUN mkdir $APP_HOME
-RUN mkdir $APP_HOME/staticfiles
-RUN mkdir $APP_HOME/mediafiles
-WORKDIR $APP_HOME
-
-# install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends netcat-traditional postgresql-client
-COPY --from=builder /usr/src/app/wheels /wheels
-COPY --from=builder /usr/src/app/requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache /wheels/*
-
-# copy entrypoint.sh
-COPY ./entrypoint.sh .
-RUN sed -i 's/\r$//g'  $APP_HOME/entrypoint.sh
-RUN chmod +x  $APP_HOME/entrypoint.sh
+# install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends postgresql-client && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # copy project
-COPY . $APP_HOME
+COPY . /usr/src/app/
 
-# chown all the files to the app user
-RUN chown -R app:app $APP_HOME
+# install python dependencies
+COPY --from=builder /usr/src/app/wheels /wheels
+RUN pip install --no-cache /wheels/*
 
-# change to the app user
-USER app
+# lint (optional)
+# RUN pip install flake8==6.0.0
+# RUN flake8 --ignore=E501,F401 .
 
-# run entrypoint.sh
-ENTRYPOINT ["/home/app/web/entrypoint.sh"]
+# run the application
+CMD ["gunicorn", "cf.wsgi:application", "--bind", "0.0.0.0:8003"]

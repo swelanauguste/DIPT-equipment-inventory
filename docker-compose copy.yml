@@ -1,9 +1,13 @@
 services:
   web:
     build: ./app
+    # command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn cf.wsgi:application --bind 0.0.0.0:8003
     volumes:
+      # - ./app/:/usr/src/app/
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
+
     env_file:
       - ./.env
     expose:
