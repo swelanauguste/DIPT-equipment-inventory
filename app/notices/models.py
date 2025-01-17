@@ -8,9 +8,9 @@ from django.shortcuts import reverse
 
 class Notice(models.Model):
     uid = models.UUIDField(default=uuid.uuid4, editable=False)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255,null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
-    message = models.TextField()
+    message = models.TextField(blank=True, null=True)
     priority = models.IntegerField(default=1)
     post = models.FileField(upload_to="announcements/", null=True, blank=True)
     expiration_date = models.DateField(null=True, blank=True)

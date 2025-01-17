@@ -4,10 +4,13 @@
 
 {% block content %}
 
+{% load humanize %}
+
 {% if not request.user.is_authenticated %}
 <div class="text-end px-5 bg-white">
-<a href="{% url 'login' %}"
-    class=" rounded-pill my-2 px-5 fw-bold btn btn-info text-dark">Sign in</a>
+    <a href="{% url 'login' %}"
+        class=" rounded-pill my-2 px-5 fw-bold btn btn-info text-dark">Sign
+        in</a>
 </div>
 {% endif %}
 
@@ -21,19 +24,29 @@
                 placeholder="Search notices"
                 value="{{ request.GET.notice }}">
         </div>
-        <br>
-        <div class="col-lg-8 mx-auto">
-
-            {% for ob in object_list %}
-            <div class="bg-white border p-5 rounded-4 shadow">
-                <p>{{ob.message|markdown|safe}}</p>
+    </form>
+    <br>
+    {% for ob in object_list %}
+    <div class="d-flex justify-content-center">
+        <div class="card shadow border-dark border-2"
+            style="width: 32rem;">
+            {% if ob.post %}
+            <img src="{{ob.post.url}}"
+                class="card-img-top"
+                alt="...">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-text">{{ob.title|markdown|safe}}</h5>
+                <p class="card-text">{{ob.message|markdown|safe}}</p>
+                <p class="card-text text-end"><small class="text-muted">updated
+                        {{ob.created_at|naturaltime}}</small></p>
             </div>
-            <br>
-            {% empty %}
-            <p class="text-center">No notices</p>
-            {% endfor %}
-
         </div>
+    </div>
+    <br>
+
+    {% endfor %}
+
 </div>
 
 {% endblock content %}

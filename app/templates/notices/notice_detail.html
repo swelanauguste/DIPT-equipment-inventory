@@ -32,23 +32,15 @@
             {% endif %}
             <p><strong>Expiration date: </strong>{{object.expiration_date}}</p>
             <p><strong>Draft: </strong>
-            {% if object.draft %}
-            Draft
-            {% else %}
-            Published
-            {% endif %}
+                {% if object.draft %}
+                Draft
+                {% else %}
+                Published
+                {% endif %}
             </p>
             <p><strong>Priority: </strong>{{object.priority}}</p>
             <p><strong>Title: <br></strong>{{object.title|title}}</p>
             <p><strong>Message: </strong><br>{{object.message|markdown|safe}}
-
-
-                {% if not object.is_closed %}
-
-            <p class="text-end"> <a class="delete-ticket"
-                    href="{% url 'ticket-delete' object.slug %}">Delete</a>
-            </p>
-            {% endif %}
 
             <hr>
             <p class="small text-muted"><strong>Created:
@@ -60,35 +52,6 @@
                         href="{object.updated_at.get_absolute_url}}">{{object.updated_by}}</a></span>
             </p>
         </div>
-        <br>
-        <hr>
-        <br>
-        {% if object.pk %}
-        {% if not object.is_closed %}
-        <form action="{% url 'ticket-add-comment' object.slug %}"
-            method="post">
-            {% csrf_token %}
-            {{comment_form|crispy}}
-            <div class="text-end">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-        {% endif %}
-        <br>
-        <hr>
-        <br>
-        <div class="p-5">
-            {% for comment in object.comments.all %}
-            <span class="small">{{comment.comments}} </span><br>
-            <p class="text-end small"><a
-                    href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
-                <span>{{comment.created_at}}</span>
-
-            </p>
-            <hr>
-            {% endfor %}
-        </div>
-        {% endif %}
     </div>
 </div>
 {% endblock content %}
