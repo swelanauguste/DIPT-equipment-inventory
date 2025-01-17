@@ -88,6 +88,7 @@ class ComputerListView(UserAccessMixin, ListView):
         writer = csv.writer(response)
         writer.writerow(
             [
+                "#",
                 "Project",
                 "Model",
                 "Serial Number",
@@ -96,12 +97,13 @@ class ComputerListView(UserAccessMixin, ListView):
                 "Location",
                 "Department",
                 "User",
+                "Comments",
             ]
         )
 
-        for computer in queryset:
+        for index, computer in enumerate(queryset, start=1):
             writer.writerow(
-                [
+                [   index,
                     computer.from_project,
                     computer.model.name.upper(),
                     computer.serial_number.upper(),
