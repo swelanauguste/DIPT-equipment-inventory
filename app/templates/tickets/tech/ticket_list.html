@@ -2,10 +2,10 @@
 
 {% block content %}
 <div class="p-5">
-    <h1 class="display-4"><a href="{% url 'ticket-list' %}">Tickets</a>
+    <h1 class="display-4 text-center"><a href="{% url 'ticket-list' %}">Tickets</a>
         ({{ticket_count}})</h1>
     <hr>
-    <div class="text-end">
+    <div class="text-center">
         {% if request.user.role == 'user' %}
         <a class="text-dark px-2"
             href="{% url 'ticket-user-create' %}">Add ticket</a>
@@ -14,7 +14,8 @@
             href="{% url 'ticket-tech-create' %}">Add ticket</a>
         {% endif %}
     </div>
-    <div class="py-3">
+    <hr>
+    <div class="py-3 d-flex justify-content-center">
         {% include 'tickets/includes/ticket-filter-form.html' %}
     </div>
 

@@ -21,7 +21,7 @@
         <li><a class="text-dark" href="{% url 'article-detail' ob.slug %}">{{ ob.title }}</a>
         </li>
         {% empty %}
-        <li class="text-center">No articles found</li>
+        <p class="text-center">No articles found</p>
         {% endfor %}
     </ul>
 </div>
