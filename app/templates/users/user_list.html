@@ -1,124 +1,67 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-5">
-    <h1 class="display-4"><a href="{% url 'user-list' %}">Users</a> ({{user_count}})</h1>
-        <div class="py-3 text-end">
-            <a href="{% url 'register' %}" class="text-dark">Register user</a>
+<h1 class="display-4"><a href="{% url 'user-list' %}">Users</a>
+    ({{user_count}})</h1>
+<div class="p-3 text-end">
+    <a href="{% url 'register' %}"
+        class="add-btn">Register user</a>
 
-        </div>
-    <div class="py-3 col-lg-8 mx-auto">
-        <form method="get" class="select-form"
-            action="{% url 'user-list' %}">
-            <div class="col-lg-8 mx-auto">
-                <label for="search">Search:</label>
-                <input type="text"
-                    name="q"
-                    placeholder="Search"
-                    id="search"
-                    value="{{ request.GET.q }}">
-            </div>
-            <br>
-            <div class="d-flex justify-content-center gap-2">
-                <div>
-                    <select name="department"
-                        id="department"
-                        class="form-control">
-                        <option value="">All Departments </option>
-                        {% for department in departments %}
-                        <option value="{{ department.id }}"
-                            {% if request.GET.department == department.id|stringformat:"s" %}selected
-                            {% endif %}>
-                            {{ department.name|upper }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div>
-                    <select name="location"
-                        id="location"
-                        class="form-control">
-                        <option value="">All Locations</option>
-                        {% for location in locations %}
-                        <option value="{{ location.id }}"
-                            {% if request.GET.location == location.id|stringformat:"s" %}selected
-                            {% endif %}>
-                            {{ location.name|upper }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div>
-                    <select class="form-control" name="role">
-                        <option value="">Select Role</option>
-                        {% for value, label in roles %}
-                        <option value="{{ value }}" {% if request.GET.role == value %}selected{% endif %}>
-                            {{ label|title }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <br>
-            <button type="submit">Filter</button>
-        </form>
+</div>
+{% include 'users/includes/user_filter_form.html' %}
 
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-hover table-sm small">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">User</th>
-                    <th scope="col">Department</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Job title</th>
-                    <th scope="col">Phone</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ob in object_list %}
-                <tr>
-                    <th scope="row">{{forloop.counter}}</th>
-                    <td><a
-                            href="{{ob.get_absolute_url}}">{{ob|upper}}</a>
-                    </td>
-                    <td>{{ob.department|upper}}</td>
-                    <td>{{ob.location|upper}}</td>
-                    <td>{{ob.role|upper}}</td>
-                    <td>{{ob.job_title|upper}}</td>
-                    <td>{{ob.phone}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-            <a href="?page=1{% for key, value in request.GET.items %}&{{ key }}={{ value }}
+<div class="table-responsive">
+    <table class="table table-hover table-sm small">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User</th>
+                <th scope="col">Department</th>
+                <th scope="col">Location</th>
+                <th scope="col">Role</th>
+                <th scope="col">Job title</th>
+                <th scope="col">Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ob in object_list %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td><a href="{{ob.get_absolute_url}}">{{ob|upper}}</a>
+                </td>
+                <td>{{ob.department|upper}}</td>
+                <td>{{ob.location|upper}}</td>
+                <td>{{ob.role|upper}}</td>
+                <td>{{ob.job_title|upper}}</td>
+                <td>{{ob.phone}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1{% for key, value in request.GET.items %}&{{ key }}={{ value }}
                 {% endfor %}">&laquo; first</a>
-            <a
-                href="?page={{ page_obj.previous_page_number }}
+        <a
+            href="?page={{ page_obj.previous_page_number }}
                 {% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">previous</a>
-            {% endif %}
-    
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-    
-            {% if page_obj.has_next %}
-            <a
-                href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">next</a>
-            <a
-                href="?page={{ page_obj.paginator.num_pages }}
-                {% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">last
-                &raquo;</a>
-            {% endif %}
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
         </span>
-    </div>
+
+        {% if page_obj.has_next %}
+        <a
+            href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">next</a>
+        <a
+            href="?page={{ page_obj.paginator.num_pages }}
+                {% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">last
+            &raquo;</a>
+        {% endif %}
+    </span>
 </div>
 
 {% endblock content %}

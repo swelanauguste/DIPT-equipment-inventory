@@ -4,25 +4,23 @@
 
 {% block content %}
 
-<div class="p-5 small">
-    <div class="col-lg-4 mx-auto bg-white p-5 rounded-4 shadow">
-        <h1>
-            {% if object.pk %}
-            {{object.serial_number|upper}}
-            {% else %}
-            New Printer
-            {% endif %}
-        </h1>
-        <hr>
-        <form action=""
-            method="post">
-            {% csrf_token %}
-            {{form|crispy}}
-            <br>
-            <div class="d-grid">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-    </div>
+<div class="col-lg-4 mx-auto bg-white p-3 rounded-4 shadow">
+    <h1>
+        {% if object.pk %}
+        {{object.serial_number|upper}}
+        {% else %}
+        New Printer
+        {% endif %}
+    </h1>
+    <hr>
+    <form action=""
+        method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <br>
+        <div class="d-grid">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
 </div>
 {% endblock content %}

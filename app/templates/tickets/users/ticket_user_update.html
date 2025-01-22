@@ -4,25 +4,24 @@
 
 {% block content %}
 
-<div class="p-5 small">
-    <div class="col-lg-6 mx-auto bg-light p-5 shadow rounded-4 border">
-        <h1>
-            {% if object.pk %}
-            {{object.ticket_id|upper}}
-            {% else %}
-            New Ticket
-            {% endif %}
-        </h1>
-        <hr>
-        <form action="" enctype="multipart/form-data"
-            method="post">
-            {% csrf_token %}
-            {{form|crispy}}
-            <br>
-            <div class="d-grid">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-    </div>
+<div class="col-lg-6 mx-auto bg-light p-5 shadow rounded-4 border">
+    <h1>
+        {% if object.pk %}
+        {{object.ticket_id|upper}}
+        {% else %}
+        New Ticket
+        {% endif %}
+    </h1>
+    <hr>
+    <form action=""
+        enctype="multipart/form-data"
+        method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <br>
+        <div class="d-grid">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
 </div>
 {% endblock content %}

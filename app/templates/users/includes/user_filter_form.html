@@ -1,0 +1,56 @@
+<div class="col-lg-8 mx-auto">
+<form method="get" class="select-form"
+action="{% url 'user-list' %}">
+<div class="row">
+    <div class="col-lg-5 mx-auto">
+        <label for="search">Search:</label>
+        <input type="text"
+            name="q"
+            placeholder="Search"
+            id="search"
+            value="{{ request.GET.q }}">
+    </div>
+</div><br>
+<div class="row col-lg-6 mx-auto">
+    <div class="col-lg-4 mb-2">
+        <select name="department"
+            id="department"
+            class="form-control">
+            <option value="">All Departments </option>
+            {% for department in departments %}
+            <option value="{{ department.id }}"
+                {% if request.GET.department == department.id|stringformat:"s" %}selected
+                {% endif %}>
+                {{ department.name|upper }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-lg-4 mb-2">
+        <select name="location"
+            id="location"
+            class="form-control">
+            <option value="">All Locations</option>
+            {% for location in locations %}
+            <option value="{{ location.id }}"
+                {% if request.GET.location == location.id|stringformat:"s" %}selected
+                {% endif %}>
+                {{ location.name|upper }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-lg-4">
+        <select class="form-control" name="role">
+            <option value="">Select Role</option>
+            {% for value, label in roles %}
+            <option value="{{ value }}" {% if request.GET.role == value %}selected{% endif %}>
+                {{ label|title }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<br>
+</form>
+</div>

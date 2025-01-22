@@ -2,12 +2,11 @@
 
 
 {% block content %}
-<div class="p-5">
+<div class="">
     <h1>{{object.name}} | {{object.maker}}</h1>
     <hr>
-    <div class="p-5 bg-white rounded-4 shadow">
-        <p class="text-end me-3"><a
-                class="edit-btn"
+    <div class="col-lg-4 p-3 bg-white rounded-4 shadow mx-auto">
+        <p class="text-end me-3"><a class="edit-btn"
                 href="{% url 'printer-model-update' object.slug %}">Edit</a>
         </p>
         <p><strong>Name: </strong>{{object.name}}</p>
@@ -21,7 +20,9 @@
             </strong><span>{{object.created_at}}
                 <a
                     href="{{object.created_by.get_absolute_url}}">{{object.created_by|lower}}</a></span>
-            <span class="float-end"><strong>Updated:
+        </p>
+        <p class="small text-muted">
+            <span><strong>Updated:
                 </strong>{{object.updated_at}}
                 <a
                     href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|lower}}</a></span>
@@ -29,16 +30,18 @@
         <hr>
         <ul>
             {% for printer in object.printers.all %}
-            <a class="list" href="{{printer.get_absolute_url}}"><li>({{printer.serial_number}}) - {{printer}}
-                <ul>
-                    <li>{{printer.department|title}}/{{printer.location|title}}</li>
-                </ul>
-            </li></a>
+            <a class="list"
+                href="{{printer.get_absolute_url}}">
+                <li>({{printer.serial_number}}) - {{printer}}
+                    <ul>
+                        <li>{{printer.department|title}}/{{printer.location|title}}
+                        </li>
+                    </ul>
+                </li>
+            </a>
             <br>
             {% endfor %}
         </ul>
-
-   
     </div>
 </div>
 {% endblock content %}

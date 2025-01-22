@@ -2,22 +2,24 @@
 
 
 {% block content %}
-<div class="p-5">
-    <h1>{{object.name}} | {{object.maker}}</h1>
+<h1>{{object.name}} | {{object.maker}}</h1>
+<hr>
+<div class="p-3 bg-white shadow rounded-4 col-lg-4">
+    <p class="text-end me-3"><a class="edit-btn"
+            href="{% url 'monitor-model-update' object.slug %}">Edit</a>
+    </p>
+    <p><strong>Name: </strong>{{object.name}}</p>
+    <p><strong>Maker: </strong>{{object.maker}}</p>
+    <p><strong>Notes: </strong>{{object.notes|default:'N/A'}}</p>
     <hr>
-    <div class="px-3 bg-white shadow-sm rounded-4">
-        <p class="text-end me-3"><a
-                class="edit-btn"
-                href="{% url 'monitor-model-update' object.slug %}">Edit</a>
-        </p>
-        <p><strong>Name: </strong>{{object.name}}</p>
-        <p><strong>Maker: </strong>{{object.maker}}</p>
-        <p><strong>Notes: </strong>{{object.notes|default:'N/A'}}</p>
-        <hr>
-        <p class="small text-muted"><strong>Created:
-            </strong><span>{{object.created_at}} <a href="{{object.created_by.get_absolute_url}}">{{object.created_by}}</a></span>
-           <span class="float-end"><strong>Updated: </strong>{{object.updated_at}} <a href="{{object.updated_at.get_absolute_url}}">{{object.updated_by}}</a></span>
-        </p>
-    </div>
+    <p class="small text-muted"><strong>Created:
+        </strong><span>{{object.created_at}} <a
+                href="{{object.created_by.get_absolute_url}}">{{object.created_by}}</a></span>
+    </p>
+    <p class="small text-muted">
+        <span><strong>Updated: </strong>{{object.updated_at}}
+            <a
+                href="{{object.updated_at.get_absolute_url}}">{{object.updated_by}}</a></span>
+    </p>
 </div>
 {% endblock content %}

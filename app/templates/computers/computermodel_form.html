@@ -3,55 +3,54 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<h1>
+    {% if object.pk %}
+    {{object.name}}
+    {% else %}
+    New computer model
+    {% endif %}
+</h1>
+<hr>
+<div class="bg-white p-3 rounded-4 shadow col-lg-4 mx-auto">
 
-<div class="m-5 small">
-    <div class="p-5">
-        <h1>
-            {% if object.pk %}
-            {{object.name}}
-            {% else %}
-            New computer model
-            {% endif %}
-        </h1>
-        <hr>
-        <form class="col-lg-6" action=""
-            method="post">
-            {% csrf_token %}
+    <form class=""
+        action=""
+        method="post">
+        {% csrf_token %}
 
-            <div class="row">
-                <span class="col">
-                    {{ form.maker|as_crispy_field }}
-                </span>
-                <span class="col">
-                    {{ form.name|as_crispy_field }}
-                </span>
+        <div class="row">
+            <span class="col">
+                {{ form.maker|as_crispy_field }}
+            </span>
+            <span class="col">
+                {{ form.name|as_crispy_field }}
+            </span>
 
-            </div>
-            <div class="row">
-                <span class="col">
-                    {{ form.computer_type|as_crispy_field }}
-                </span>
+        </div>
+        <div class="row">
+            <span class="col">
+                {{ form.computer_type|as_crispy_field }}
+            </span>
 
-                <span class="col">
-                    {{ form.processor|as_crispy_field }}
-                </span>
-            </div>
-            <div class="row">
-                <span class="col">
-                    {{ form.ram|as_crispy_field }}
-                </span>
-                <span class="col">
-                    {{ form.hdd|as_crispy_field }}
-                </span>
-            </div>
-            <div class="col">
-                <span>{{form.notes|as_crispy_field}}</span>
-            </div>
-            <br>
-            <div class="d-grid">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-    </div>
+            <span class="col">
+                {{ form.processor|as_crispy_field }}
+            </span>
+        </div>
+        <div class="row">
+            <span class="col">
+                {{ form.ram|as_crispy_field }}
+            </span>
+            <span class="col">
+                {{ form.hdd|as_crispy_field }}
+            </span>
+        </div>
+        <div class="col">
+            <span>{{form.notes|as_crispy_field}}</span>
+        </div>
+        <br>
+        <div class="d-grid">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
 </div>
 {% endblock content %}

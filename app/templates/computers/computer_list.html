@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-5 small">
     <h1 class="display-4 text-center"><a href="{% url 'computer-list' %}">Computers</a>
         ({{ computer_count }})</h1>
     <hr>
-    <div class="text-center p-1">
+    <div class="text-center p-1 small">
         <a class="text-dark px-2 link-body-emphasis"
             href="{% url 'computer-create' %}">Add computer</a>
         <a class="text-dark px-2 link-body-emphasis"
@@ -66,5 +65,4 @@
         </table>
     </div>
     {% include 'computers/includes/computer_list_pagination.html' %}
-</div>
 {% endblock %}

@@ -3,23 +3,20 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
-<div class="m-5 small">
-    <div class="p-5">
-        <p class="fw-bold fs-4">
-            {{microsoft_office_key.product_key}}
-        </p>
-        <hr>
-        <form class="col-lg-4" action=""
-            method="post">
-            {% csrf_token %}
-            {{form|crispy}}
-            <br>
-            <div class="d-grid">
-                <button type="submit">Submit</button><br>
-                <a href="{% url 'microsoft-office-list' %}" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
+<p class="fw-bold fs-4">
+    {{microsoft_office_key.product_key}}
+</p>
+<hr>
+<form class="col-lg-4"
+    action=""
+    method="post">
+    {% csrf_token %}
+    {{form|crispy}}
+    <br>
+    <div class="d-grid">
+        <button type="submit">Submit</button><br>
+        <a href="{% url 'microsoft-office-list' %}"
+            class="btn btn-secondary">Cancel</a>
     </div>
-</div>
+</form>
 {% endblock content %}

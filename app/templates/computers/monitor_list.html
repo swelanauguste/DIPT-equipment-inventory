@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-5">
     <h1 class="display-4"><a href="{% url 'monitor-list' %}">Monitors</a></h1>
     <div class="text-end py-3">
         <a class="text-dark px-2"
@@ -55,6 +54,5 @@
     <a
         href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
     {% endif %}
-</div>
 {% endif %}
 {% endblock content %}

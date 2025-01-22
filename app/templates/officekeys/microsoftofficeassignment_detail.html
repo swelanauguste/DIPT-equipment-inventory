@@ -2,30 +2,32 @@
 
 
 {% block content %}
-<div class="p-5">
-    <h1>{{object.microsoft_office.version.name}} | XXXXX-XXXXX-{{object.microsoft_office.product_key|slice:'-5:'}}</h1>
+<h1>{{object.microsoft_office.version.name}} |
+    XXXXX-XXXXX-{{object.microsoft_office.product_key|slice:'-5:'}}</h1>
+<hr>
+<div class="px-3">
+    <p class="text-end me-3">
+        <a class="edit-btn me-3"
+            href="{% url 'microsoft-office-assignment-update' object.pk %}">Edit</a>
+    </p>
+    <p><strong>Computer: </strong>
+
+        {% for computer in object.computers.all %}
+        <a href="{{computer.get_absolute_url}}">{{computer}}</a>
+        {% endfor %}
+
+    </p>
+    <p><strong>Product Key:
+        </strong>XXXXX-XXXXX-XXXXX-XXXXX-{{object.microsoft_office.product_key|slice:'-5:'}}
+    </p>
+    <p><strong>Version: </strong>{{object.microsoft_office.version.name}}</p>
+    <p><strong>Note: </strong>{{object.notes|default:"N/A"}}</p>
     <hr>
-    <div class="px-3">
-        <p class="text-end me-3">
-            <a
-                class="edit-btn me-3"
-                href="{% url 'microsoft-office-assignment-update' object.pk %}">Edit</a>
-        </p>
-        <p><strong>Computer: </strong>
-            
-            {% for computer in object.computers.all  %}
-                <a href="{{computer.get_absolute_url}}">{{computer}}</a>
-            {% endfor %}
-                
-            </p>
-        <p><strong>Product Key: </strong>XXXXX-XXXXX-XXXXX-XXXXX-{{object.microsoft_office.product_key|slice:'-5:'}}</p>
-        <p><strong>Version: </strong>{{object.microsoft_office.version.name}}</p>
-        <p><strong>Note: </strong>{{object.notes|default:"N/A"}}</p>
-        <hr>
-        <p class="small text-muted"><strong>Created:
-            </strong><span>{{object.created_at}} <a href="">{{object.created_by}}</a></span>
-           <span class="float-end"><strong>Updated: </strong>{{object.updated_at}} <a href="">{{object.updated_by}}</a></span>
-        </p>
-    </div>
+    <p class="small text-muted"><strong>Created:
+        </strong><span>{{object.created_at}} <a
+                href="">{{object.created_by}}</a></span>
+        <span class="float-end"><strong>Updated: </strong>{{object.updated_at}}
+            <a href="">{{object.updated_by}}</a></span>
+    </p>
 </div>
 {% endblock content %}

@@ -3,23 +3,19 @@
 {% load md_extras %}
 
 {% block content %}
-<div class="p-5">
-    <h1>{{ object.title }}</h1>
-    <br>
-    <div class="px-5 py-3 bg-white shadow rounded-4">
-        <p>{{ object.content|markdown|safe }}</p>
-        <hr>
-        <div class="d-flex  justify-content-between gap-3">
-            <div class="d-flex gap-3 small">
-                <p><strong>Author:</strong> {{ object.author }}</p>
-                <p><strong>Created at:</strong> {{ object.created_at }}</p>
-                <p><strong>Updated at:</strong> {{ object.updated_at }}</p>
-            </div>
-            <div class="text-end">
-                <a href="{% url 'article-update' object.slug %}"
-                    class="edit-btn">Edit</a>
-            </div>
-        </div>
+<h1>{{ object.title }}</h1>
+<br>
+<div class="col-lg-4 p-3 py-3 bg-white shadow rounded-4 mx-auto">
+    <p>{{ object.content|markdown|safe }}</p>
+    <hr>
+    <div class="small">
+        <p><strong>Author:</strong> {{ object.author }}</p>
+        <p><strong>Created at:</strong> {{ object.created_at }}</p>
+        <p><strong>Updated at:</strong> {{ object.updated_at }}</p>
+    </div>
+    <div class="text-end">
+        <a href="{% url 'article-update' object.slug %}"
+            class="edit-btn">Edit</a>
     </div>
 </div>
 {% endblock %}

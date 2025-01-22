@@ -1,85 +1,85 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-5 small">
-    <h1 class="display-4"><a href="{% url 'transaction-list' %}">Transaction list</a></h1>
-    <hr>
-    <div class="d-flex justify-content-between mx-5">
+<h1 class="display-4"><a href="{% url 'transaction-list' %}">Transaction
+        list</a></h1>
+<hr>
+<div class="d-flex justify-content-between mx-5">
     <a class="add-btn"
         href="{% url 'stock-transaction' %}">Add transaction</a>
-        <a class="text-dark fw-bold" href="{% url 'stock-list' %}">Stock</a>
-    </div>
-    <div class="py-3 col-lg-4 mx-auto">
-        <form class="select-form"
-            method="get">
-            <input class="form-control"
-                type="text"
-                name="transactions"
-                placeholder="Search transactions..."
-                value="{{ request.GET.transactions }}">
-            <div class="text-end">
-                <a class="text-muted me-3 fw-bold"
-                    href="{% url 'transaction-list' %}">reset</a>
-            </div>
-            <br>
-
-        </form>
-    </div>
-    <div class="col-lg-6 mx-auto">
-        <div class="table-responsive">
-            <table class="table table-hover table-sm small">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Items</th>
-                        <th scope="col">In/Out</th>
-                        <th scope="col">Qty</th>
-                        <th scope="col">By</th>
-                        <th scope="col">Created</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for ob in object_list %}
-                    <tr>
-                        <th scope="row">{{forloop.counter}}</th>
-                        <td><a href="{{ob.get_absolute_url}}">{{ob}}</a>
-                        </td>
-                        <td>{{ob.transaction_type}}</td>
-                        <td>{{ob.quantity}}</td>
-                        <td>{{ob.performed_by}}</td>
-                        <td>{{ob.created_at}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    {% if is_paginated %}
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-            <a
-                href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">&laquo;
-                first</a>
-            <a
-                href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ page_obj.number }} of 
-                {{ page_obj.paginator.num_pages }}
-            </span>
-
-            {% if page_obj.has_next %}
-            <a
-                href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">next</a>
-            <a
-                href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">last
-                &raquo;</a>
-            {% endif %}
-        </span>
-    </div>
-    {% endif %}
+    <a class="text-dark fw-bold"
+        href="{% url 'stock-list' %}">Stock</a>
 </div>
+<div class="py-3 col-lg-4 mx-auto">
+    <form class="select-form"
+        method="get">
+        <input class="form-control"
+            type="text"
+            name="transactions"
+            placeholder="Search transactions..."
+            value="{{ request.GET.transactions }}">
+        <div class="text-end">
+            <a class="text-muted me-3 fw-bold"
+                href="{% url 'transaction-list' %}">reset</a>
+        </div>
+        <br>
+
+    </form>
+</div>
+<div class="col-lg-6 mx-auto">
+    <div class="table-responsive">
+        <table class="table table-hover table-sm small">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Items</th>
+                    <th scope="col">In/Out</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">By</th>
+                    <th scope="col">Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ob in object_list %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td><a href="{{ob.get_absolute_url}}">{{ob}}</a>
+                    </td>
+                    <td>{{ob.transaction_type}}</td>
+                    <td>{{ob.quantity}}</td>
+                    <td>{{ob.performed_by}}</td>
+                    <td>{{ob.created_at}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% if is_paginated %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a
+            href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">&laquo;
+            first</a>
+        <a
+            href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of
+            {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+        <a
+            href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">next</a>
+        <a
+            href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value|urlencode }}{% endif %}{% endfor %}">last
+            &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
 
 {% endblock content %}

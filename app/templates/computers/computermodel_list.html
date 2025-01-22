@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-5">
     <h1 class="display-4"><a href="{% url 'computer-model-list' %}">Computer model list</a> ({{computer_model_count}})</h1>
     <br>
     <div class="text-end py-3">
@@ -114,6 +113,5 @@
             {% endif %}
         </span>
     </div>
-</div>
 
 {% endblock content %}

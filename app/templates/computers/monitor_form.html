@@ -4,48 +4,41 @@
 
 {% block content %}
 
-<div class="small">
-    <div class="p-5">
-        <h1>
-            {% if object.pk %}
-            {{object.serial_number}}
-            {% else %}
-            New monitor
-            {% endif %}
-        </h1>
-        <hr>
-        <form class="col-lg-6" action=""
-            method="post">
-            {% csrf_token %}
+<h1>
+    {% if object.pk %}
+    {{object.serial_number}}
+    {% else %}
+    New monitor
+    {% endif %}
+</h1>
+<hr>
+<form class="col-lg-4 bg-white p-3 rounded-4 shadow"
+    action=""
+    method="post">
+    {% csrf_token %}
 
-            <div class="row">
-                <span class="col">
-                    {{ form.date_received|as_crispy_field }}
-                </span>
-                <span class="col">
-                    {{ form.serial_number|as_crispy_field }}
-                </span>
+    <div class="row">
+        <span class="col-lg-6">
+            {{ form.date_received|as_crispy_field }}
+        </span>
+        <span class="col-lg-6">
+            {{ form.serial_number|as_crispy_field }}
+        </span>
 
-            </div>
-            <div class="row">
-                <span class="col">
-                    {{ form.model|as_crispy_field }}
-                </span>
-                <span class="col">
-                    {{ form.date_installed|as_crispy_field }}
-                </span>
-
-            </div>
-
-
-            <div class="col">
-                <span>{{form.notes|as_crispy_field}}</span>
-            </div>
-            <br>
-            <div class="d-grid">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
     </div>
-</div>
+    <div class="row">
+        <span class="col-lg-6">
+            {{ form.model|as_crispy_field }}
+        </span>
+        <span class="col-lg-6">
+            {{ form.date_installed|as_crispy_field }}
+        </span>
+    </div>
+
+    <div class="col">
+        <span>{{form.notes|as_crispy_field}}</span>
+    </div>
+    <br>
+        <button type="submit">Submit</button>
+</form>
 {% endblock content %}

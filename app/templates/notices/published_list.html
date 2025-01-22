@@ -3,17 +3,9 @@
 {% load md_extras %}
 
 {% block content %}
-
 {% load humanize %}
 
-{% if not request.user.is_authenticated %}
-<div class="text-end px-5 bg-white">
-    <a href="{% url 'login' %}"
-        class=" rounded-pill my-2 px-5 fw-bold btn btn-info text-dark">Sign
-        in</a>
-</div>
-{% endif %}
-<div class="p-5">
+
     <form class="select-form"
         method="get">
         <div class="col-lg-4 mx-auto">
@@ -44,5 +36,4 @@
     </div>
     <br>
     {% endfor %}
-</div>
 {% endblock content %}

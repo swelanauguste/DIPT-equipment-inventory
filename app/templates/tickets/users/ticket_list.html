@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-5">
     <h1 class="display-4"><a href="{% url 'user-ticket-list' %}">Tickets</a> ({{ticket_count}})</h1>
     <hr>
     <div class="text-end">
@@ -86,6 +85,4 @@
             </span>
         {% endif %}
     </div>
-</div>
-
 {% endblock content %}

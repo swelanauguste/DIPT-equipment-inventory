@@ -2,10 +2,9 @@
 
 
 {% block content %}
-<div class="p-5">
-    <h1>{{user}}</h1>
-    <hr>
-
+<h1>{{user}}</h1>
+<hr>
+<div class="col-lg-6 bg-white p-3 rounded-4 shadow">
     {% if request.user == user %}
     <p class="text-end"><a class="edit-btn"
             href="{% url 'user-update' %}">Edit</a></p>
@@ -19,7 +18,7 @@
     <p><strong>Phone: </strong>{{user.phone}}</p>
     <p><strong>Computer(s): </strong>
         {% for computer in user.computer_users.all %}
-            <a href="{{computer.get_absolute_url}}">{{computer}}</a>
+        <a href="{{computer.get_absolute_url}}">{{computer}}</a>
         {% endfor %}
     </p>
 </div>
