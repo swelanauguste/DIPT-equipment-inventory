@@ -3,37 +3,37 @@
 {% load md_extras %}
 
 {% block content %}
+
 {% load humanize %}
 
-
-    <form class="select-form"
-        method="get">
-        <div class="col-lg-4 mx-auto">
-            <input class="form-control form-control-lg rounded-pill"
-                type="text"
-                name="notice"
-                placeholder="Search notices"
-                value="{{ request.GET.notice }}">
-        </div>
-    </form>
-    <br>
-    {% for ob in object_list %}
-    <div class="d-flex justify-content-center">
-        <div class="card shadow"
-            style="width: 32rem;">
-            {% if ob.post %}
-            <img src="{{ob.post.url}}"
-                class="card-img-top"
-                alt="{{ob.post.url}">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-text">{{ob.title|markdown|safe}}</h5>
-                <p class="card-text">{{ob.message|markdown|safe}}</p>
-                <p class="card-text text-end"><small class="text-muted">updated
-                        {{ob.created_at|naturaltime}}</small></p>
-            </div>
+<form class="select-form"
+    method="get">
+    <div class="col-lg-4 mx-auto">
+        <input class="form-control form-control-lg rounded-pill"
+            type="text"
+            name="notice"
+            placeholder="Search notices"
+            value="{{ request.GET.notice }}">
+    </div>
+</form>
+<br>
+{% for ob in object_list %}
+<div class="d-flex justify-content-center">
+    <div class="card shadow"
+        style="width: 32rem;">
+        {% if ob.post %}
+        <img src="{{ob.post.url}}"
+            class="card-img-top"
+            alt="{{ob.post.url}}">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-text">{{ob.title|markdown|safe}}</h5>
+            <p class="card-text">{{ob.message|markdown|safe}}</p>
+            <p class="card-text text-end"><small class="text-muted">updated
+                    {{ob.created_at|naturaltime}}</small></p>
         </div>
     </div>
-    <br>
-    {% endfor %}
+</div>
+<br>
+{% endfor %}
 {% endblock content %}

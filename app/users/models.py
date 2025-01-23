@@ -48,6 +48,11 @@ class User(AbstractUser):
         ("manager", "Manager"),
         ("user", "User"),
     )
+    can_register_user = models.BooleanField(default=False)
+    is_tech = models.BooleanField(default=False)
+    is_user = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+    is_manager = models.BooleanField(default=False)
     uid = models.UUIDField(default=uuid.uuid4, editable=False)
     role = models.CharField(max_length=255, choices=ROLE_CHOICES, default="user")
     job_title = models.CharField(max_length=255, null=True, blank=True)

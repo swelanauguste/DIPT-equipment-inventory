@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <a class="navbar-brand fw-bold"
             href="/">ICT Unit - DIPT</a>
-        {% if request.user.role == 'user' %}
+        {% if request.user.is_user %}
         <a class="text-dark text-decoration-none"
             href="{% url 'ticket-user-create' %}"> <img class="me-2"
             src="{% static 'svg/add-ticket.svg' %}"
@@ -58,7 +58,7 @@
                             aria-current="page"
                             href="/">Home</a>
                     </li>
-                    {% if request.user.role == 'user' %}
+                    {% if request.user.is_user %}
                     <li class="nav-item">
                         <a class="nav-link"
                             href="{% url 'user-ticket-list' %}">

@@ -1,4 +1,5 @@
 import threading
+from urllib.parse import urlencode
 
 from django.contrib import messages
 from django.contrib.auth import get_backends, login, logout, update_session_auth_hash
@@ -67,6 +68,14 @@ class UserListView(UserAccessMixin, ListView):
         context["locations"] = models.Location.objects.all()
         context["departments"] = models.Department.objects.all()
         context["roles"] = models.User.ROLE_CHOICES
+
+        # Preserve query parameters for pagination
+        query_params = self.request.GET.copy()
+        if "page" in query_params:
+            query_params.pop(
+                "page"
+            )  # Remove 'page' from query parameters to prevent duplication
+        context["query_params"] = urlencode(query_params)
         return context
 
 
@@ -237,7 +246,7 @@ def activate(request, uidb64, token):
 
 @login_required
 def user_registration_view(request):
-    if request.user.role == "user":
+    if not request.user.can_register_user:
         messages.info(request, "Your request could not be completed.")
         return redirect("get-user-detail", slug=request.user.slug)
     current_site = Site.objects.get_current()

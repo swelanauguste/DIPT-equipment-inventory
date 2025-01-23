@@ -11,6 +11,7 @@ class UserAdmin(admin.ModelAdmin):
         "department",
     ]
     list_editable = ["role", "location", "department"]
+    search_fields = ["email"]
 
 
 admin.site.register(User, UserAdmin)

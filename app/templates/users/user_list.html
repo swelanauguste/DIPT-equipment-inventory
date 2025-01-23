@@ -3,13 +3,37 @@
 {% block content %}
 <h1 class="display-4"><a href="{% url 'user-list' %}">Users</a>
     ({{user_count}})</h1>
+{% if request.user.user_roles.can_register_user %}
 <div class="p-3 text-end">
     <a href="{% url 'register' %}"
         class="add-btn">Register user</a>
 
 </div>
+{% endif %}
 {% include 'users/includes/user_filter_form.html' %}
+<div class="pagination">
+    {% if is_paginated %}
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1&{{ query_params }}">&laquo; First</a>
+        <a
+            href="?page={{ page_obj.previous_page_number }}&{{ query_params }}">Previous</a>
+        {% endif %}
 
+        <span class="current">
+            Page {{ page_obj.number }} of
+            {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a
+            href="?page={{ page_obj.next_page_number }}&{{ query_params }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&{{ query_params }}">Last
+            &raquo;</a>
+        {% endif %}
+    </span>
+    {% endif %}
+</div><br>
 <div class="table-responsive">
     <table class="table table-hover table-sm small">
         <thead>
@@ -40,28 +64,27 @@
     </table>
 </div>
 <div class="pagination">
+    {% if is_paginated %}
     <span class="step-links">
         {% if page_obj.has_previous %}
-        <a href="?page=1{% for key, value in request.GET.items %}&{{ key }}={{ value }}
-                {% endfor %}">&laquo; first</a>
+        <a href="?page=1&{{ query_params }}">&laquo; First</a>
         <a
-            href="?page={{ page_obj.previous_page_number }}
-                {% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">previous</a>
+            href="?page={{ page_obj.previous_page_number }}&{{ query_params }}">Previous</a>
         {% endif %}
 
         <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            Page {{ page_obj.number }} of
+            {{ page_obj.paginator.num_pages }}.
         </span>
 
         {% if page_obj.has_next %}
         <a
-            href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">next</a>
-        <a
-            href="?page={{ page_obj.paginator.num_pages }}
-                {% for key, value in request.GET.items %}&{{ key }}={{ value }}{% endfor %}">last
+            href="?page={{ page_obj.next_page_number }}&{{ query_params }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&{{ query_params }}">Last
             &raquo;</a>
         {% endif %}
     </span>
+    {% endif %}
 </div>
 
 {% endblock content %}
