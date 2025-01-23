@@ -19,12 +19,12 @@
     <br>
     {% for ob in object_list %}
     <div class="d-flex justify-content-center">
-        <div class="card shadow border-dark border-2"
+        <div class="card shadow"
             style="width: 32rem;">
             {% if ob.post %}
             <img src="{{ob.post.url}}"
                 class="card-img-top"
-                alt="...">
+                alt="{{ob.post.url}">
             {% endif %}
             <div class="card-body">
                 <h5 class="card-text">{{ob.title|markdown|safe}}</h5>

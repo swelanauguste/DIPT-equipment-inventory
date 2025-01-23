@@ -5,7 +5,7 @@
 {% load md_extras %}
 
 {% block content %}
-<div class="col-lg-6 mx-auto p-3 bg-white rounded-4 shadow">
+<div class="col-lg-4 mx-auto p-3 bg-white rounded-4 shadow">
     {% if not request.user.role == 'user' %}
     <p class="d-flex justify-content-center gap-2">
         <a class="edit-ticket"
@@ -23,10 +23,10 @@
     <div class="d-flex justify-content-center">
         <img src="{{object.post.url}}"
             alt="{{object.post.url}}"
-            class="img-fluid"
-            style="max-width: 18rem;">
-    </div>
-    <br><br>
+            class="img-fluid rounded-4 shadow"
+            width="100%">
+    </div><br>
+    <hr><br>
     {% endif %}
     <p><strong>Expiration date: </strong>{{object.expiration_date}}</p>
     <p><strong>Draft: </strong>

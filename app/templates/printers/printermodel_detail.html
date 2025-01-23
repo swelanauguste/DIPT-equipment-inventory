@@ -13,7 +13,10 @@
         <p><strong>Maker:
             </strong>{{object.maker}}</p>
         {% if object.image %}
-        <p><strong>Att: </strong>{{object.image.url}}</p>
+        <p><strong>Att: </strong><br><img class="rounded-4"
+                width="100%"
+                src="{{object.image.url}}"
+                alt="{{object.image.url}}"></p>
         {% endif %}
         <hr>
         <p class="small text-muted"><strong>Created:
