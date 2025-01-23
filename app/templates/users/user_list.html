@@ -3,7 +3,7 @@
 {% block content %}
 <h1 class="display-4"><a href="{% url 'user-list' %}">Users</a>
     ({{user_count}})</h1>
-{% if request.user.user_roles.can_register_user %}
+{% if request.user.can_register_user %}
 <div class="p-3 text-end">
     <a href="{% url 'register' %}"
         class="add-btn">Register user</a>
