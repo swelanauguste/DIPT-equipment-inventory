@@ -13,7 +13,7 @@ from . import forms, models
 
 class TicketListView(LoginRequiredMixin, ListView):
     model = models.Ticket
-    paginate_by = 100
+    paginate_by = 50
     template_name = "tickets/tech/ticket_list.html"
 
     def get_queryset(self):
