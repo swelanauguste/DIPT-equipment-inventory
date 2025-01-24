@@ -1,6 +1,9 @@
 <form class="p-3 bg-white col-lg-4 rounded-4 shadow" method="get"
 action="">
-    <div class="">
+<div class="text-end mb-2">
+    <a class="small text-muted" href="{{ request.path }}">reset</a>
+</div>
+    <div class="mb-2">
         <input type="text"
         class="form-control"
         name="q"
@@ -8,9 +11,8 @@ action="">
         id="summary"
         value="{{ request.GET.q }}">
     </div>
-    <br>
-    <div class="d-flex justify-content-start gap-2">
-        <div>
+    <div class="row">
+        <div class="col-lg-6 mb-2 mb-2">
             <select name="ticket_status"
                 id="ticket_status"
                 class="form-control"
@@ -25,8 +27,8 @@ action="">
                 {% endfor %}
             </select>
         </div>
-
-        <div>
+       
+        <div class="col-lg-6 mb-2">
             <select id="ticket_users" name="ticket_users" class="form-control" onchange="this.form.submit();">
                 <option value="" {% if not selected_users %}selected{% endif %}>Users</option>
                 {% for user in users %}
@@ -37,9 +39,9 @@ action="">
             </select>
         </div>
         </div>
-        <br>
-        <div class="d-flex justify-content-start gap-2">
-        <div>
+       
+        <div class="row">
+        <div class="col-lg-6 mb-2">
             <select name="ticket_category" 
                 id="ticket_category" 
                 class="form-control" 
@@ -55,7 +57,7 @@ action="">
                 {% endfor %}
             </select>
         </div>
-        <div>
+        <div class="col-lg-6 mb-2">
             <select name="assigned_to"
                 id="assigned_to"
                 class="form-control"
@@ -75,8 +77,6 @@ action="">
         </div>
     </div>
     <br>
-    <div class="text-end">
-        <a class="small text-muted" href="{{ request.path }}">reset</a>
-    </div>
+
 </form>
 
