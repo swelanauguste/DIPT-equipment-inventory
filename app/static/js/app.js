@@ -47,4 +47,6 @@ $('input[type="text"]').addClass('form-control form-control-sm');
 $('h1 a').addClass('text-decoration-none text-dark');
 $('thead').addClass('table-dark');
 $('td a').attr('target', '_blank');
+$('#id_password1').attr({'value': 'Welcome2025', 'disabled': 'disabled'});
+$('#id_password2').attr({'value': 'Welcome2025', 'disabled': 'disabled'});
 });
