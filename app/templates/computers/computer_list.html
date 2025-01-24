@@ -31,6 +31,7 @@
                     <th>#</th>
                     <th>Computer (Serial#)</th>
                     <th>Computer Type</th>
+                    <th>Status</th>
                     <th>Department</th>
                     <th>User</th>
                     <th>Note</th>
@@ -46,6 +47,7 @@
                             ({{ computer.serial_number|upper }})</a>
                     </td>
                     <td>{{ computer.model.computer_type|upper }}</td>
+                    <td>{{ computer.status|upper }}</td>
                     <td>{{ computer.department }}</td>
                     <td>
                         {% for user in computer.user.all %}

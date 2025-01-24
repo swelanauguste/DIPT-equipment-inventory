@@ -3,9 +3,10 @@
 {% block content %}
 <h1>Knowledge Base</h1>
 <hr>
-<a class="add-btn"
-    href="{% url 'article-create' %}">Create Article</a>
+
 <div class="col-lg-4 mx-auto py-3">
+    <a class="add-btn"
+    href="{% url 'article-create' %}">Create Article</a><br><br>
     <form action=""
         method="get">
         <input type="text"
@@ -14,14 +15,13 @@
             value="{{ request.GET.q }}">
         <br>
     </form>
-</div>
-<ul>
     {% for ob in object_list %}
-    <li><a class="text-dark"
-            href="{% url 'article-detail' ob.slug %}">{{ ob.title }}</a>
-    </li>
-    {% empty %}
-    <p class="text-center">No articles found</p>
-    {% endfor %}
-</ul>
+<p>{{forloop.counter}}. <a class="text-dark fw-bold"
+        href="{% url 'article-detail' ob.slug %}">{{ ob.title }}</a>
+</p>
+{% empty %}
+<p class="text-center">No articles found</p>
+{% endfor %}
+</div>
+
 {% endblock %}

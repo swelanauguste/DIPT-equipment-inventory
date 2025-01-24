@@ -3,37 +3,37 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.PrinterListView.as_view(), name="printer-list"),
-    path("create/", views.PrinterCreateView.as_view(), name="printer-create"),
+    path("", views.PrinterListView.as_view(), name="device-list"),
+    path("create/", views.PrinterCreateView.as_view(), name="device-create"),
     path(
-        "detail/<slug:slug>/", views.PrinterDetailView.as_view(), name="printer-detail"
+        "detail/<slug:slug>/", views.PrinterDetailView.as_view(), name="device-detail"
     ),
     path(
-        "update/<slug:slug>/", views.PrinterUpdateView.as_view(), name="printer-update"
+        "update/<slug:slug>/", views.PrinterUpdateView.as_view(), name="device-update"
     ),
     path(
-        "printer-model-list/",
+        "device-model-list/",
         views.PrinterModelListView.as_view(),
-        name="printer-model-list",
+        name="device-model-list",
     ),
     path(
-        "printer-model/create/",
+        "device-model/create/",
         views.PrinterModelCreateView.as_view(),
-        name="printer-model-create",
+        name="device-model-create",
     ),
     path(
-        "printer-model/detail/<slug:slug>/",
+        "device-model/detail/<slug:slug>/",
         views.PrinterModelDetailView.as_view(),
-        name="printer-model-detail",
+        name="device-model-detail",
     ),
     path(
-        "printer-model/update/<slug:slug>/",
+        "device-model/update/<slug:slug>/",
         views.PrinterModelUpdateView.as_view(),
-        name="printer-model-update",
+        name="device-model-update",
     ),
     path(
-        "printer-comment/<slug:slug>/",
+        "device-comment/<slug:slug>/",
         views.add_comment_view,
-        name="printer-add-comment",
+        name="device-add-comment",
     ),
 ]

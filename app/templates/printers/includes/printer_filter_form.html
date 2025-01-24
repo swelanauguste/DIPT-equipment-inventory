@@ -1,13 +1,13 @@
+<div class="col-lg-6 mx-auto">
 <form class="select-form"
 method="get">
-<input class="form-control"
+<input class="form-control mb-2"
     type="text"
     name="search"
-    placeholder="Search printers"
+    placeholder="Search devices"
     value="{{ request.GET.search }}">
-<br>
-
-<div class="d-flex justify-content-center gap-2">
+<div class="row">
+    <div class="col-lg-6 mb-2">
     <select name="model"
         class="form-control">
         <option value="">All Models</option>
@@ -20,19 +20,23 @@ method="get">
         </option>
         {% endfor %}
     </select>
-
-    <select name="location"
-        class="form-control">
-        <option value="">All Locations</option>
-        {% for location in locations %}
-        <option value="{{ location.id }}"
-            {% if request.GET.location == location.id|stringformat:"s" %} 
-            selected {% endif %}>
-            {{ location.name|upper }}
-        </option>
-        {% endfor %}
-    </select>
-
+    </div>
+    <div class="col-lg-6 mb-2">
+        <select name="location"
+            class="form-control">
+            <option value="">All Locations</option>
+            {% for location in locations %}
+            <option value="{{ location.id }}"
+                {% if request.GET.location == location.id|stringformat:"s" %} 
+                selected {% endif %}>
+                {{ location.name|upper }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-lg-6 mb-2">
     <select name="department"
         class="form-control">
         <option value="">All Departments</option>
@@ -43,22 +47,24 @@ method="get">
         </option>
         {% endfor %}
     </select>
-
-    <select name="status"
-        class="form-control">
-        <option value="">All Statuses</option>
-        {% for status in statuses %}
-        <option value="{{ status.id }}"
-            {% if request.GET.status == status.id|stringformat:"s" %}
-            selected 
-            {% endif %}>
-            {{ status.name }}
-        </option>
-        {% endfor %}
-    </select>
+    </div>
+    <div class="col-lg-6 mb-2">
+        <select name="status"
+            class="form-control">
+            <option value="">All Statuses</option>
+            {% for status in statuses %}
+            <option value="{{ status.id }}"
+                {% if request.GET.status == status.id|stringformat:"s" %}
+                selected 
+                {% endif %}>
+                {{ status.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
 </div>
-<br>
 <div class="text-end">
-    <button type="submit">Filter</button>
+<a class="text-muted" href="{% url 'device-list' %}">reset</a>
 </div>
 </form>
+</div>

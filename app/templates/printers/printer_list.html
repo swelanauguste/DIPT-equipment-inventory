@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="display-4"><a href="{% url 'printer-list' %}">Printers</a>
+<h1 class="display-4"><a href="{% url 'device-list' %}">Printers</a>
     ({{printer_count}})</h1>
 <div class="py-3 text-end">
     <a class="text-dark px-2"
-        href="{% url 'printer-create' %}">Add printer</a>
+        href="{% url 'device-create' %}">Add device</a>
     <a class="text-dark"
-        href="{% url 'printer-model-list' %}">Printer models</a>
+        href="{% url 'device-model-list' %}">Printer models</a>
 </div>
 <div class="py-3 col-lg-8 mx-auto">
     {% include 'printers/includes/printer_filter_form.html' %}
 </div>
 
 <div class="table-responsive">
-    <table class="table table-hover table-sm small">
+    <table class="table table-hover table-sm small fw-bold">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -29,8 +29,8 @@
             {% for ob in printers %}
             <tr>
                 <th scope="row">{{forloop.counter}}</th>
-                <td><a href="{{ob.get_absolute_url}}">{{ob.printer_name|upper}}
-                        ({{ob.serial_number|upper}})</a></td>
+                <td><a href="{{ob.get_absolute_url}}">
+                        {{ob.serial_number|upper}}</a></td>
                 <td>{{ob.model}}</td>
                 <td>{{ob.department}}</td>
                 <td>{{ob.location}}</td>

@@ -11,14 +11,14 @@
 
     <div class="row bg-light p-3 rounded-4 shadow">
         <p class="text-end me-3"><a class="edit-btn"
-                href="{% url 'printer-update' object.slug %}">Edit</a>
+                href="{% url 'device-update' object.slug %}">Edit</a>
         </p><br>
         <div class="col">
             <p><strong>Received: </strong>{{object.date_received}}</p>
             <p><strong>Serial#: </strong>{{object.serial_number}}</p>
-            <p><strong>Printer name:
-                </strong>{{object.printer_name|default:"N/A"}}</p>
-            <p><strong>Printer IP address: </strong><a target="_blank"
+            <p><strong>Name:
+                </strong>{{object.name|default:"N/A"}}</p>
+            <p><strong>IP address: </strong><a target="_blank"
                     href="http://{{object.ip_addr}}">{{object.ip_addr|default:"N/A"}}</a>
             </p>
             <p><strong>Status:</strong><span
@@ -54,7 +54,7 @@
             <h3>Comments</h3>
             <hr>
             {% if object.pk %}
-            <form action="{% url 'printer-add-comment' object.slug %}"
+            <form action="{% url 'device-add-comment' object.slug %}"
                 method="post">
                 {% csrf_token %}
                 {{comments_form|crispy}}
@@ -71,7 +71,6 @@
                 <p class="text-end small"><a
                         href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
                     <span>{{comment.created_at}}</span>
-
                 </p>
                 <hr>
                 {% endfor %}

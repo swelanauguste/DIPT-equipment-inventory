@@ -139,18 +139,18 @@ class PrinterModelUpdateView(UserAccessMixin, UpdateView):
 
 @login_required
 def add_comment_view(request, slug):
-    printer = get_object_or_404(models.Printer, slug=slug)
+    device = get_object_or_404(models.Printer, slug=slug)
 
     if request.method == "POST":
         form = forms.CommentCreateForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.printer = printer
+            comment.device = device
             if request.user.is_authenticated:
                 comment.created_by = request.user
                 comment.updated_by = request.user
             comment.save()
-            return redirect("printer-detail", slug=slug)
+            return redirect("device-detail", slug=slug)
 
     # If the form is not valid or the request method is not POST
     return render(

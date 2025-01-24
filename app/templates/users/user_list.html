@@ -35,7 +35,7 @@
     {% endif %}
 </div><br>
 <div class="table-responsive">
-    <table class="table table-hover table-sm small">
+    <table class="table table-hover table-sm small fw-bold">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -51,7 +51,7 @@
             {% for ob in object_list %}
             <tr>
                 <th scope="row">{{forloop.counter}}</th>
-                <td><a href="{{ob.get_absolute_url}}">{{ob|upper}}</a>
+                <td><a href="{{ob.get_absolute_url}}">{{ob}}</a>
                 </td>
                 <td>{{ob.department|upper}}</td>
                 <td>{{ob.location|upper}}</td>
