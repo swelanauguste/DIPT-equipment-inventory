@@ -19,28 +19,28 @@
         {% csrf_token %}
 
         <div class="row">
-            <span class="col">
+            <span class="col-lg-6">
                 {{ form.maker|as_crispy_field }}
             </span>
-            <span class="col">
+            <span class="col-lg-6">
                 {{ form.name|as_crispy_field }}
             </span>
 
         </div>
         <div class="row">
-            <span class="col">
+            <span class="col-lg-6">
                 {{ form.computer_type|as_crispy_field }}
             </span>
 
-            <span class="col">
+            <span class="col-lg-6">
                 {{ form.processor|as_crispy_field }}
             </span>
         </div>
         <div class="row">
-            <span class="col">
+            <span class="col-lg-6">
                 {{ form.ram|as_crispy_field }}
             </span>
-            <span class="col">
+            <span class="col-lg-6">
                 {{ form.hdd|as_crispy_field }}
             </span>
         </div>

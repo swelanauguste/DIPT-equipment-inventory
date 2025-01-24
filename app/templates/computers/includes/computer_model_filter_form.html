@@ -1,0 +1,51 @@
+<div class="py-3 col-lg-4 mx-auto">
+    <form method="get"
+        action="">
+        <!-- Search Field -->
+        <input type="text"
+            class="mb-2"
+            name="search"
+            placeholder="Search by Name or Processor"
+            value="{{ request.GET.search }}">
+        <div class="row">
+            <div class="col-lg-6 mb-2">
+                <!-- Maker Dropdown -->
+                <select name="maker"
+                    class="form-control"
+                    id="maker"
+                    onchange="this.form.submit()">
+                    <option value="">All Makers</option>
+                    {% for maker in makers %}
+                    <option value="{{ maker.id }}"
+                        {% if request.GET.maker == maker.id|stringformat:"s" %}
+                        selected
+                        {% endif %}>
+                        {{ maker.name|upper }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-6 mb-2">
+
+                <!-- Computer Type Dropdown -->
+                <select name="computer_type"
+                    class="form-control"
+                    id="computer_type"
+                    onchange="this.form.submit()">
+                    <option value="">All Types</option>
+                    {% for type_key, type_name in computer_types %}
+                    <option value="{{ type_key }}"
+                        {% if request.GET.computer_type == type_key %}
+                        selected
+                        {% endif %}>
+                        {{ type_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="text-end">
+          <a class="text-muted" href="{% url 'computer-model-list' %}">reset</a>
+        </div>
+        </div>
+    </form>
+</div>

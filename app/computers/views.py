@@ -103,7 +103,8 @@ class ComputerListView(UserAccessMixin, ListView):
 
         for index, computer in enumerate(queryset, start=1):
             writer.writerow(
-                [   index,
+                [
+                    index,
                     computer.from_project,
                     computer.model.name.upper(),
                     computer.serial_number.upper(),
@@ -183,13 +184,16 @@ class ComputerModelListView(UserAccessMixin, ListView):
         search_query = self.request.GET.get("search", "")
         maker = self.request.GET.get("maker", "")
         computer_type = self.request.GET.get("computer_type", "")
-        ram = self.request.GET.get("ram", "")
-        hdd = self.request.GET.get("hdd", "")
+        # ram = self.request.GET.get("ram", "")
+        # hdd = self.request.GET.get("hdd", "")
 
         # Filter by search query
         if search_query:
             queryset = queryset.filter(
-                Q(name__icontains=search_query) | Q(processor__icontains=search_query)
+                Q(name__icontains=search_query)
+                | Q(processor__icontains=search_query)
+                | Q(ram__icontains=search_query)
+                | Q(hdd__icontains=search_query)
             )
 
         # Filter by maker (Foreign)
@@ -200,13 +204,13 @@ class ComputerModelListView(UserAccessMixin, ListView):
         if computer_type:
             queryset = queryset.filter(computer_type=computer_type)
 
-        # Filter by RAM
-        if ram:
-            queryset = queryset.filter(ram=ram)
+        # # Filter by RAM
+        # if ram:
+        #     queryset = queryset.filter(ram=ram)
 
-        # Filter by HDD/Storage
-        if hdd:
-            queryset = queryset.filter(hdd=hdd)
+        # # Filter by HDD/Storage
+        # if hdd:
+        #     queryset = queryset.filter(hdd=hdd)
 
         return queryset
 
