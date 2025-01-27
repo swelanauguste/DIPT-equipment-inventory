@@ -27,7 +27,7 @@
             <select class="form-control" name="model">
                 <option value="">Select Model</option>
                 {% for model in models %}
-                    <option value="{{ model.id }}" {% if request.GET.model == model.id|stringformat:"s" %}selected{% endif %}>{{ model.name|upper }}</option>
+                    <option value="{{ model.id }}" {% if request.GET.model == model.id|stringformat:"s" %}selected{% endif %}>{{ model|upper }}</option>
                 {% endfor %}
             </select>
         </div>
