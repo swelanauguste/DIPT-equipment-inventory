@@ -13,9 +13,11 @@
     <p><strong>Department: </strong>{{request.user.department|upper}}</p>
     <p><strong>Location: </strong>{{request.user.location|upper}}</p>
     <p><strong>Phone: </strong>{{request.user.phone}}</p>
-    <p><strong>Computer(s): </strong>
+    <p><strong>Computer(s): </strong><br>
         {% for computer in request.user.computer_users.all %}
-        <a href="{{computer.get_absolute_url}}">{{computer}}</a>
+        <a target="_blank"
+            href="{{computer.get_absolute_url}}">{{forloop.counter}}.
+            {{computer}}</a><br>
         {% endfor %}
     </p>
     <hr>
