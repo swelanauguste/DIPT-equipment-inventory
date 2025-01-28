@@ -6,17 +6,16 @@
 
 {% load humanize %}
 
-<form class="select-form"
+<form class="select-form mb-2"
     method="get">
     <div class="col-lg-3 mx-auto">
-        <input class="form-control form-control-lg rounded-pill"
+        <input class="form-control rounded-pill"
             type="text"
             name="notice"
             placeholder="Search notices"
             value="{{ request.GET.notice }}">
     </div>
 </form>
-<br>
 {% for ob in object_list %}
 <div class="d-flex justify-content-center mb-2">
     <div class="card shadow col-lg-3"
