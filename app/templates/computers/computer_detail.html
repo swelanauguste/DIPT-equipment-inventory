@@ -7,101 +7,99 @@
 {% block content %}
 <h1>{{object.model|upper}} | {{object.serial_number|upper}}</h1>
 <hr>
-<div class="">
-    <p class="text-end me-3"><a class="edit-btn"
-            href="{% url 'computer-update' object.slug %}">Edit</a>
-    </p>
-    <div class="d-lg-flex">
-        <div class="text-bg-light p-3 rounded-4 shadow col-lg-9 row">
-            <div class="col-lg-3">
-                <p><strong>Received: </strong>{{object.date_received}}</p>
-                <p><strong>Installed: </strong>{{object.date_installed}}</p>
-                <p><strong>Warranty: </strong>{{object.warranty_info}}</p>
+<p class="text-end me-3"><a class="edit-btn"
+        href="{% url 'computer-update' object.slug %}">Edit</a>
+</p>
+<div class="d-lg-flex justify-content-center">
+    <div class="text-bg-light p-3 rounded-4 shadow col-lg-9 row"
+        style="height: fit-content;">
+        <div class="col-lg-3">
+            <p><strong>Received: </strong>{{object.date_received}}</p>
+            <p><strong>Installed: </strong>{{object.date_installed}}</p>
+            <p><strong>Warranty: </strong>{{object.warranty_info}}</p>
 
-                <p><strong>Operating System: </strong>{{object.os}}</p>
+            <p><strong>Operating System: </strong>{{object.os}}</p>
 
 
-                {% if object.image %}
-                <p><strong>Att: </strong>{{object.image.url}}</p>
-                {% endif %}
-                <p><strong>Notes: </strong>{{object.notes|default:'N/A'}}</p>
+            {% if object.image %}
+            <p><strong>Att: </strong>{{object.image.url}}</p>
+            {% endif %}
+            <p><strong>Notes: </strong>{{object.notes|default:'N/A'}}</p>
 
-                <p><strong>Office suite: </strong><a
-                        href="{{object.office_key_computers.last.get_absolute_url}}">{{object.office_key_computers.last}}</a>
-                </p>
+            <p><strong>Office suite: </strong><a
+                    href="{{object.office_key_computers.last.get_absolute_url}}">{{object.office_key_computers.last}}</a>
+            </p>
 
-            </div>
-            <div class="col-lg-3">
-                <p><strong>Status: </strong><span
-                        class="text-bg-{{object.status.colour}} py-1 rounded-pill">{{object.status}}</span>
-                </p>
-                <p><strong>Location: </strong>{{object.location}}</p>
-                <p><strong>Department: </strong>{{object.department}}</p>
-                <p><strong>Assigned to: </strong>
-
-                    {% for user in object.user.all %}
-                    <a
-                        href="{{user.get_absolute_url}}">{{user|default:"N/A"}}</a>
-                    {% endfor %}
-
-                </p>
-                <p><strong>Created: </strong>{{object.created_at}} <a
-                        href="{{object.created_by.get_absolute_url}}">{{object.created_by|title}}</a>
-                </p>
-
-                <p><strong>Updated:
-                    </strong>{{object.updated_at}} <a
-                        href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|title}}</a>
-                </p>
-            </div>
-            <div class="col-lg-3">
-                <p><strong>Serial#: </strong>{{object.serial_number|upper}}</p>
-                <p><strong>Model: </strong><a
-                        href="{{object.model.get_absolute_url}}">{{object.model.name}}</a>
-                </p>
-                <p><strong>Computer name:
-                    </strong>{{object.computer_name|upper}}</p>
-
-                <p><strong>Monitor: </strong>
-                    {% for monitor in object.monitor.all %}
-                    <a href="{{monitor.get_absolute_url}}">{{monitor}}</a>
-                    {% endfor %}
-                </p>
-                <p><strong>Type: </strong>{{object.model.computer_type}}</p>
-                <p><strong>Maker: </strong>{{object.model.maker}}</p>
-                <p><strong>Processor: </strong>{{object.model.processor}}</p>
-                <p><strong>RAM (GB): </strong>{{object.model.ram}}</p>
-                <p><strong>HDD: </strong>{{object.model.hdd}}</p>
-            </div>
         </div>
-        <div class="row text-bg-light col-lg-3 rounded-4 shadow p-3 mt-2 mt-lg-0 ms-lg-3">
-            <h3>Comments</h3>
-            <hr>
-            {% if object.pk %}
-            {% if not object.is_closed %}
-            <form action="{% url 'computer-add-comment' object.slug %}"
-                method="post">
-                {% csrf_token %}
-                {{comments_form|crispy}}
-                <div class="text-end">
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-            {% endif %}
-            <div>
-                {% for comment in object.comments.all %}
-                <span>{{comment.comment|markdown|safe}} </span><br>
-                <p class="text-end small"><a
-                        href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
-                    <span>{{comment.created_at}}</span>
+        <div class="col-lg-3">
+            <p><strong>Status: </strong><span
+                    class="text-bg-{{object.status.colour}} py-1 rounded-pill">{{object.status}}</span>
+            </p>
+            <p><strong>Location: </strong>{{object.location}}</p>
+            <p><strong>Department: </strong>{{object.department}}</p>
+            <p><strong>Assigned to: </strong>
 
-                </p>
-                <hr>
+                {% for user in object.user.all %}
+                <a href="{{user.get_absolute_url}}">{{user|default:"N/A"}}</a>
                 {% endfor %}
-            </div>
-            {% endif %}
+
+            </p>
+            <p><strong>Created: </strong>{{object.created_at}} <a
+                    href="{{object.created_by.get_absolute_url}}">{{object.created_by|title}}</a>
+            </p>
+
+            <p><strong>Updated:
+                </strong>{{object.updated_at}} <a
+                    href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|title}}</a>
+            </p>
+        </div>
+        <div class="col-lg-3">
+            <p><strong>Serial#: </strong>{{object.serial_number|upper}}</p>
+            <p><strong>Model: </strong><a
+                    href="{{object.model.get_absolute_url}}">{{object.model.name}}</a>
+            </p>
+            <p><strong>Computer name:
+                </strong>{{object.computer_name|upper}}</p>
+
+            <p><strong>Monitor: </strong>
+                {% for monitor in object.monitor.all %}
+                <a href="{{monitor.get_absolute_url}}">{{monitor}}</a>
+                {% endfor %}
+            </p>
+            <p><strong>Type: </strong>{{object.model.computer_type}}</p>
+            <p><strong>Maker: </strong>{{object.model.maker}}</p>
+            <p><strong>Processor: </strong>{{object.model.processor}}</p>
+            <p><strong>RAM (GB): </strong>{{object.model.ram}}</p>
+            <p><strong>HDD: </strong>{{object.model.hdd}}</p>
         </div>
     </div>
+    <div
+        class="row text-bg-light col-lg-3 rounded-4 shadow p-3 mt-2 mt-lg-0 ms-lg-3">
+        <h3>Comments</h3>
+        <hr>
+        {% if object.pk %}
+        {% if not object.is_closed %}
+        <form action="{% url 'computer-add-comment' object.slug %}"
+            method="post">
+            {% csrf_token %}
+            {{comments_form|crispy}}
+            <div class="text-end">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+        {% endif %}
+        <div>
+            {% for comment in object.comments.all %}
+            <span>{{comment.comment|markdown|safe}} </span><br>
+            <p class="text-end small"><a
+                    href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
+                <span>{{comment.created_at}}</span>
 
+            </p>
+            <hr>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock content %}
