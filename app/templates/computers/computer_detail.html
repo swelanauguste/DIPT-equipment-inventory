@@ -75,26 +75,28 @@
     </div>
     <div
         class="row text-bg-light col-lg-3 rounded-4 shadow p-3 mt-2 mt-lg-0 ms-lg-3">
-        <h3>Comments</h3>
-        <hr>
+
         {% if object.pk %}
         {% if not object.is_closed %}
         <form action="{% url 'computer-add-comment' object.slug %}"
             method="post">
             {% csrf_token %}
             {{comments_form|crispy}}
-            <div class="text-end">
+            <div class="text-end mb-4">
                 <button type="submit">Submit</button>
             </div>
         </form>
+
         {% endif %}
-        <div>
+        <h3>Comments</h3>
+        <hr>
+
+        <div style="max-height:18rem; overflow-y: scroll;">
             {% for comment in object.comments.all %}
             <span>{{comment.comment|markdown|safe}} </span><br>
             <p class="text-end small"><a
                     href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
                 <span>{{comment.created_at}}</span>
-
             </p>
             <hr>
             {% endfor %}

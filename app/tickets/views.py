@@ -254,6 +254,23 @@ def ticket_close_view(request, slug):
         request, "tickets/ticket_detail.html", {"ticket": ticket, "comment_form": form}
     )
 
+@login_required
+def ticket_reopen_view(request, slug):
+    ticket = get_object_or_404(models.Ticket, slug=slug)
+    open_status = get_object_or_404(models.TicketStatus, name__icontains="open")
+    ticket.ticket_status = open_status
+    ticket.is_closed = False
+    ticket.updated_at = timezone.now()
+    ticket.updated_by = request.user
+    ticket.save()
+
+    return redirect("ticket-detail", slug=slug)
+
+    # If the form is not valid or the request method is not POST
+    return render(
+        request, "tickets/ticket_detail.html", {"ticket": ticket, "comment_form": form}
+    )
+
 
 @login_required
 def add_comment_view(request, slug):
