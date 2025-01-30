@@ -20,7 +20,7 @@ class PrinterListView(UserAccessMixin, ListView):
         if search_query:
             queryset = queryset.filter(
                 Q(serial_number__icontains=search_query)
-                | Q(printer_name__icontains=search_query)
+                | Q(name__icontains=search_query)
                 | Q(model__name__icontains=search_query)
                 | Q(location__name__icontains=search_query)
                 | Q(department__name__icontains=search_query)
