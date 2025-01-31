@@ -62,7 +62,7 @@ class PublishedNoticeListView(ListView):
         query = self.request.GET.get("notice", "")
 
         if query:
-            queryset = queryset.filter(
+            queryset = models.Notice.objects.filter(
                 Q(title__icontains=query) | Q(message__icontains=query)
             )
 
