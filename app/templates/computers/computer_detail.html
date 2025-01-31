@@ -5,15 +5,17 @@
 {% load md_extras %}
 
 {% block content %}
-<h1>{{object.model|upper}} | {{object.serial_number|upper}}</h1>
-<hr>
-<p class="text-end me-3"><a class="edit-btn"
-        href="{% url 'computer-update' object.slug %}">Edit</a>
-</p>
+
+
 <div class="d-lg-flex justify-content-center">
     <div class="text-bg-light p-3 rounded-4 shadow col-lg-9 row"
         style="height: fit-content;">
-        <div class="col-lg-3">
+        <h1>{{object.model|upper}} | {{object.serial_number|upper}}</h1>
+        <hr>
+        <p class="text-end me-3"><a class="edit-btn"
+                href="{% url 'computer-update' object.slug %}">Edit</a>
+        </p>
+        <div class="col-lg-4">
             <p><strong>Received: </strong>{{object.date_received}}</p>
             <p><strong>Installed: </strong>{{object.date_installed}}</p>
             <p><strong>Warranty: </strong>{{object.warranty_info}}</p>
@@ -50,14 +52,12 @@
 
             <p><strong>Updated:
                 </strong>{{object.updated_at}} <a
-                    href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|title}}</a>
+                    href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|lower}}</a>
             </p>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <p><strong>Serial#: </strong>{{object.serial_number|upper}}</p>
-            <p><strong>Model: </strong><a
-                    href="{{object.model.get_absolute_url}}">{{object.model.name}}</a>
-            </p>
+
             <p><strong>Computer name:
                 </strong>{{object.computer_name|upper}}</p>
 
@@ -66,11 +66,15 @@
                 <a href="{{monitor.get_absolute_url}}">{{monitor}}</a>
                 {% endfor %}
             </p>
-            <p><strong>Type: </strong>{{object.model.computer_type}}</p>
             <p><strong>Maker: </strong>{{object.model.maker}}</p>
-            <p><strong>Processor: </strong>{{object.model.processor}}</p>
-            <p><strong>RAM (GB): </strong>{{object.model.ram}}</p>
-            <p><strong>HDD: </strong>{{object.model.hdd}}</p>
+            <p><strong>Model: </strong><a
+                    href="{{object.model.get_absolute_url}}">{{object.model.name}}
+                    ({{object.model.computer_type|upper}})</a>
+            </p>
+            <p><strong>Processor: </strong>{{object.model.processor}};
+                <strong>Storage: </strong>{{object.model.hdd}} GB;
+                <strong>Memory: </strong>{{object.model.ram}}GB
+            </p>
         </div>
     </div>
     <div
@@ -87,7 +91,7 @@
         </form>
 
         {% endif %}
-        
+
         {% if object.comments.last %}
         <h3>Comments</h3>
         <hr>
