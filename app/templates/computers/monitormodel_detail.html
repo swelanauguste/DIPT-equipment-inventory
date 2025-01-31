@@ -2,9 +2,10 @@
 
 
 {% block content %}
-<h1>{{object.name}} | {{object.maker}}</h1>
-<hr>
-<div class="p-3 bg-white shadow rounded-4 col-lg-4">
+
+<div class="p-3 bg-white shadow rounded-4 col-lg-4 mx-auto">
+    <h1>{{object.name}} | {{object.maker}}</h1>
+    <hr>
     <p class="text-end me-3"><a class="edit-btn"
             href="{% url 'monitor-model-update' object.slug %}">Edit</a>
     </p>

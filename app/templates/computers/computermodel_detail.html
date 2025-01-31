@@ -2,25 +2,26 @@
 
 
 {% block content %}
-<h1>{{object.maker}} {{object.name}}</h1>
-<hr>
-<div class="p-3 col-lg-6 mx-auto bg-white shadow-sm rounded-4">
 
-    <p class="text-end me-3"><a class="btn btn-sm btn-outline-dark px-5"
-            href="{% url 'computer-model-update' object.slug %}">Edit</a>
-    </p>
-    <p><strong>Name: </strong>{{object.name}}</p>
-    <p><strong>Type: </strong>{{object.computer_type}}</p>
-    <p><strong>Maker: </strong>{{object.maker}}</p>
-    <p><strong>Processor: </strong>{{object.processor}}</p>
-    <p><strong>RAM (GB): </strong>{{object.ram}}</p>
-    <p><strong>HDD: </strong>{{object.hdd}}</p>
-    <hr>
-    <p class="small text-muted"><strong>Created:
-        </strong><span>{{object.created_at}} <a
-                href="">{{object.created_by}}</a></span></p>
-                <p class="small text-muted">
-        <span><strong>Updated: </strong>{{object.updated_at}}
-            <a href="">{{object.updated_by}}</a></span></p>
+<div class="p-3 col-lg-6 mx-auto bg-white shadow-sm rounded-4">
+        <h1>{{object.maker}} {{object.name}}</h1>
+        <hr>
+        <p class="text-end me-3"><a class="btn btn-sm btn-outline-dark px-5"
+                        href="{% url 'computer-model-update' object.slug %}">Edit</a>
+        </p>
+        <p><strong>Name: </strong>{{object.name}}</p>
+        <p><strong>Type: </strong>{{object.computer_type}}</p>
+        <p><strong>Maker: </strong>{{object.maker}}</p>
+        <p><strong>Processor: </strong>{{object.processor}}</p>
+        <p><strong>RAM (GB): </strong>{{object.ram}}</p>
+        <p><strong>HDD: </strong>{{object.hdd}}</p>
+        <hr>
+        <p class="small text-muted"><strong>Created:
+                </strong><span>{{object.created_at}} <a
+                                href="">{{object.created_by}}</a></span></p>
+        <p class="small text-muted">
+                <span><strong>Updated: </strong>{{object.updated_at}}
+                        <a href="">{{object.updated_by}}</a></span>
+        </p>
 </div>
 {% endblock content %}

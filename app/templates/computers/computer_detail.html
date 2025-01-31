@@ -7,7 +7,7 @@
 {% block content %}
 
 
-<div class="d-lg-flex justify-content-center">
+<div class="d-lg-flex justify-content-center mx-3 gap-3">
     <div class="text-bg-light p-3 rounded-4 shadow col-lg-9 row"
         style="height: fit-content;">
         <h1>{{object.model|upper}} | {{object.serial_number|upper}}</h1>
@@ -19,19 +19,14 @@
             <p><strong>Received: </strong>{{object.date_received}}</p>
             <p><strong>Installed: </strong>{{object.date_installed}}</p>
             <p><strong>Warranty: </strong>{{object.warranty_info}}</p>
-
             <p><strong>Operating System: </strong>{{object.os}}</p>
-
-
             {% if object.image %}
             <p><strong>Att: </strong>{{object.image.url}}</p>
             {% endif %}
             <p><strong>Notes: </strong>{{object.notes|default:'N/A'}}</p>
-
             <p><strong>Office suite: </strong><a
                     href="{{object.office_key_computers.last.get_absolute_url}}">{{object.office_key_computers.last}}</a>
             </p>
-
         </div>
         <div class="col-lg-3">
             <p><strong>Status: </strong><span
@@ -40,16 +35,13 @@
             <p><strong>Location: </strong>{{object.location}}</p>
             <p><strong>Department: </strong>{{object.department}}</p>
             <p><strong>Assigned to: </strong>
-
                 {% for user in object.user.all %}
                 <a href="{{user.get_absolute_url}}">{{user|default:"N/A"}}</a>
                 {% endfor %}
-
             </p>
             <p><strong>Created: </strong>{{object.created_at}} <a
                     href="{{object.created_by.get_absolute_url}}">{{object.created_by|title}}</a>
             </p>
-
             <p><strong>Updated:
                 </strong>{{object.updated_at}} <a
                     href="{{object.updated_by.get_absolute_url}}">{{object.updated_by|lower}}</a>
@@ -57,10 +49,8 @@
         </div>
         <div class="col-lg-4">
             <p><strong>Serial#: </strong>{{object.serial_number|upper}}</p>
-
             <p><strong>Computer name:
                 </strong>{{object.computer_name|upper}}</p>
-
             <p><strong>Monitor: </strong>
                 {% for monitor in object.monitor.all %}
                 <a href="{{monitor.get_absolute_url}}">{{monitor}}</a>
@@ -79,8 +69,6 @@
     </div>
     <div
         class="row text-bg-light col-lg-3 rounded-4 shadow p-3 mt-2 mt-lg-0 ms-lg-3">
-
-        {% if not object.is_closed %}
         <form action="{% url 'computer-add-comment' object.slug %}"
             method="post">
             {% csrf_token %}
@@ -89,9 +77,6 @@
                 <button type="submit">Submit</button>
             </div>
         </form>
-
-        {% endif %}
-
         {% if object.comments.last %}
         <h3>Comments</h3>
         <hr>
