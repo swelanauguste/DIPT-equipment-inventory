@@ -20,8 +20,8 @@
             <p><strong>Installed: </strong>{{object.date_installed}}</p>
             <p><strong>Warranty: </strong>{{object.warranty_info}}</p>
             <p><strong>Operating System: </strong>{{object.os}}</p>
-            {% if object.image %}
-            <p><strong>Att: </strong>{{object.image.url}}</p>
+            {% if object.file %}
+            <p><strong>Att: </strong><a target="_blank" href="{{object.file.url}}">{{object.file.url}}</a></p>
             {% endif %}
             <p><strong>Notes: </strong>{{object.notes|default:'N/A'}}</p>
             <p><strong>Office suite: </strong><a

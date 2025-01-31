@@ -14,7 +14,8 @@
     </h1>
     <hr>
     <form action=""
-        method="post">
+        method="post"
+        enctype="multipart/form-data">
         {% csrf_token %}
 
         <div class="row">
@@ -51,7 +52,7 @@
         </div>
         <div class="row">
             <span class="col-lg-2">
-                {{ form.image|as_crispy_field }}
+                {{ form.file|as_crispy_field }}
             </span>
             <span class="col-lg-2">
                 {{ form.user|as_crispy_field }}
@@ -68,11 +69,11 @@
         </div>
         <hr>
         <div class="row">
-           
+
         </div>
         <div class="row">
-          
-           
+
+
         </div>
         <div class="col">
             <span>{{form.notes|as_crispy_field}}</span>

@@ -253,7 +253,7 @@ class Computer(models.Model):
     user = models.ManyToManyField(User, related_name="computer_users", blank=True)
     date_received = models.DateField(blank=True, null=True, default=timezone.now)
     date_installed = models.DateField(blank=True, null=True)
-    image = models.FileField(upload_to="system_audit/", blank=True, null=True)
+    file = models.FileField(upload_to="system_audit/", blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
