@@ -113,6 +113,7 @@ class ComputerListView(UserAccessMixin, ListView):
                     computer.location,
                     computer.department,
                     computer.user.last(),
+                    computer.notes,
                 ]
             )
 
