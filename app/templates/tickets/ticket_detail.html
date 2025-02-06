@@ -49,7 +49,7 @@
                     {% endfor %}
                 </p>
                 <p><strong>Summary: </strong>{{object.summary}}</p>
-                <p><strong>Description: </strong><br>{{object.description}}</p>
+                <p><strong>Description: </strong><br>{{object.description|linebreaks}}</p>
                 <p><strong>Status: </strong>{{object.ticket_status}}</p>
                 <p><strong>Category: </strong>
                     {% for category in object.ticket_category.all %}
@@ -98,7 +98,7 @@
                 <hr>
                 {% for comment in object.comments.all %}
 
-                <span>{{comment.comments|markdown|safe}} </span><br>
+                <span>{{comment.comments|linebreaks|markdown|safe}} </span><br>
                 <p class="text-end small"><a
                         href="{{comment.created_by.get_absolute_url}}"><span>{{comment.created_by}}</span></a>
                     <span>{{comment.created_at}}</span>

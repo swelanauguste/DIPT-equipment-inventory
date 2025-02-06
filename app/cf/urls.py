@@ -13,6 +13,7 @@ urlpatterns = [
     path("stocks/", include("stocks.urls")),
     path("knowledge-base/", include("knowledge_base.urls")),
     path("", include("notices.urls")),
+    path("", include("pwa.urls")),
 ]
 
 if settings.DEBUG:
