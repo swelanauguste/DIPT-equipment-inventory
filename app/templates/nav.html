@@ -8,25 +8,25 @@
         {% if request.user.is_user %}
         <a class="text-dark text-decoration-none"
             href="{% url 'ticket-user-create' %}"> <img class="me-2"
-            src="{% static 'svg/add-ticket.svg' %}"
-            alt="{% static 'svg/add-ticket.svg' %}"></a>
-            <a class="text-dark text-decoration-none"
+                src="{% static 'svg/add-ticket.svg' %}"
+                alt="{% static 'svg/add-ticket.svg' %}"></a>
+        <a class="text-dark text-decoration-none"
             href="{% url 'user-ticket-list' %}"> <img class="me-2"
-            src="{% static 'svg/ticket.svg' %}"
-            alt="{% static 'svg/ticket.svg' %}"></a>
+                src="{% static 'svg/ticket.svg' %}"
+                alt="{% static 'svg/ticket.svg' %}"></a>
         {% else %}
         <a class="text-dark text-decoration-none"
             href="{% url 'ticket-tech-create' %}"> <img class="me-2"
-            src="{% static 'svg/add-ticket.svg' %}"
-            alt="{% static 'svg/add-ticket.svg' %}"></a>
+                src="{% static 'svg/add-ticket.svg' %}"
+                alt="{% static 'svg/add-ticket.svg' %}"></a>
         <a class="text-dark text-decoration-none"
             href="{% url 'ticket-list' %}"> <img class="me-2"
-            src="{% static 'svg/ticket.svg' %}"
-            alt="{% static 'svg/ticket.svg' %}"></a>
+                src="{% static 'svg/ticket.svg' %}"
+                alt="{% static 'svg/ticket.svg' %}"></a>
         <a class="text-dark text-decoration-none"
             href="{% url 'computer-list' %}"> <img class="me-2"
-            src="{% static 'svg/computer.svg' %}"
-            alt="{% static 'svg/computer.svg' %}"></a>
+                src="{% static 'svg/computer.svg' %}"
+                alt="{% static 'svg/computer.svg' %}"></a>
         {% endif %}
 
         <button class="navbar-toggler"
@@ -99,7 +99,8 @@
                         <a class="nav-link"
                             href="{% url 'device-list' %}"><img class="me-2"
                                 src="{% static 'svg/printer.svg' %}"
-                                alt="{% static 'svg/printer.svg' %}">Printers and Devices</a>
+                                alt="{% static 'svg/printer.svg' %}">Printers
+                            and Devices</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
@@ -125,6 +126,13 @@
                                 src="{% static 'svg/knowledge-base.svg' %}"
                                 alt="{% static 'svg/knowledge-base.svg' %}">Knowledge
                             Base</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'reports' %}"><img class="me-2"
+                                src="{% static 'svg/reports.svg' %}"
+                                alt="{% static 'svg/reports.svg' %}">Reports
+                        </a>
                     </li>
                     {% endif %}
                     <hr>

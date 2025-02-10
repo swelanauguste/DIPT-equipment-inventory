@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "stocks",
     "notices",
     "knowledge_base",
+    "reports",
     "pwa",
 ]
 
