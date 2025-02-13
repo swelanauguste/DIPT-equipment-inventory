@@ -39,12 +39,14 @@ def ticket_created_email(instance):
         html_message=html_message,
     )
     
-    ticket_users = list(instance.user.values_list("email", flat=True))
+    ticket_users = instance.user.all()
+
+    users_emails = [email.email for email in ticket_users]
     send_mail(
         subject,  # subject of email
         plain_message,  # body of email
         settings.DEFAULT_FROM_EMAIL,  # from email
-        ticket_users,  # list of recipients
+        users_emails,  # list of recipients
         html_message=html_message,
     )
 
