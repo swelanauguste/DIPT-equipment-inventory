@@ -48,16 +48,19 @@
     {% include 'messages.html' %}
     <div class="small container-fluid min-vh-100">
         {% if request.user.is_authenticated %}
-        <div class="d-flex justify-content-between mx-4">
+        <div class="d-flex justify-content-between mx-4"
+            style="z-index: 10000;">
             <a href="#"
-                onclick="history.back()"> <img class="me-2"
+                onclick="history.back()"> <img class=""
                     src="{% static 'svg/arrow_back.svg' %}"
                     alt="{% static 'svg/ticket.svg' %}"></a>
+
             <a href="#"
-                class=""
                 onclick="history.forward()"> <img class="me-2"
                     src="{% static 'svg/arrow_forward.svg' %}"
                     alt="{% static 'svg/ticket.svg' %}"></a>
+
+
         </div><br><br>
         {% endif %}
 
