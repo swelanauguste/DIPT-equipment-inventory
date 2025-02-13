@@ -21,6 +21,10 @@ def ticket_created_email(instance):
     plain_message = strip_tags(html_message)
     # Collect email recipients
     recipients = []
+    ticket_users = instance.user.all()
+
+    for email in ticket_users:
+        recipients.append(email.email)
 
     # Add `created_by` email if it exists and is not already included
     if instance.created_by and instance.created_by.email not in recipients:
@@ -29,7 +33,7 @@ def ticket_created_email(instance):
     # Add a fallback or default recipient
     if settings.DEFAULT_FROM_EMAIL not in recipients:
         recipients.append(settings.DEFAULT_FROM_EMAIL)
-    
+
     # Send email
     send_mail(
         subject,  # subject of email
@@ -38,17 +42,14 @@ def ticket_created_email(instance):
         recipients,  # list of recipients
         html_message=html_message,
     )
-    
-    ticket_users = instance.user.all()
 
-    users_emails = [email.email for email in ticket_users]
-    send_mail(
-        subject,  # subject of email
-        plain_message,  # body of email
-        settings.DEFAULT_FROM_EMAIL,  # from email
-        users_emails,  # list of recipients
-        html_message=html_message,
-    )
+    # send_mail(
+    #     subject,  # subject of email
+    #     plain_message,  # body of email
+    #     settings.DEFAULT_FROM_EMAIL,  # from email
+    #     users_emails,  # list of recipients
+    #     html_message=html_message,
+    # )
 
 
 def ticket_updated_email(instance):
