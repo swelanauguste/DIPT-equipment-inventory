@@ -50,7 +50,10 @@ class Command(BaseCommand):
         body = "Attached is the monthly ticket report."
 
         email = EmailMessage(
-            subject, body, settings.DEFAULT_FROM_EMAIL, [recipient_email, 'ict.infrastructure@govt.lc']
+            subject,
+            body,
+            settings.DEFAULT_FROM_EMAIL,
+            [recipient_email, "ict.infrastructure@govt.lc"],
         )
         email.attach_file(file_path)
         email.send()
