@@ -82,30 +82,6 @@ class TicketListView(LoginRequiredMixin, ListView):
 
         return context
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     # Add filter options for dropdowns
-    #     context["ticket_count"] = self.get_queryset().count()
-    #     context["statuses"] = models.TicketStatus.objects.all()
-    #     context["categories"] = models.TicketCategory.objects.all()
-    #     context["users"] = User.objects.filter(role__in=["technician", "manager"])
-
-    #     # Get selected categories as a list
-    #     selected_categories = self.request.GET.getlist("ticket_category")
-    #     context["selected_categories"] = [
-    #         int(category) for category in selected_categories
-    #     ]
-
-    #     # Preserve query parameters for pagination
-    #     query_params = self.request.GET.copy()
-    #     if "page" in query_params:
-    #         query_params.pop(
-    #             "page"
-    #         )  # Remove 'page' from query parameters to prevent duplication
-    #     context["query_params"] = urlencode(query_params)
-
-    #     return context
-
 
 class UserTicketListView(LoginRequiredMixin, ListView):
     model = models.Ticket
@@ -253,6 +229,7 @@ def ticket_close_view(request, slug):
     return render(
         request, "tickets/ticket_detail.html", {"ticket": ticket, "comment_form": form}
     )
+
 
 @login_required
 def ticket_reopen_view(request, slug):

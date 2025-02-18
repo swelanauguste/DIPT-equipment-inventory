@@ -72,7 +72,7 @@
         <form action="{% url 'computer-add-comment' object.slug %}"
             method="post">
             {% csrf_token %}
-            {{comments_form|crispy}}
+            {{form|crispy}}
             <div class="text-end mb-4">
                 <button type="submit">Submit</button>
             </div>

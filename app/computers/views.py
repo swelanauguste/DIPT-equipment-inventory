@@ -3,9 +3,10 @@ from datetime import datetime
 from urllib.parse import urlencode
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
@@ -150,15 +151,16 @@ class ComputerDetailView(UserAccessMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["comments_form"] = forms.CommentCreateForm
+        context["form"] = forms.CommentCreateForm
         return context
 
 
+@login_required
 def add_comment_view(request, slug):
     computer = get_object_or_404(models.Computer, slug=slug)
+    form = forms.CommentCreateForm(request.POST)
 
     if request.method == "POST":
-        form = forms.CommentCreateForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.computer = computer
@@ -171,8 +173,8 @@ def add_comment_view(request, slug):
     # If the form is not valid or the request method is not POST
     return render(
         request,
-        "computer/computer_detail.html",
-        {"computer": computer, "comment_form": form},
+        "computers/computer_detail.html",
+        {"object": computer, "form": form},
     )
 
 
