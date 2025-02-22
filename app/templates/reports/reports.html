@@ -7,7 +7,7 @@
 
 <br>
 <div class="row gap-4 px-3">
-    <div class="p-5 shadow rounded-4 col bg-light">
+    <div class="p-5 shadow rounded-4 col bg-light" style="max-height: fit-content;">
         <h3>Tickets</h3>
         <hr>
         {% for status, tickets in tickets_by_status.items %}
@@ -20,7 +20,7 @@
                 class="text-success fw-bold">Export tickets to CSV</a>
         </div>
     </div>
-    <div class="p-5 shadow rounded-4 col bg-light">
+    <div class="p-5 shadow rounded-4 col bg-light" style="max-height: fit-content;">
         <h3>Computers</h3>
         <hr>
         {% for status, tickets in computers_by_status.items %}
@@ -32,6 +32,14 @@
             <a href="?export_computers=computers_csv"
                 class="text-success fw-bold">Export computers to CSV</a>
         </div>
+    </div>
+    <div class="p-5 shadow rounded-4 col bg-light" style="max-height: fit-content;">
+        <h3>User tickets</h3>
+        <hr>
+       {% for user in users_with_more_than_2_tickets %}
+         <p>{{forloop.counter}}. {{user}} ({{user.tickets.count}})</p>
+       {% endfor %}
+        
     </div>
 </div>
 

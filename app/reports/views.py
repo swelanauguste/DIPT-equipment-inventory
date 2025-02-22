@@ -2,13 +2,20 @@ import csv
 from datetime import datetime
 
 from computers.models import Computer, Status
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.http import HttpResponse
 from django.shortcuts import render
 from tickets.models import Ticket, TicketCategory, TicketStatus
+from users.models import User
 
 
 def ticket_report_view(request):
+
+    users_with_more_than_2_tickets = (
+        User.objects.annotate(ticket_count=Count("tickets"))
+        .filter(ticket_count__gte=2)
+        .order_by("-ticket_count")
+    )
 
     tickets_by_status = {
         status.name: Ticket.objects.filter(ticket_status=status)
@@ -36,6 +43,7 @@ def ticket_report_view(request):
     context = {
         "tickets_by_status": tickets_by_status,
         "computers_by_status": computers_by_status,
+        "users_with_more_than_2_tickets": users_with_more_than_2_tickets,
     }
 
     return render(request, "reports/reports.html", context)
