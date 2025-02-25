@@ -1,5 +1,5 @@
 <form class="select-form small" method="get" action="">
-    <div class="col-lg-6 mx-auto bg-white p-3 shadow rounded-4">
+    <div class="col-lg-4 p-3 bg-light shadow rounded-4">
     <h3>Filter computers</h3><br>
     <div class="row">
         <div class="mb-2">
@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="row mb-2">
-        <div class="col-lg-4 mb-2">
+        <div class="col-lg-6 mb-2">
             <select class="form-control" name="status" onchange="this.form.submit()">
                 <option value="">Select Status</option>
                 {% for stat in statuses %}
@@ -15,7 +15,7 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="col-lg-4 mb-2">
+        <div class="col-lg-6 mb-2">
             <select class="form-control" name="os">
                 <option value="">Select Operating System</option>
                 {% for os in operating_systems %}
@@ -23,7 +23,9 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="col-lg-4 mb-2">
+    </div>
+    <div class="row mb-2">
+        <div class="col-lg-6 mb-2">
             <select class="form-control" name="model">
                 <option value="">Select Model</option>
                 {% for model in models %}
@@ -31,9 +33,7 @@
                 {% endfor %}
             </select>
         </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-lg-4 mb-2">
+        <div class="col-lg-6 mb-2">
             <select class="form-control user" name="user">
                 <option value="">Select User</option>
                 {% for user in users %}
@@ -41,7 +41,10 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="col-lg-4 mb-2">
+    </div>
+    <div class="row mb-2">
+
+        <div class="col-lg-6 mb-2">
             <select class="department form-control" name="department">
                 <option value="">Select Department</option>
                 {% for department in departments %}
@@ -54,7 +57,7 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="col-lg-4 mb-2">
+        <div class="col-lg-6 mb-2">
             <select class="form-control location" name="location">
                 <option value="">Select Location</option>
                 {% for location in locations %}

@@ -3,10 +3,15 @@
 {% load md_extras %}
 
 {% block content %}
-<h1>{{ object.title }}</h1>
+<h1 class="text-center">{{ object.title }}</h1>
 <br>
 <div class="col-lg-4 p-3 py-3 bg-white shadow rounded-4 mx-auto">
     <p>{{ object.content|markdown|safe }}</p>
+    {% if object.file %}
+    <p><a target="_blank"
+            href="{{ object.file.url }}">
+            {{ object.file|cut:"knowledge_base/" }}</a></p>
+    {% endif %}
     <hr>
     <div class="small">
         <p><strong>Author:</strong> {{ object.author }}</p>

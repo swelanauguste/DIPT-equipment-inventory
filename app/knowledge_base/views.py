@@ -15,7 +15,7 @@ class ArticleDetailView(UserAccessMixin, DetailView):
 
 class ArticleCreateView(UserAccessMixin, CreateView):
     model = Article
-    fields = ["title", "content"]
+    fields = ["title", "file", "content"]
 
     def form_valid(self, form):
         form.instance.author = self.request.user

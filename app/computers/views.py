@@ -22,7 +22,7 @@ class ComputerListView(UserAccessMixin, ListView):
     paginate_by = 50
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = self.model.objects.none()  # Start with an empty queryset
 
         # Retrieve and apply filter parameters
         query = self.request.GET.get("query")
@@ -34,25 +34,28 @@ class ComputerListView(UserAccessMixin, ListView):
         department = self.request.GET.get("department")
         user = self.request.GET.get("user")
 
-        if query:
-            queryset = queryset.filter(
-                Q(serial_number__icontains=query)
-                | Q(computer_name__icontains=query)
-                | Q(notes__icontains=query)
-            )
+        # Check if any filter parameter is provided
+        if query or computer_name or status or model or os or location or department or user:
+            queryset = models.Computer.objects.all()
+            if query:
+                queryset = queryset.filter(
+                    Q(serial_number__icontains=query)
+                    | Q(computer_name__icontains=query)
+                    | Q(notes__icontains=query)
+                )
 
-        if status:
-            queryset = queryset.filter(status__id=status)
-        if model:
-            queryset = queryset.filter(model__id=model)
-        if os:
-            queryset = queryset.filter(os__id=os)
-        if location:
-            queryset = queryset.filter(location__id=location)
-        if department:
-            queryset = queryset.filter(department__id=department)
-        if user:
-            queryset = queryset.filter(user__id=user)
+            if status:
+                queryset = queryset.filter(status__id=status)
+            if model:
+                queryset = queryset.filter(model__id=model)
+            if os:
+                queryset = queryset.filter(os__id=os)
+            if location:
+                queryset = queryset.filter(location__id=location)
+            if department:
+                queryset = queryset.filter(department__id=department)
+            if user:
+                queryset = queryset.filter(user__id=user)
 
         return queryset
 
