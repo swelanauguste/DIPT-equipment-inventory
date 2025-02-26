@@ -19,7 +19,7 @@ class ComputerListView(UserAccessMixin, ListView):
     model = models.Computer
     template_name = "computer_list.html"
     context_object_name = "computers"
-    paginate_by = 50
+    paginate_by = 48
 
     def get_queryset(self):
         queryset = self.model.objects.none()  # Start with an empty queryset
