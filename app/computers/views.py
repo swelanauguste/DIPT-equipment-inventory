@@ -22,7 +22,7 @@ class ComputerListView(UserAccessMixin, ListView):
     paginate_by = 48
 
     def get_queryset(self):
-        queryset = self.model.objects.none()  # Start with an empty queryset
+        queryset = self.model.objects.all()  # Start with an empty queryset
 
         # Retrieve and apply filter parameters
         query = self.request.GET.get("query")

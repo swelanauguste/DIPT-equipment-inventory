@@ -4,7 +4,6 @@
 <h1 class="display-4 text-center"><a
         href="{% url 'computer-list' %}">Computers</a>
     ({{ computer_count }})</h1>
-<hr>
 <div class="text-center p-1 fw-bold">
     <a class="text-dark pe-1 link-body-emphasis"
         href="{% url 'computer-create' %}">Add computer</a>
@@ -17,11 +16,13 @@
     <a class="text-dark pe-1 link-body-emphasis"
         href="{% url 'microsoft-office-list' %}">Office Suite</a>
 </div>
-<hr>
 
 <div class="py-3">
     <!-- Filter Form -->
     {% include 'computers/includes/computer_filter_form.html' %}
+</div>
+<div class="py-2">
+    {% include 'computers/includes/computer_list_pagination.html' %}
 </div>
 <div class="row row-cols-1 row-cols-md-6 g-2">
     {% for computer in computers %}
@@ -34,20 +35,24 @@
                 {% elif computer.status.name == 'IN-REPAIR' %} bg-danger opacity-75
                 {% elif computer.status.name == 'IN-USE' %} bg-success {% endif %}">
                 <div class="card-body fw-bold">
-                    <h5 class="card-title">{{computer.serial_number|upper|truncatechars:20}}
+                    <h5 class="card-title">
+                        {{computer.serial_number|upper|truncatechars:20}}
                     </h5>
                     <hr>
                     <p class="card-text text-muted">
                         {{computer.updated_by}} {{computer.updated_at}}</p>
-                        <p class="fw-bold">{{computer.status}}</p>
-                    <p class="card-text">{{computer.computer_name|default:"unnamed"|upper}}</p>
-                    <p class="card-text">{{computer.os}}</p>
-                    <p class="card-text">{{computer.model|linebreaks|truncatechars:38}}</p>
+                    <p class="fw-bold">{{computer.status}}</p>
                     <p class="card-text">
-                        {{computer.department}}, {{computer.location|linebreaks|truncatechars:40}}</p>
+                        {{computer.computer_name|default:"unnamed"|upper}}</p>
+                    <p class="card-text">{{computer.os}}</p>
+                    <p class="card-text">
+                        {{computer.model|linebreaks|truncatechars:38}}</p>
+                    <p class="card-text">
+                        {{computer.department}},
+                        {{computer.location|linebreaks|truncatechars:40}}</p>
                     <p class="card-text">
                         {{computer.user.last|default:"unassigned"}}</p>
-                    
+
 
                 </div>
             </div>
