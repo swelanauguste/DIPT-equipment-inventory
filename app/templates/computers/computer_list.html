@@ -40,8 +40,7 @@
                     <p class="card-text text-muted">
                         {{computer.updated_by}} {{computer.updated_at}}</p>
                         <p class="fw-bold">{{computer.status}}</p>
-                    <p class="card-text">{{computer.computer_name|upper|default:'unnamed'}}</p>
-                    <p class="card-text"></p>
+                    <p class="card-text">{{computer.computer_name|default:"unnamed"|upper}}</p>
                     <p class="card-text">{{computer.os}}</p>
                     <p class="card-text">{{computer.model|linebreaks|truncatechars:38}}</p>
                     <p class="card-text">
