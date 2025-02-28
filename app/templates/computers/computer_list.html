@@ -24,7 +24,7 @@
 <div class="py-2">
     {% include 'computers/includes/computer_list_pagination.html' %}
 </div>
-<div class="row row-cols-1 row-cols-md-6 g-2">
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-6 g-2">
     {% for computer in computers %}
     <a class="text-decoration-none"
         href="{{ computer.get_absolute_url }}">

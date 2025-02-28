@@ -42,6 +42,7 @@ class ComputerListView(UserAccessMixin, ListView):
                     Q(serial_number__icontains=query)
                     | Q(computer_name__icontains=query)
                     | Q(notes__icontains=query)
+                    | Q(comments__comment__icontains=query)
                 )
 
             if status:
