@@ -1,5 +1,6 @@
 services:
   web:
+    container_name: inventory
     build: ./app
     volumes:
       - static_volume:/home/app/web/staticfiles
