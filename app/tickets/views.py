@@ -42,6 +42,7 @@ class TicketListView(LoginRequiredMixin, ListView):
                 Q(summary__icontains=query)
                 | Q(description__icontains=query)
                 | Q(ticket_id__icontains=query)
+                | Q(comments__comments__icontains=query)
             )
         if assigned_to:
             if assigned_to == "unassigned":

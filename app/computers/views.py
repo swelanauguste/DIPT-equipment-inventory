@@ -19,10 +19,10 @@ class ComputerListView(UserAccessMixin, ListView):
     model = models.Computer
     template_name = "computer_list.html"
     context_object_name = "computers"
-    paginate_by = 50
+    paginate_by = 48
 
     def get_queryset(self):
-        queryset = self.model.objects.none()  # Start with an empty queryset
+        queryset = self.model.objects.all()  # Start with an empty queryset
 
         # Retrieve and apply filter parameters
         query = self.request.GET.get("query")
@@ -42,6 +42,7 @@ class ComputerListView(UserAccessMixin, ListView):
                     Q(serial_number__icontains=query)
                     | Q(computer_name__icontains=query)
                     | Q(notes__icontains=query)
+                    | Q(comments__comment__icontains=query)
                 )
 
             if status:
