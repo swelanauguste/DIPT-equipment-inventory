@@ -46,7 +46,7 @@ class Command(BaseCommand):
 
     def send_email(self, file_path, file_name):
         recipient_email = "kingship.lc@gmail.com"  # Update with actual recipient
-        subject = "Monthly Ticket Report"
+        subject = f"Monthly ticket report {datetime.now().strftime('%Y%m')}"
         body = "Attached is the monthly ticket report."
 
         email = EmailMessage(
