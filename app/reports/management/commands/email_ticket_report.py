@@ -21,11 +21,11 @@ class Command(BaseCommand):
         with open(file_path, "w", newline="") as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(
-                ["Ticket Status", "Ticket ID", "Summary", "Assigned to", "Created At"]
+                ["status", "ticket_id", "summary", "assigned_to", "created"]
             )  # CSV Header
 
             tickets_by_status = {
-                status.name: Ticket.objects.filter(ticket_status=status)
+                status.name: Ticket.objects.filter(ticket_status=status).filter(is_deleted=False).order_by('created_at')
                 for status in TicketStatus.objects.all()
             }
 
