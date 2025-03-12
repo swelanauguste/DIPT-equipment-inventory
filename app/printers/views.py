@@ -22,10 +22,12 @@ class PrinterListView(UserAccessMixin, ListView):
                 Q(serial_number__icontains=search_query)
                 | Q(name__icontains=search_query)
                 | Q(model__name__icontains=search_query)
+                | Q(model__maker__name__icontains=search_query)
                 | Q(location__name__icontains=search_query)
                 | Q(department__name__icontains=search_query)
                 | Q(status__name__icontains=search_query)
                 | Q(ip_addr__icontains=search_query)
+                | Q(comments__comment__icontains=query)
             )
 
         # Filtering by fields
